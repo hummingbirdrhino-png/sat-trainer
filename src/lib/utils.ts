@@ -95,6 +95,18 @@ export function calculateConfidenceWeight(eliminatedCount: number): number {
   return weights[eliminatedCount] ?? 0.65;
 }
 
+export function getSkillKey(question: Question): string {
+  return `${question.section ?? 'reading_writing'}:${question.skill}`;
+}
+
+export function getSkillDisplayName(skillKey: string): string {
+  return skillKey.includes(':') ? skillKey.split(':').slice(1).join(':') : skillKey;
+}
+
+export function getSectionLabel(section?: string): string {
+  return section === 'math' ? 'Math' : 'Reading & Writing';
+}
+
 // Question selection algorithms
 function sampleQuestions(pool: Question[], count: number): Question[] {
   return shuffleArray(pool).slice(0, Math.min(count, pool.length));
@@ -114,7 +126,8 @@ export function selectAdaptiveQuestions(
 
   // Weight skills by weakness and recency. Keep a nonzero floor so mastered skills can still appear.
   const skillWeights = skills.map((skill) => {
-    const us = userSkills[skill];
+    const sampleQuestion = questions.find((q) => q.skill === skill);
+    const us = sampleQuestion ? userSkills[getSkillKey(sampleQuestion)] : userSkills[skill];
     const mastery = us?.masteryScore ?? 0;
     const lastPracticed = us?.lastPracticed ?? 0;
     const daysSince = lastPracticed ? (now - lastPracticed) / (1000 * 60 * 60 * 24) : 30;
@@ -161,7 +174,7 @@ export function selectWeakSpotQuestions(
   const sortedSkills = skills
     .map((skill) => ({
       skill,
-      mastery: userSkills[skill]?.masteryScore ?? 0,
+      mastery: userSkills[getSkillKey(questions.find((q) => q.skill === skill) ?? questions[0])]?.masteryScore ?? userSkills[skill]?.masteryScore ?? 0,
     }))
     .sort((a, b) => a.mastery - b.mastery)
     .slice(0, 3);
@@ -274,6 +287,25 @@ export function getSkillColor(skill: string): string {
     Transitions: '#84CC16',
     Boundaries: '#6366F1',
     'Form, Structure, and Sense': '#14B8A6',
+    'Linear equations in one variable': '#3B82F6',
+    'Linear equations in two variables': '#2563EB',
+    'Linear functions': '#0EA5E9',
+    'Systems of two linear equations in two variables': '#06B6D4',
+    'Linear inequalities in one or two variables': '#14B8A6',
+    'Nonlinear functions': '#8B5CF6',
+    'Nonlinear equations in one variable and systems of equations in two variables': '#A855F7',
+    'Equivalent expressions': '#D946EF',
+    'Ratios, rates, proportional relationships, and units': '#F59E0B',
+    'Percentages': '#F97316',
+    'One-variable data: Distributions and measures of center and spread': '#84CC16',
+    'Two-variable data: Models and scatterplots': '#22C55E',
+    'Probability and conditional probability': '#10B981',
+    'Inference from sample statistics and margin of error': '#EAB308',
+    'Evaluating statistical claims: Observational studies and experiments': '#F43F5E',
+    'Area and volume': '#EC4899',
+    'Lines, angles, and triangles': '#EF4444',
+    'Right triangles and trigonometry': '#F97316',
+    'Circles': '#6366F1',
   };
   return colors[skill] ?? '#6B7280';
 }

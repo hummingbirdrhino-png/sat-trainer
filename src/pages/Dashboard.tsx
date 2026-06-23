@@ -47,20 +47,29 @@ export default function Dashboard() {
     dailyGoals,
   } = useStore();
 
-  const overallMastery = Object.values(userSkills).reduce(
-    (sum, s) => sum + (s?.masteryScore ?? 0),
-    0
-  ) / Math.max(Object.keys(userSkills).length, 1) || 0;
+  const readingAnswers = userAnswers.filter((answer) => (answer.section ?? 'reading_writing') !== 'math');
+  const mathAnswers = userAnswers.filter((answer) => answer.section === 'math');
+  const sectionSkills = (section: 'reading_writing' | 'math') => Object.values(userSkills).filter((skill) => (skill.section ?? 'reading_writing') === section);
+  const averageMastery = (skills: typeof userSkills[keyof typeof userSkills][]) =>
+    skills.reduce((sum, skill) => sum + (skill?.masteryScore ?? 0), 0) / Math.max(skills.length, 1) || 0;
+  const rwMastery = averageMastery(sectionSkills('reading_writing'));
+  const mathMastery = averageMastery(sectionSkills('math'));
+  const overallMastery = averageMastery(Object.values(userSkills));
 
-  const totalCorrect = userAnswers.filter((a) => a.isCorrect).length;
   const totalAnswered = userAnswers.length;
   const avgTime = totalAnswered > 0
     ? Math.round(userAnswers.reduce((sum, a) => sum + a.timeSpentSeconds, 0) / totalAnswered)
     : 0;
 
-  const predictedScore = sessionSummaries.length > 0
-    ? sessionSummaries[0].predictedSatScore
-    : calculatePredictedScore(totalCorrect, totalAnswered, avgTime, overallMastery);
+  const sectionScore = (answers: typeof userAnswers, mastery: number) => {
+    if (answers.length === 0) return null;
+    const correct = answers.filter((answer) => answer.isCorrect).length;
+    const avg = answers.length > 0 ? answers.reduce((sum, answer) => sum + answer.timeSpentSeconds, 0) / answers.length : undefined;
+    return calculatePredictedScore(correct, answers.length, avg, mastery);
+  };
+  const rwPredictedScore = sectionScore(readingAnswers, rwMastery);
+  const mathPredictedScore = sectionScore(mathAnswers, mathMastery);
+  const predictedScore = rwPredictedScore !== null && mathPredictedScore !== null ? rwPredictedScore + mathPredictedScore : null;
 
   const streak = dailyGoals.length > 0
     ? dailyGoals.sort((a, b) => b.date.localeCompare(a.date))[0]?.streak ?? 0
@@ -104,10 +113,10 @@ export default function Dashboard() {
       };
     }
     return {
-      labels: skills.map((s) => s.skill),
+      labels: skills.map((s) => s.displaySkill ?? s.skill),
       datasets: [{
         data: skills.map((s) => s.masteryScore),
-        backgroundColor: skills.map((s) => getSkillColor(s.skill)),
+        backgroundColor: skills.map((s) => getSkillColor(s.displaySkill ?? s.skill)),
         borderWidth: 0,
       }],
     };
@@ -117,14 +126,14 @@ export default function Dashboard() {
   const accuracyChartData = useMemo(() => {
     const skills = Object.values(userSkills);
     return {
-      labels: skills.map((s) => s.skill.slice(0, 15) + (s.skill.length > 15 ? '...' : '')),
+      labels: skills.map((s) => { const label = s.displaySkill ?? s.skill; return label.slice(0, 15) + (label.length > 15 ? '...' : ''); }),
       datasets: [{
         label: 'Accuracy %',
         data: skills.map((s) =>
           s.questionsAnswered > 0 ? Math.round((s.questionsCorrect / s.questionsAnswered) * 100) : 0
         ),
-        backgroundColor: skills.map((s) => `${getSkillColor(s.skill)}80`),
-        borderColor: skills.map((s) => getSkillColor(s.skill)),
+        backgroundColor: skills.map((s) => `${getSkillColor(s.displaySkill ?? s.skill)}80`),
+        borderColor: skills.map((s) => getSkillColor(s.displaySkill ?? s.skill)),
         borderWidth: 1,
       }],
     };
@@ -199,16 +208,30 @@ export default function Dashboard() {
       </div>
 
       {/* Stats Cards */}
-      <div className="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
         <StatCard
-          label="Predicted SAT Score"
-          value={predictedScore.toString()}
+          label="Predicted Total Score"
+          value={predictedScore?.toString() ?? '—'}
           icon={TrendingUp}
           color="var(--accent-blue)"
           trend={sessionSummaries.length > 1
             ? `${sessionSummaries[0].predictedSatScore - sessionSummaries[1].predictedSatScore > 0 ? '+' : ''}${sessionSummaries[0].predictedSatScore - sessionSummaries[1].predictedSatScore} pts`
             : 'Baseline'
           }
+        />
+        <StatCard
+          label="RW Score"
+          value={rwPredictedScore?.toString() ?? '—'}
+          icon={TrendingUp}
+          color="#60A5FA"
+          trend={`${readingAnswers.length} answered`}
+        />
+        <StatCard
+          label="Math Score"
+          value={mathPredictedScore?.toString() ?? '—'}
+          icon={TrendingUp}
+          color="#A78BFA"
+          trend={`${mathAnswers.length} answered`}
         />
         <StatCard
           label="Overall Mastery"

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useStore } from '@/store/useStore';
-import { getUniqueSkills, getSkillColor, cn, shuffleArray } from '@/lib/utils';
+import { getUniqueSkills, getSkillColor, cn, shuffleArray, getSkillKey } from '@/lib/utils';
 import { Check, ArrowRight, Sliders } from 'lucide-react';
 
 export default function FocusedSetup() {
@@ -69,7 +69,8 @@ export default function FocusedSetup() {
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {skills.map((skill) => {
             const isSelected = selectedSkills.includes(skill);
-            const skillData = userSkills[skill];
+            const sampleQuestion = activeQuestions.find((q) => q.skill === skill);
+            const skillData = sampleQuestion ? userSkills[getSkillKey(sampleQuestion)] : userSkills[skill];
             const mastery = skillData?.masteryScore ?? 0;
             const questionCount = activeQuestions.filter((q) => q.skill === skill).length;
 

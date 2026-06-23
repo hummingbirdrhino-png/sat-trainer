@@ -53,6 +53,9 @@ export interface AuthUser {
 
 export interface UserAnswer {
   questionId: string;
+  section?: QuestionSection;
+  skill?: string;
+  domain?: string;
   selectedAnswer: string;
   isCorrect: boolean;
   eliminatedChoices: string[];
@@ -64,6 +67,9 @@ export interface UserAnswer {
 
 export interface UserSkill {
   skill: string;
+  section?: QuestionSection;
+  displaySkill?: string;
+  domain?: string;
   masteryScore: number;
   questionsAnswered: number;
   questionsCorrect: number;
@@ -75,6 +81,7 @@ export interface UserSkill {
 export interface SessionSummary {
   id: string;
   mode: PracticeMode;
+  section?: QuestionSection;
   score: number;
   totalQuestions: number;
   correctCount: number;

@@ -90,31 +90,32 @@ const modes: ModeCard[] = [
 
 export default function ModeSelection() {
   const navigate = useNavigate();
-  const { questions, mathQuestions, userSkills, bookmarks, userAnswers, sessionSummaries, displayName, isPro, setCurrentSession } = useStore();
+  const { questions, mathQuestions, userSkills, bookmarks, userAnswers, displayName, isPro, setCurrentSession } = useStore();
   const [selectedSection, setSelectedSection] = useState<QuestionSection>('reading_writing');
-
-  const overallMastery = Object.values(userSkills).reduce(
-    (sum, s) => sum + (s?.masteryScore ?? 0),
-    0
-  ) / Math.max(Object.keys(userSkills).length, 1) || 0;
-
-  const wrongAnswers = userAnswers.filter((a) => !a.isCorrect);
-  const predictedScore = sessionSummaries.length > 0 
-    ? sessionSummaries[0].predictedSatScore 
-    : calculatePredictedScore(
-        userAnswers.filter((a) => a.isCorrect).length,
-        userAnswers.length,
-        userAnswers.length > 0 ? userAnswers.reduce((sum, answer) => sum + answer.timeSpentSeconds, 0) / userAnswers.length : undefined,
-        overallMastery
-      );
-
-  const dueForReview = Object.values(userSkills).filter(
-    (s) => s.sessionCounter >= s.nextReviewSession
-  ).length;
 
   const activeQuestions = selectedSection === 'math' ? mathQuestions : questions;
   const sectionLabel = selectedSection === 'math' ? 'Math' : 'Reading & Writing';
   const skills = getUniqueSkills(activeQuestions);
+  const sectionSkillData = Object.values(userSkills).filter((skill) => (skill.section ?? 'reading_writing') === selectedSection);
+  const overallMastery = sectionSkillData.reduce(
+    (sum, s) => sum + (s?.masteryScore ?? 0),
+    0
+  ) / Math.max(sectionSkillData.length, 1) || 0;
+
+  const wrongAnswers = userAnswers.filter((a) => !a.isCorrect && (a.section ?? 'reading_writing') === selectedSection);
+  const sectionAnswers = userAnswers.filter((answer) => (answer.section ?? 'reading_writing') === selectedSection);
+  const predictedScore = sectionAnswers.length > 0
+    ? calculatePredictedScore(
+        sectionAnswers.filter((a) => a.isCorrect).length,
+        sectionAnswers.length,
+        sectionAnswers.reduce((sum, answer) => sum + answer.timeSpentSeconds, 0) / sectionAnswers.length,
+        overallMastery
+      )
+    : null;
+
+  const dueForReview = sectionSkillData.filter(
+    (s) => s.sessionCounter >= s.nextReviewSession
+  ).length;
 
   const startMode = (mode: PracticeMode) => {
     if (!activeQuestions.length) return;
@@ -213,21 +214,18 @@ export default function ModeSelection() {
           trend="Keep practicing"
         />
         <StatCard
-          label="Predicted SAT Score"
-          value={predictedScore.toString()}
+          label={`Predicted ${sectionLabel} Score`}
+          value={predictedScore?.toString() ?? '—'}
           icon={TrendingUp}
           color="var(--accent-blue)"
-          trend={sessionSummaries.length > 1 
-            ? `${sessionSummaries[0].predictedSatScore - sessionSummaries[1].predictedSatScore > 0 ? '+' : ''}${sessionSummaries[0].predictedSatScore - sessionSummaries[1].predictedSatScore} pts`
-            : 'Baseline'
-          }
+          trend={sectionAnswers.length > 0 ? `${sectionAnswers.length} answered` : 'Start practicing'}
         />
         <StatCard
           label="Due for Review"
           value={dueForReview.toString()}
           icon={BookOpen}
           color="var(--accent-emerald)"
-          trend={`${skills.length} skills tracked`}
+          trend={`${skills.length} ${sectionLabel} skills`}
         />
       </div>
 

@@ -22,7 +22,7 @@ const plans = [
     name: 'Pro',
     price: '$19',
     subtitle: 'Lifetime early-access price',
-    features: ['Full 596-question bank', 'Mock tests + focused drills', 'Weak-spot review', 'Bookmarks and missed-question review'],
+    features: ['Full Reading/Writing and Math banks', 'Mock tests + focused drills', 'Weak-spot review', 'Bookmarks and missed-question review'],
     cta: 'Unlock Pro',
     to: '/upgrade',
     highlighted: true,
@@ -37,13 +37,13 @@ export default function Landing() {
         <div className="relative text-center">
           <div className="mx-auto mb-6 flex w-fit items-center gap-2 rounded-full border px-4 py-2 text-sm" style={{ borderColor: 'rgba(96,165,250,.35)', backgroundColor: 'rgba(59,130,246,.08)', color: '#93C5FD' }}>
             <Zap className="h-4 w-4" />
-            SAT Reading & Writing practice that adapts to you
+            SAT Reading, Writing, and Math practice that adapts to you
           </div>
           <h1 className="mx-auto max-w-4xl text-5xl font-black tracking-tight md:text-7xl" style={{ fontFamily: 'var(--font-heading)' }}>
             Stop grinding random SAT questions. Practice the skills that move your score.
           </h1>
           <p className="mx-auto mt-6 max-w-2xl text-lg md:text-xl" style={{ color: 'var(--text-secondary)' }}>
-            A focused SAT Reading & Writing trainer with a clean question bank, timed practice, explanations, bookmarks, and weak-spot tracking.
+            A focused SAT trainer with Reading, Writing, and Math practice, timed drills, explanations, bookmarks, and weak-spot tracking.
           </p>
           <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Link to="/signup" className="rounded-xl bg-blue-500 px-7 py-4 font-bold text-white shadow-lg shadow-blue-500/25 transition hover:bg-blue-400">

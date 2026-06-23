@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useStore } from '@/store/useStore';
-import { cn, formatTime, calculateConfidenceWeight, updateMasteryScore, calculatePredictedScore, calculateNextReviewSession } from '@/lib/utils';
+import { cn, formatTime, calculateConfidenceWeight, updateMasteryScore, calculatePredictedScore, calculateNextReviewSession, getSkillKey } from '@/lib/utils';
 import { getChoiceDisplay } from '@/lib/questionSanitizer';
 import type { Question, UserAnswer } from '@/types';
 import {
@@ -102,22 +102,24 @@ export default function Practice() {
   );
 
   const assetUrl = (path: string) => {
-    const base = import.meta.env.BASE_URL === './' ? '/' : import.meta.env.BASE_URL;
+    const cleanPath = path.replace(/^\//, '');
+    const base = import.meta.env.BASE_URL || './';
+    if (base === './') return `${base}${cleanPath}`;
     const normalizedBase = base.endsWith('/') ? base : `${base}/`;
-    return `${normalizedBase}${path.replace(/^\//, '')}`;
+    return `${normalizedBase}${cleanPath}`;
   };
 
   const renderMathQuestionParts = (parts = currentQuestion.question_parts ?? []) => (
-    <div className="rounded-2xl border p-4 shadow-lg sm:p-5" style={{ backgroundColor: 'var(--bg-base)', borderColor: 'rgba(148, 163, 184, 0.16)' }}>
-      <div className="flex flex-wrap items-center gap-x-1.5 gap-y-2 text-base leading-8 sm:text-lg" style={{ color: 'var(--text-primary)' }}>
+    <div className="rounded-2xl border p-4 shadow-lg sm:p-6" style={{ backgroundColor: 'var(--bg-base)', borderColor: 'rgba(148, 163, 184, 0.16)' }}>
+      <div className="flex flex-wrap items-center gap-x-1.5 gap-y-3 text-base leading-8 sm:text-lg" style={{ color: 'var(--text-primary)' }}>
         {parts.map((part, index) => {
           if (part.type === 'image' && part.src) {
             return (
-              <span key={`${part.src}-${index}`} className={part.block ? 'my-3 block w-full' : 'inline-flex align-middle'}>
+              <span key={`${part.src}-${index}`} className={part.block ? 'my-3 block w-full' : 'inline-flex items-center align-middle'}>
                 <img
                   src={assetUrl(part.src)}
                   alt="Math expression"
-                  className={part.block ? 'max-h-72 max-w-full rounded-lg bg-white object-contain p-2' : 'inline-block max-h-16 bg-white object-contain align-middle'}
+                  className={part.block ? 'max-h-80 max-w-full rounded-lg bg-white object-contain p-2' : 'inline-block max-h-14 bg-white object-contain align-middle'}
                 />
               </span>
             );
@@ -167,7 +169,8 @@ export default function Practice() {
 
     const skills = [...new Set(pool.map((q) => q.skill))];
     const skillWeights = skills.map((skill) => {
-      const skillData = useStore.getState().userSkills[skill];
+      const sampleQuestion = pool.find((q) => q.skill === skill);
+      const skillData = sampleQuestion ? useStore.getState().userSkills[getSkillKey(sampleQuestion)] : undefined;
       const mastery = skillData?.masteryScore ?? 0;
       const answered = skillData?.questionsAnswered ?? 0;
       return { skill, weight: Math.max(0.15, (100 - mastery) / 100) * (answered < 3 ? 1.5 : 1) };
@@ -268,6 +271,9 @@ export default function Practice() {
 
     const answer: UserAnswer = {
       questionId: currentQuestion.id,
+      section: currentQuestion.section ?? 'reading_writing',
+      skill: currentQuestion.skill,
+      domain: currentQuestion.domain,
       selectedAnswer: submittedAnswer,
       isCorrect,
       eliminatedChoices,
@@ -280,7 +286,8 @@ export default function Practice() {
     updateSessionAnswer(answer);
 
     // Update mastery
-    const currentMastery = userSkills[currentQuestion.skill]?.masteryScore ?? 0;
+    const skillKey = getSkillKey(currentQuestion);
+    const currentMastery = userSkills[skillKey]?.masteryScore ?? 0;
     const newMastery = updateMasteryScore(
       currentMastery,
       isCorrect,
@@ -289,14 +296,17 @@ export default function Practice() {
       timeSpent
     );
 
-    updateUserSkill(currentQuestion.skill, {
+    updateUserSkill(skillKey, {
+      section: currentQuestion.section ?? 'reading_writing',
+      displaySkill: currentQuestion.skill,
+      domain: currentQuestion.domain,
       masteryScore: newMastery,
-      questionsAnswered: (userSkills[currentQuestion.skill]?.questionsAnswered ?? 0) + 1,
-      questionsCorrect: (userSkills[currentQuestion.skill]?.questionsCorrect ?? 0) + (isCorrect ? 1 : 0),
+      questionsAnswered: (userSkills[skillKey]?.questionsAnswered ?? 0) + 1,
+      questionsCorrect: (userSkills[skillKey]?.questionsCorrect ?? 0) + (isCorrect ? 1 : 0),
       lastUpdated: Date.now(),
-      sessionCounter: (userSkills[currentQuestion.skill]?.sessionCounter ?? 0) + 1,
+      sessionCounter: (userSkills[skillKey]?.sessionCounter ?? 0) + 1,
       nextReviewSession: calculateNextReviewSession(
-        (userSkills[currentQuestion.skill]?.sessionCounter ?? 0) + 1,
+        (userSkills[skillKey]?.sessionCounter ?? 0) + 1,
         newMastery
       ),
     });
@@ -369,6 +379,7 @@ export default function Practice() {
     const summary = {
       id: currentSession.id,
       mode: currentSession.mode,
+      section: currentSession.section,
       score: Math.round((correct / total) * 100),
       totalQuestions: total,
       correctCount: correct,
@@ -379,7 +390,7 @@ export default function Practice() {
         total,
         answers.length > 0 ? answers.reduce((sum, answer) => sum + answer.timeSpentSeconds, 0) / answers.length : undefined,
         currentSession.questions.length > 0
-          ? currentSession.questions.reduce((sum, question) => sum + (useStore.getState().userSkills[question.skill]?.masteryScore ?? 0), 0) / currentSession.questions.length
+          ? currentSession.questions.reduce((sum, question) => sum + (useStore.getState().userSkills[getSkillKey(question)]?.masteryScore ?? 0), 0) / currentSession.questions.length
           : undefined
       ),
       date: Date.now(),
@@ -652,15 +663,14 @@ export default function Practice() {
               renderMathQuestionParts()
             ) : isMathQuestion && mathPageImages.length > 0 ? (
               <div className="space-y-4">
-                <div className="rounded-xl border p-3 text-sm" style={{ backgroundColor: 'var(--bg-elevated)', borderColor: 'rgba(96, 165, 250, 0.25)', color: 'var(--text-secondary)' }}>
-                  Fallback PDF crop: this question has visual math that could not be fully structured yet.
-                </div>
                 {mathPageImages.map((image, index) => (
-                  <div key={image} className="overflow-hidden rounded-xl border bg-white p-1 shadow-lg sm:p-2" style={{ borderColor: 'rgba(148, 163, 184, 0.2)' }}>
+                  <div key={image} className="overflow-hidden rounded-2xl border bg-white p-2 shadow-xl sm:p-4" style={{ borderColor: 'rgba(148, 163, 184, 0.22)' }}>
                     <img
                       src={assetUrl(image)}
-                      alt={`Math question page ${index + 1}`}
+                      alt={`Math question ${index + 1}`}
                       className="mx-auto w-full object-contain"
+                      loading="eager"
+                      decoding="async"
                     />
                   </div>
                 ))}
@@ -802,16 +812,22 @@ export default function Practice() {
                     >
                       {letter}
                     </span>
-                    {choiceImage ? (
+                    {text ? (
+                      renderFormattedText(text, cn('flex-1 text-base leading-relaxed sm:text-lg', getAnswerTextStyle(letter)))
+                    ) : choiceImage ? (
                       <span className="flex-1 overflow-hidden rounded-lg bg-white p-2 sm:p-3">
                         <img
                           src={assetUrl(choiceImage)}
                           alt={`Choice ${letter}`}
                           className="min-h-12 max-h-40 w-full object-contain object-left sm:max-h-52"
+                          loading="lazy"
+                          decoding="async"
                         />
                       </span>
                     ) : (
-                      renderFormattedText(text, cn('flex-1 text-sm leading-relaxed', getAnswerTextStyle(letter)))
+                      <span className="flex-1 text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+                        See choice {letter} in the question image
+                      </span>
                     )}
                   </button>
                 );

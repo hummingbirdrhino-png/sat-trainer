@@ -165,7 +165,7 @@ export const useStore = create<AppState>()(
         set((state) => ({
           userSkills: {
             ...state.userSkills,
-            [skill]: { ...state.userSkills[skill], ...update, skill },
+            [skill]: { ...state.userSkills[skill], ...update, skill, displaySkill: update.displaySkill ?? state.userSkills[skill]?.displaySkill ?? skill },
           },
         })),
       bookmarks: [],

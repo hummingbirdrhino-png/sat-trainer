@@ -140,15 +140,15 @@ def answer_marker_y(page: fitz.Page) -> float | None:
     return min(candidates) if candidates else None
 
 
-def render_question_crop(page: fitz.Page, out: Path):
+def render_question_crop(page: fitz.Page, out: Path, *, is_first_page: bool):
     if out.exists():
         return
-    # Crop before Correct Answer/Rationale so practice mode does not reveal the answer.
-    marker_y = answer_marker_y(page)
-    rect = page.rect
-    if marker_y is not None and marker_y > 120:
-        rect = fitz.Rect(0, 0, page.rect.width, max(120, marker_y - 8))
-    pix = page.get_pixmap(matrix=fitz.Matrix(1.75, 1.75), alpha=False, clip=rect)
+    # Crop to the actual question area only. Exclude header metadata, answer choices, correct answer, and rationale.
+    top, bottom = question_content_bounds(page, is_first_page)
+    top = max(0, top - 10)
+    bottom = max(top + 80, bottom - 8)
+    rect = fitz.Rect(0, top, page.rect.width, min(page.rect.height, bottom))
+    pix = page.get_pixmap(matrix=fitz.Matrix(2.0, 2.0), alpha=False, clip=rect)
     pix.save(out)
 
 
@@ -239,12 +239,12 @@ def extract_question_parts(page: fitz.Page, qid: str, page_number: int, is_first
     data = page.get_text('dict')
     for b in data.get('blocks', []):
         rect = fitz.Rect(b.get('bbox'))
-        if rect.y1 < top or rect.y0 > bottom:
+        if rect.y1 < top or rect.y0 >= bottom:
             continue
         if b.get('type') == 0:
             for line in b.get('lines', []):
                 line_rect = fitz.Rect(line.get('bbox'))
-                if line_rect.y1 < top or line_rect.y0 > bottom:
+                if line_rect.y1 < top or line_rect.y0 >= bottom:
                     continue
                 text = ''.join(span.get('text', '') for span in line.get('spans', [])).strip()
                 if text and text not in {'Question', 'Answer'}:
@@ -263,7 +263,11 @@ def extract_question_parts(page: fitz.Page, qid: str, page_number: int, is_first
                 'x': round(rect.x0, 2),
                 'y': round(rect.y0, 2),
             })
-    return sorted(items, key=lambda item: (round(item.get('y', 0) / 6) * 6, item.get('x', 0)))
+    def sort_key(item: dict):
+        # Group nearby text/image fragments into the same visual line, then sort left-to-right.
+        return (round(item.get('y', 0) / 20) * 20, item.get('x', 0))
+
+    return sorted(items, key=sort_key)
 
 
 def main():
@@ -308,7 +312,7 @@ def main():
             # If a continuation page starts directly with rationale, do not include it in practice display.
             if marker_y_value is None or marker_y_value > 120:
                 img_name = f'{qid}{suffix}_qcrop.png'
-                render_question_crop(doc[pno], IMG_DIR / img_name)
+                render_question_crop(doc[pno], IMG_DIR / img_name, is_first_page=(n == 1))
                 page_images.append(f'math_figures/{img_name}')
                 question_parts.extend(extract_question_parts(doc[pno], qid, n, n == 1))
                 if n == 1:

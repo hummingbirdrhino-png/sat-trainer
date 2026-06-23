@@ -39,6 +39,7 @@ export default function Results() {
   });
 
   // Predicted score
+  const sectionLabel = currentSession.section === 'math' ? 'Math' : 'Reading/Writing';
   const predictedScore = sessionSummaries.length > 0 ? sessionSummaries[0].predictedSatScore : 400;
   const previousScore = sessionSummaries.length > 1 ? sessionSummaries[1].predictedSatScore : predictedScore;
   const scoreChange = predictedScore - previousScore;
@@ -90,7 +91,7 @@ export default function Results() {
             ) : (
               <TrendingDown className="h-4 w-4 text-rose-400" />
             )}
-            Predicted SAT: {predictedScore}
+            Predicted {sectionLabel}: {predictedScore}
             {scoreChange !== 0 && (
               <span className={scoreChange >= 0 ? 'text-emerald-400' : 'text-rose-400'}>
                 ({scoreChange >= 0 ? '+' : ''}{scoreChange})
