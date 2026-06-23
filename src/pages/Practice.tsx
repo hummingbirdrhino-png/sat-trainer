@@ -199,6 +199,11 @@ export default function Practice() {
     );
   };
 
+  const eliminateAllButSelected = () => {
+    if (isAnswered || !selectedAnswer) return;
+    setEliminatedChoices(['A', 'B', 'C', 'D'].filter((choice) => choice !== selectedAnswer));
+  };
+
   const handleSubmit = () => {
     if (!selectedAnswer || isAnswered) return;
 
@@ -362,7 +367,10 @@ export default function Practice() {
       }
 
       const key = e.key.toUpperCase();
-      if (['A', 'B', 'C', 'D'].includes(key)) {
+      if (e.shiftKey && key === 'E') {
+        e.preventDefault();
+        eliminateAllButSelected();
+      } else if (['A', 'B', 'C', 'D'].includes(key)) {
         e.preventDefault();
         if (e.shiftKey) {
           toggleEliminate(key);
