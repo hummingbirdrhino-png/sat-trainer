@@ -627,7 +627,7 @@ export default function Practice() {
                   Math questions are rendered from official PDF crops so equations, graphs, and tables stay exact without showing the answer key.
                 </div>
                 {mathPageImages.map((image, index) => (
-                  <div key={image} className="overflow-hidden rounded-xl border bg-white p-2 shadow-lg" style={{ borderColor: 'rgba(148, 163, 184, 0.2)' }}>
+                  <div key={image} className="overflow-hidden rounded-xl border bg-white p-1 shadow-lg sm:p-2" style={{ borderColor: 'rgba(148, 163, 184, 0.2)' }}>
                     <img
                       src={`${import.meta.env.BASE_URL}${image}`}
                       alt={`Math question page ${index + 1}`}
@@ -664,7 +664,15 @@ export default function Practice() {
         >
           {/* Question Stem */}
           <div className="mb-6">
-            <div className="mb-2 flex items-center gap-2">
+            <div className="mb-2 flex flex-wrap items-center gap-2">
+              {isMathQuestion && (
+                <span
+                  className="rounded px-2 py-0.5 text-xs font-semibold uppercase"
+                  style={{ backgroundColor: 'rgba(59, 130, 246, 0.16)', color: 'var(--accent-blue)' }}
+                >
+                  Math
+                </span>
+              )}
               <span
                 className="rounded px-2 py-0.5 text-xs font-semibold uppercase"
                 style={{
@@ -688,16 +696,23 @@ export default function Practice() {
                 {currentQuestion.difficulty}
               </span>
             </div>
-            <p
-              className="text-lg font-medium leading-relaxed"
-              style={{
-                fontFamily: 'var(--font-body)',
-                color: 'var(--text-primary)',
-                fontSize: `${fontSize}px`,
-              }}
-            >
-              {renderFormattedText(currentQuestion.stem)}
-            </p>
+            {!isMathQuestion && (
+              <p
+                className="text-lg font-medium leading-relaxed"
+                style={{
+                  fontFamily: 'var(--font-body)',
+                  color: 'var(--text-primary)',
+                  fontSize: `${fontSize}px`,
+                }}
+              >
+                {renderFormattedText(currentQuestion.stem)}
+              </p>
+            )}
+            {isMathQuestion && (
+              <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
+                Use the official question image on the left, then choose an answer below.
+              </p>
+            )}
           </div>
 
           {/* Answer Choices */}
@@ -711,7 +726,7 @@ export default function Practice() {
                   <button
                     key={letter}
                     onClick={() => handleSelectAnswer(letter)}
-                    className={cn(getAnswerButtonStyle(letter), 'group relative')}
+                    className={cn(getAnswerButtonStyle(letter), choiceImage && 'min-h-28 py-3 pr-14', 'group relative')}
                     disabled={isAnswered}
                     style={{ backgroundColor: 'var(--bg-surface)' }}
                   >
@@ -759,11 +774,11 @@ export default function Practice() {
                       {letter}
                     </span>
                     {choiceImage ? (
-                      <span className="flex-1 overflow-hidden rounded-md bg-white p-2">
+                      <span className="flex-1 overflow-hidden rounded-lg bg-white p-2 sm:p-3">
                         <img
                           src={`${import.meta.env.BASE_URL}${choiceImage}`}
                           alt={`Choice ${letter}`}
-                          className="max-h-24 w-full object-contain object-left"
+                          className="min-h-12 max-h-40 w-full object-contain object-left sm:max-h-52"
                         />
                       </span>
                     ) : (
