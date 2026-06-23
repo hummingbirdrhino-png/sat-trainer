@@ -65,48 +65,55 @@ export function calculateConfidenceWeight(eliminatedCount: number): number {
 }
 
 // Question selection algorithms
+function sampleQuestions(pool: Question[], count: number): Question[] {
+  return shuffleArray(pool).slice(0, Math.min(count, pool.length));
+}
+
 export function selectAdaptiveQuestions(
   questions: Question[],
   userSkills: Record<string, { masteryScore: number; lastPracticed?: number }>,
   count: number = 10
 ): Question[] {
+  if (questions.length <= count) return shuffleArray(questions);
+
   const skills = getUniqueSkills(questions);
   const now = Date.now();
+  const selected: Question[] = [];
+  const selectedIds = new Set<string>();
 
-  // Weight skills by weakness and recency
+  // Weight skills by weakness and recency. Keep a nonzero floor so mastered skills can still appear.
   const skillWeights = skills.map((skill) => {
     const us = userSkills[skill];
     const mastery = us?.masteryScore ?? 0;
     const lastPracticed = us?.lastPracticed ?? 0;
     const daysSince = lastPracticed ? (now - lastPracticed) / (1000 * 60 * 60 * 24) : 30;
     const recencyFactor = Math.min(1 + daysSince * 0.1, 3);
-    const weaknessWeight = (100 - mastery) / 100;
+    const weaknessWeight = Math.max(0.1, (100 - mastery) / 100);
     return { skill, weight: weaknessWeight * recencyFactor };
   });
 
-  const totalWeight = skillWeights.reduce((sum, sw) => sum + sw.weight, 0);
-  const selected: Question[] = [];
-
-  for (let i = 0; i < count; i++) {
+  const pickWeightedSkill = () => {
+    const availableWeights = skillWeights.filter((sw) =>
+      questions.some((q) => q.skill === sw.skill && !selectedIds.has(q.id))
+    );
+    const totalWeight = availableWeights.reduce((sum, sw) => sum + sw.weight, 0);
     let rand = Math.random() * totalWeight;
-    let chosenSkill = skillWeights[0].skill;
-    for (const sw of skillWeights) {
+
+    for (const sw of availableWeights) {
       rand -= sw.weight;
-      if (rand <= 0) {
-        chosenSkill = sw.skill;
-        break;
-      }
+      if (rand <= 0) return sw.skill;
     }
 
-    const skillQuestions = questions.filter((q) => q.skill === chosenSkill);
-    if (skillQuestions.length > 0) {
-      const q = skillQuestions[Math.floor(Math.random() * skillQuestions.length)];
-      if (!selected.find((sq) => sq.id === q.id)) {
-        selected.push(q);
-      } else {
-        i--;
-      }
-    }
+    return availableWeights[0]?.skill ?? skills[0];
+  };
+
+  while (selected.length < count && selected.length < questions.length) {
+    const chosenSkill = pickWeightedSkill();
+    const skillQuestions = questions.filter((q) => q.skill === chosenSkill && !selectedIds.has(q.id));
+    const pool = skillQuestions.length ? skillQuestions : questions.filter((q) => !selectedIds.has(q.id));
+    const q = pool[Math.floor(Math.random() * pool.length)];
+    selected.push(q);
+    selectedIds.add(q.id);
   }
 
   return selected;
@@ -117,6 +124,8 @@ export function selectWeakSpotQuestions(
   userSkills: Record<string, { masteryScore: number }>,
   count: number = 30
 ): Question[] {
+  if (questions.length <= count) return shuffleArray(questions);
+
   const skills = getUniqueSkills(questions);
   const sortedSkills = skills
     .map((skill) => ({
@@ -127,62 +136,51 @@ export function selectWeakSpotQuestions(
     .slice(0, 3);
 
   const selected: Question[] = [];
-  const perSkill = Math.floor(count / sortedSkills.length);
+  const selectedIds = new Set<string>();
+  const perSkill = Math.max(1, Math.ceil(count / Math.max(sortedSkills.length, 1)));
 
   for (const { skill } of sortedSkills) {
-    const skillQuestions = questions.filter((q) => q.skill === skill);
-    const shuffled = [...skillQuestions].sort(() => Math.random() - 0.5);
-    selected.push(...shuffled.slice(0, perSkill));
+    for (const q of sampleQuestions(questions.filter((item) => item.skill === skill), perSkill)) {
+      if (!selectedIds.has(q.id) && selected.length < count) {
+        selected.push(q);
+        selectedIds.add(q.id);
+      }
+    }
   }
 
-  return selected.slice(0, count);
+  for (const q of shuffleArray(questions)) {
+    if (selected.length >= count) break;
+    if (!selectedIds.has(q.id)) selected.push(q);
+  }
+
+  return selected;
 }
 
 export function selectMockTestQuestions(questions: Question[]): Question[] {
-  // Module 1: balanced mix of all difficulties
-  const easy = questions.filter((q) => q.difficulty === 'Easy');
-  const medium = questions.filter((q) => q.difficulty === 'Medium');
-  const hard = questions.filter((q) => q.difficulty === 'Hard');
+  const easy = sampleQuestions(questions.filter((q) => q.difficulty === 'Easy'), 9);
+  const medium = sampleQuestions(questions.filter((q) => q.difficulty === 'Medium'), 12);
+  const hard = sampleQuestions(questions.filter((q) => q.difficulty === 'Hard'), 6);
+  const selectedIds = new Set([...easy, ...medium, ...hard].map((q) => q.id));
+  const fill = shuffleArray(questions.filter((q) => !selectedIds.has(q.id))).slice(0, Math.max(0, 27 - selectedIds.size));
 
-  const selected: Question[] = [];
-  // 9 easy, 12 medium, 6 hard = 27
-  for (let i = 0; i < 9; i++) {
-    selected.push(easy[Math.floor(Math.random() * easy.length)]);
-  }
-  for (let i = 0; i < 12; i++) {
-    selected.push(medium[Math.floor(Math.random() * medium.length)]);
-  }
-  for (let i = 0; i < 6; i++) {
-    selected.push(hard[Math.floor(Math.random() * hard.length)]);
-  }
-
-  return shuffleArray(selected);
+  return shuffleArray([...easy, ...medium, ...hard, ...fill]);
 }
 
 export function selectMockModule2Questions(
   questions: Question[],
   module1Correct: number
 ): Question[] {
-  // Adaptive: more hard if did well, more easy if did poorly
-  const isHarder = module1Correct >= 14; // ~50% threshold
-  const easy = questions.filter((q) => q.difficulty === 'Easy');
-  const medium = questions.filter((q) => q.difficulty === 'Medium');
-  const hard = questions.filter((q) => q.difficulty === 'Hard');
+  const isHarder = module1Correct >= 14;
+  const easyTarget = isHarder ? 6 : 12;
+  const mediumTarget = 9;
+  const hardTarget = isHarder ? 12 : 6;
+  const easy = sampleQuestions(questions.filter((q) => q.difficulty === 'Easy'), easyTarget);
+  const medium = sampleQuestions(questions.filter((q) => q.difficulty === 'Medium'), mediumTarget);
+  const hard = sampleQuestions(questions.filter((q) => q.difficulty === 'Hard'), hardTarget);
+  const selectedIds = new Set([...easy, ...medium, ...hard].map((q) => q.id));
+  const fill = shuffleArray(questions.filter((q) => !selectedIds.has(q.id))).slice(0, Math.max(0, 27 - selectedIds.size));
 
-  const selected: Question[] = [];
-  if (isHarder) {
-    // 6 easy, 9 medium, 12 hard
-    for (let i = 0; i < 6; i++) selected.push(easy[Math.floor(Math.random() * easy.length)]);
-    for (let i = 0; i < 9; i++) selected.push(medium[Math.floor(Math.random() * medium.length)]);
-    for (let i = 0; i < 12; i++) selected.push(hard[Math.floor(Math.random() * hard.length)]);
-  } else {
-    // 12 easy, 9 medium, 6 hard
-    for (let i = 0; i < 12; i++) selected.push(easy[Math.floor(Math.random() * easy.length)]);
-    for (let i = 0; i < 9; i++) selected.push(medium[Math.floor(Math.random() * medium.length)]);
-    for (let i = 0; i < 6; i++) selected.push(hard[Math.floor(Math.random() * hard.length)]);
-  }
-
-  return shuffleArray(selected);
+  return shuffleArray([...easy, ...medium, ...hard, ...fill]);
 }
 
 // Helper functions

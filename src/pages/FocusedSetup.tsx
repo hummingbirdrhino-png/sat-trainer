@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useStore } from '@/store/useStore';
 import { getUniqueSkills, getSkillColor, cn, shuffleArray } from '@/lib/utils';
@@ -10,10 +10,13 @@ export default function FocusedSetup() {
   const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
   const [questionCount, setQuestionCount] = useState(20);
 
-  if (!currentSession || currentSession.mode !== 'focused') {
-    navigate('/app');
-    return null;
-  }
+  useEffect(() => {
+    if (!currentSession || currentSession.mode !== 'focused') {
+      navigate('/app');
+    }
+  }, [currentSession, navigate]);
+
+  if (!currentSession || currentSession.mode !== 'focused') return null;
 
   const skills = getUniqueSkills(questions);
 
