@@ -13,6 +13,7 @@ export default function LatexMath({ value, displayMode = false, className }: Lat
       return katex.renderToString(value, {
         throwOnError: false,
         displayMode,
+        output: 'html',
         strict: false,
         trust: false,
       });
