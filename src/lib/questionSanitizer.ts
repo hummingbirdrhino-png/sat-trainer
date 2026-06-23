@@ -53,7 +53,7 @@ function splitChoices(choices: string[] = []): string[] {
 export function sanitizeQuestion(question: Question): Question {
   return {
     ...question,
-    passage: cleanQuestionText(question.passage),
+    passage: question.figure_image ? String(question.passage ?? '').trim() : cleanQuestionText(question.passage),
     stem: cleanQuestionText(question.stem),
     rationale: cleanQuestionText(question.rationale),
     choices: splitChoices(question.choices),

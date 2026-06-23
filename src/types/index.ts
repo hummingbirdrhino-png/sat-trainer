@@ -9,6 +9,8 @@ export interface Question {
   correct_answer: string;
   rationale: string;
   has_graph: boolean;
+  figure_image?: string;
+  figure_alt?: string;
 }
 
 export interface AuthUser {

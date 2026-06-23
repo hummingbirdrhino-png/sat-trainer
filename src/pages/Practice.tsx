@@ -466,6 +466,15 @@ export default function Practice() {
               lineHeight: '1.7',
             }}
           >
+            {currentQuestion.figure_image && (
+              <div className="mb-6 overflow-hidden rounded-xl border bg-white p-3 shadow-lg" style={{ borderColor: 'rgba(148, 163, 184, 0.2)' }}>
+                <img
+                  src={currentQuestion.figure_image}
+                  alt={currentQuestion.figure_alt ?? 'Question figure'}
+                  className="mx-auto max-h-[420px] w-full object-contain"
+                />
+              </div>
+            )}
             {currentQuestion.passage ? (
               <div dangerouslySetInnerHTML={{ __html: formatPassageHtml(currentQuestion.passage) }} />
             ) : (
