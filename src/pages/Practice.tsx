@@ -367,8 +367,17 @@ export default function Practice() {
       }
 
       const key = e.key.toUpperCase();
-      if (e.shiftKey && (key === 'E' || key === 'ENTER')) {
+      const isConfidenceShortcut = e.shiftKey && (
+        key === 'E' ||
+        key === 'ENTER' ||
+        e.code === 'KeyE' ||
+        e.code === 'Enter' ||
+        e.code === 'NumpadEnter'
+      );
+
+      if (isConfidenceShortcut) {
         e.preventDefault();
+        e.stopPropagation();
         eliminateAllButSelected();
       } else if (['A', 'B', 'C', 'D'].includes(key)) {
         e.preventDefault();
@@ -385,8 +394,8 @@ export default function Practice() {
       }
     };
 
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    window.addEventListener('keydown', handleKeyDown, true);
+    return () => window.removeEventListener('keydown', handleKeyDown, true);
   }, [selectedAnswer, isAnswered, currentQuestion, eliminatedChoices]);
 
   const getAnswerButtonStyle = (choice: string) => {
