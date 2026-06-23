@@ -4,6 +4,7 @@
   "pdf_page_count": 855,
   "rendered_question_image_count": 852,
   "rendered_choice_image_count": 2576,
+  "rendered_inline_image_count": 565,
   "multi_page_question_count": 28,
   "domains": {
     "Advanced Math": 220,
@@ -44,7 +45,7 @@
   "missing_correct_answer_count": 0,
   "missing_correct_answer_examples": [],
   "notes": [
-    "Math equations/fractions/graphs are often embedded visually in the PDF, so page_images are question-only visual crops for practice display.",
+    "Math equations/fractions/graphs are often embedded visually in the PDF; question_parts provide text plus inline visual snippets, while page_images remain fallback question-only crops.",
     "Structured text is useful for metadata/search/adaptive targeting but may omit symbols/equations.",
     "skill_level_2 is currently null because the PDF header exposes one skill label under each domain in extracted text."
   ]

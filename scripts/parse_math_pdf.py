@@ -19,8 +19,10 @@ OUT_JSON = Path('public/math_questions.json')
 SUMMARY_JSON = Path('public/math_questions_summary.json')
 IMG_DIR = Path('public/math_figures')
 CHOICE_DIR = Path('public/math_choices')
+INLINE_DIR = Path('public/math_inline')
 IMG_DIR.mkdir(parents=True, exist_ok=True)
 CHOICE_DIR.mkdir(parents=True, exist_ok=True)
+INLINE_DIR.mkdir(parents=True, exist_ok=True)
 
 ID_RE = re.compile(r'Question ID:\s*([A-Za-z0-9]+)')
 CORRECT_RE = re.compile(r'Correct Answer:\s*(.+?)(?=\nRationale\n|\nRationale\r?\n|\Z)', re.S)
@@ -186,12 +188,92 @@ def render_choice_crops(page: fitz.Page, qid: str) -> dict[str, str]:
     return rendered
 
 
+
+def render_inline_crop(page: fitz.Page, rect: fitz.Rect, qid: str, page_number: int, part_index: int) -> dict:
+    # Pad very small math snippets a little so strokes are not clipped.
+    padded = fitz.Rect(
+        max(0, rect.x0 - 2),
+        max(0, rect.y0 - 2),
+        min(page.rect.width, rect.x1 + 2),
+        min(page.rect.height, rect.y1 + 2),
+    )
+    out = INLINE_DIR / f'{qid}_p{page_number}_{part_index}.png'
+    pix = page.get_pixmap(matrix=fitz.Matrix(2.25, 2.25), alpha=False, clip=padded)
+    pix.save(out)
+    width = padded.width
+    height = padded.height
+    return {
+        'type': 'image',
+        'src': f'math_inline/{out.name}',
+        'width': round(width, 2),
+        'height': round(height, 2),
+        'block': bool(width > 140 or height > 55),
+    }
+
+
+def marker_y(page: fitz.Page, markers: set[str], *, prefix: bool = False) -> float | None:
+    candidates = []
+    for x0, y0, x1, y1, txt in line_text(page):
+        stripped = txt.strip()
+        if stripped in markers or (prefix and any(stripped.startswith(marker) for marker in markers)):
+            candidates.append(y0)
+    return min(candidates) if candidates else None
+
+
+def question_content_bounds(page: fitz.Page, is_first_page: bool) -> tuple[float, float]:
+    top = 0
+    if is_first_page:
+        qy = marker_y(page, {'Question'})
+        top = (qy + 10) if qy is not None else 120
+    bottom_candidates = [y for y in [marker_y(page, {'Answer'}), answer_marker_y(page)] if y is not None]
+    bottom = min(bottom_candidates) if bottom_candidates else page.rect.height
+    return top, bottom
+
+
+def extract_question_parts(page: fitz.Page, qid: str, page_number: int, is_first_page: bool) -> list[dict]:
+    top, bottom = question_content_bounds(page, is_first_page)
+    if bottom <= top + 5:
+        return []
+    items = []
+    part_index = 0
+    data = page.get_text('dict')
+    for b in data.get('blocks', []):
+        rect = fitz.Rect(b.get('bbox'))
+        if rect.y1 < top or rect.y0 > bottom:
+            continue
+        if b.get('type') == 0:
+            for line in b.get('lines', []):
+                line_rect = fitz.Rect(line.get('bbox'))
+                if line_rect.y1 < top or line_rect.y0 > bottom:
+                    continue
+                text = ''.join(span.get('text', '') for span in line.get('spans', [])).strip()
+                if text and text not in {'Question', 'Answer'}:
+                    items.append({
+                        'type': 'text',
+                        'text': clean_text(text),
+                        'x': round(line_rect.x0, 2),
+                        'y': round(line_rect.y0, 2),
+                        'width': round(line_rect.width, 2),
+                        'height': round(line_rect.height, 2),
+                    })
+        elif b.get('type') == 1:
+            part_index += 1
+            items.append({
+                **render_inline_crop(page, rect, qid, page_number, part_index),
+                'x': round(rect.x0, 2),
+                'y': round(rect.y0, 2),
+            })
+    return sorted(items, key=lambda item: (round(item.get('y', 0) / 6) * 6, item.get('x', 0)))
+
+
 def main():
     doc = fitz.open(PDF_PATH)
     # Remove stale generated images for deterministic output.
     for old in IMG_DIR.glob('math_*.png'):
         old.unlink()
     for old in CHOICE_DIR.glob('math_*.png'):
+        old.unlink()
+    for old in INLINE_DIR.glob('math_*.png'):
         old.unlink()
 
     starts = []
@@ -217,16 +299,18 @@ def main():
         question, choices, correct, rationale, qtype = extract_sections(raw)
 
         page_images = []
+        question_parts = []
         choice_images = {}
         image_blocks = 0
         for n, pno in enumerate(page_indexes, start=1):
             suffix = '' if len(page_indexes) == 1 else f'_p{n}'
-            marker_y = answer_marker_y(doc[pno])
+            marker_y_value = answer_marker_y(doc[pno])
             # If a continuation page starts directly with rationale, do not include it in practice display.
-            if marker_y is None or marker_y > 120:
+            if marker_y_value is None or marker_y_value > 120:
                 img_name = f'{qid}{suffix}_qcrop.png'
                 render_question_crop(doc[pno], IMG_DIR / img_name)
                 page_images.append(f'math_figures/{img_name}')
+                question_parts.extend(extract_question_parts(doc[pno], qid, n, n == 1))
                 if n == 1:
                     choice_images = render_choice_crops(doc[pno], qid)
             image_blocks += sum(1 for b in doc[pno].get_text('dict').get('blocks', []) if b.get('type') == 1)
@@ -248,6 +332,7 @@ def main():
             'question_type': qtype,
             'calculator': None,
             'question': question,
+            'question_parts': question_parts,
             'choices': choices,
             'choice_images': choice_images,
             'correct_answer': correct,
@@ -283,6 +368,7 @@ def main():
         'pdf_page_count': doc.page_count,
         'rendered_question_image_count': sum(len(q['page_images']) for q in questions),
         'rendered_choice_image_count': sum(len(q.get('choice_images', {})) for q in questions),
+        'rendered_inline_image_count': sum(sum(1 for part in q.get('question_parts', []) if part.get('type') == 'image') for q in questions),
         'multi_page_question_count': multipage,
         'domains': dict(sorted(domains.items())),
         'skills': dict(sorted(skills.items())),
@@ -291,7 +377,7 @@ def main():
         'missing_correct_answer_count': len(missing_correct),
         'missing_correct_answer_examples': missing_correct[:25],
         'notes': [
-            'Math equations/fractions/graphs are often embedded visually in the PDF, so page_images are question-only visual crops for practice display.',
+            'Math equations/fractions/graphs are often embedded visually in the PDF; question_parts provide text plus inline visual snippets, while page_images remain fallback question-only crops.',
             'Structured text is useful for metadata/search/adaptive targeting but may omit symbols/equations.',
             'skill_level_2 is currently null because the PDF header exposes one skill label under each domain in extracted text.',
         ],

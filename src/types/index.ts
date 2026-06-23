@@ -1,6 +1,15 @@
 export type QuestionSection = 'reading_writing' | 'math';
 export type QuestionType = 'multiple_choice' | 'student_produced_response';
 
+export interface MathQuestionPart {
+  type: 'text' | 'image';
+  text?: string;
+  src?: string;
+  width?: number;
+  height?: number;
+  block?: boolean;
+}
+
 export interface Question {
   id: string;
   source_id?: string;
@@ -15,6 +24,7 @@ export interface Question {
   passage: string;
   stem: string;
   question?: string;
+  question_parts?: MathQuestionPart[];
   choices: string[];
   choice_images?: Record<string, string>;
   correct_answer: string;

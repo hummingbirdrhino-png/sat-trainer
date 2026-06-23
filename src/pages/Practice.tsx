@@ -107,6 +107,27 @@ export default function Practice() {
     return `${normalizedBase}${path.replace(/^\//, '')}`;
   };
 
+  const renderMathQuestionParts = (parts = currentQuestion.question_parts ?? []) => (
+    <div className="rounded-2xl border p-4 shadow-lg sm:p-5" style={{ backgroundColor: 'var(--bg-base)', borderColor: 'rgba(148, 163, 184, 0.16)' }}>
+      <div className="flex flex-wrap items-center gap-x-1.5 gap-y-2 text-base leading-8 sm:text-lg" style={{ color: 'var(--text-primary)' }}>
+        {parts.map((part, index) => {
+          if (part.type === 'image' && part.src) {
+            return (
+              <span key={`${part.src}-${index}`} className={part.block ? 'my-3 block w-full' : 'inline-flex align-middle'}>
+                <img
+                  src={assetUrl(part.src)}
+                  alt="Math expression"
+                  className={part.block ? 'max-h-72 max-w-full rounded-lg bg-white object-contain p-2' : 'inline-block max-h-16 bg-white object-contain align-middle'}
+                />
+              </span>
+            );
+          }
+          return <span key={`${part.text}-${index}`}>{part.text}</span>;
+        })}
+      </div>
+    </div>
+  );
+
   const isMockMode = currentSession?.mode === 'mock';
   const isAdaptiveMode = currentSession?.mode === 'adaptive';
   const isRandomMode = currentSession?.mode === 'random';
@@ -627,10 +648,12 @@ export default function Practice() {
               lineHeight: '1.7',
             }}
           >
-            {isMathQuestion && mathPageImages.length > 0 ? (
+            {isMathQuestion && currentQuestion.question_parts?.length ? (
+              renderMathQuestionParts()
+            ) : isMathQuestion && mathPageImages.length > 0 ? (
               <div className="space-y-4">
                 <div className="rounded-xl border p-3 text-sm" style={{ backgroundColor: 'var(--bg-elevated)', borderColor: 'rgba(96, 165, 250, 0.25)', color: 'var(--text-secondary)' }}>
-                  Math questions are rendered from official PDF crops so equations, graphs, and tables stay exact without showing the answer key.
+                  Fallback PDF crop: this question has visual math that could not be fully structured yet.
                 </div>
                 {mathPageImages.map((image, index) => (
                   <div key={image} className="overflow-hidden rounded-xl border bg-white p-1 shadow-lg sm:p-2" style={{ borderColor: 'rgba(148, 163, 184, 0.2)' }}>
@@ -716,7 +739,7 @@ export default function Practice() {
             )}
             {isMathQuestion && (
               <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
-                Use the official question image on the left, then choose an answer below.
+                Read the question on the left, then choose an answer below.
               </p>
             )}
           </div>
