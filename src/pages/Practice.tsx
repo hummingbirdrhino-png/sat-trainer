@@ -368,9 +368,7 @@ export default function Practice() {
 
       const key = e.key.toUpperCase();
       const isConfidenceShortcut = e.shiftKey && (
-        key === 'E' ||
         key === 'ENTER' ||
-        e.code === 'KeyE' ||
         e.code === 'Enter' ||
         e.code === 'NumpadEnter'
       );
@@ -717,7 +715,7 @@ export default function Practice() {
               onClick={eliminateAllButSelected}
               className="mb-4 w-full rounded-lg border px-4 py-2 text-sm font-semibold transition-all hover:bg-white/5"
               style={{ borderColor: 'rgba(96, 165, 250, 0.35)', color: 'var(--accent-blue)' }}
-              title="Shortcut: Shift+E or Shift+Enter"
+              title="Shortcut: Shift+Enter"
             >
               100% confident — eliminate other choices
             </button>
