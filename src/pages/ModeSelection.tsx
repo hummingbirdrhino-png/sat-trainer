@@ -347,7 +347,7 @@ export default function ModeSelection() {
                 {isDisabled && (
                   <div className="absolute inset-0 flex items-center justify-center rounded-xl bg-black/5">
                     <span className="text-sm font-medium" style={{ color: 'var(--text-muted)' }}>
-                      {mode.id === 'review_wrong' ? 'No wrong answers yet' : 'No {sectionLabel} bookmarks yet'}
+                      {mode.id === 'review_wrong' ? 'No wrong answers yet' : `No ${sectionLabel} bookmarks yet`}
                     </span>
                   </div>
                 )}
