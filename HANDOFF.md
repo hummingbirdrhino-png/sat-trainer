@@ -120,3 +120,43 @@ Recommended next step in paid Clawbite account:
 3. Build a separate `public/math_questions.json` or merge into `questions.json` with a `section` field.
 4. Add math-specific domains/topics and figure extraction.
 5. Add section selector and separate RW/Math/Total predicted scores.
+
+## SAT Math import status
+
+The SAT Math PDF has now been parsed into a first structured data pass.
+
+Generated files:
+
+- `public/math_questions.json` — 826 SAT Math question records.
+- `public/math_questions_summary.json` — summary counts/domains/skills/difficulties/import notes.
+- `public/math_figures/` — 855 rendered PDF page images used to preserve exact math notation, graphs, tables, and answer-choice visuals.
+- `scripts/parse_math_pdf.py` — parser used to regenerate the Math JSON/page images from the source PDF.
+
+Important Math parsing notes:
+
+- The PDF stores many equations, fractions, graphs, and tables as positioned visual/image snippets, so plain text extraction often omits the actual math symbols.
+- For display fidelity, each Math question includes `page_image` and `page_images`; these should be treated as the authoritative student-facing rendering until a richer math renderer is built.
+- Structured fields like `domain`, `skill`, `difficulty`, `question_type`, `correct_answer`, and `rationale` are extracted for filtering/adaptive/mastery/search.
+- Some multiple-choice graph/table answer choices have label-only text (`A.`, `B.`, etc.) because the choice content is visual; render the page image for those.
+- The PDF exposes one specific skill label under each broad domain in extracted text. `skill_level_2` is currently `null`; if a later source exposes deeper subskill metadata, preserve it rather than flattening to broad domains.
+
+Import summary:
+
+- 826 Math questions.
+- 646 multiple-choice questions.
+- 180 student-produced-response questions.
+- 0 missing correct answers after audit/manual rationale fallback.
+- 28 multi-page questions.
+- Domains:
+  - Algebra: 266
+  - Advanced Math: 220
+  - Problem-Solving and Data Analysis: 198
+  - Geometry and Trigonometry: 142
+
+Recommended next app step:
+
+1. Add section-aware loading for `questions.json` and `math_questions.json`.
+2. Add Math practice mode using the Math JSON while rendering `page_images` for fidelity.
+3. Add student-produced-response input support.
+4. Preserve current app styling/flow; do not copy PracticeSAT's UI.
+5. Add embedded Desmos later via iframe `https://www.desmos.com/testing/cb-sat-ap/graphing` in a way that fits the existing app design.

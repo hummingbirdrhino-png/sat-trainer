@@ -1,0 +1,50 @@
+{
+  "source_pdf": "work/math-pdf/sat_math_question_bank.pdf",
+  "question_count": 826,
+  "pdf_page_count": 855,
+  "rendered_page_image_count": 855,
+  "multi_page_question_count": 28,
+  "domains": {
+    "Advanced Math": 220,
+    "Algebra": 266,
+    "Geometry and Trigonometry": 142,
+    "Problem-Solving and Data Analysis": 198
+  },
+  "skills": {
+    "Area and volume": 43,
+    "Circles": 30,
+    "Equivalent expressions": 64,
+    "Evaluating statistical claims: Observational studies and experiments": 11,
+    "Inference from sample statistics and margin of error": 16,
+    "Linear equations in one variable": 48,
+    "Linear equations in two variables": 77,
+    "Linear functions": 62,
+    "Linear inequalities in one or two variables": 33,
+    "Lines, angles, and triangles": 40,
+    "Nonlinear equations in one variable and systems of equations in two variables": 69,
+    "Nonlinear functions": 87,
+    "One-variable data: Distributions and measures of center and spread": 40,
+    "Percentages": 34,
+    "Probability and conditional probability": 29,
+    "Ratios, rates, proportional relationships, and units": 36,
+    "Right triangles and trigonometry": 29,
+    "Systems of two linear equations in two variables": 46,
+    "Two-variable data: Models and scatterplots": 32
+  },
+  "difficulties": {
+    "Easy": 265,
+    "Hard": 262,
+    "Medium": 299
+  },
+  "question_types": {
+    "multiple_choice": 646,
+    "student_produced_response": 180
+  },
+  "missing_correct_answer_count": 0,
+  "missing_correct_answer_examples": [],
+  "notes": [
+    "Math equations/fractions/graphs are often embedded visually in the PDF, so page_images are authoritative for display.",
+    "Structured text is useful for metadata/search/adaptive targeting but may omit symbols/equations.",
+    "skill_level_2 is currently null because the PDF header exposes one skill label under each domain in extracted text."
+  ]
+}
