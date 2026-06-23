@@ -101,6 +101,12 @@ export default function Practice() {
     />
   );
 
+  const assetUrl = (path: string) => {
+    const base = import.meta.env.BASE_URL === './' ? '/' : import.meta.env.BASE_URL;
+    const normalizedBase = base.endsWith('/') ? base : `${base}/`;
+    return `${normalizedBase}${path.replace(/^\//, '')}`;
+  };
+
   const isMockMode = currentSession?.mode === 'mock';
   const isAdaptiveMode = currentSession?.mode === 'adaptive';
   const isRandomMode = currentSession?.mode === 'random';
@@ -629,7 +635,7 @@ export default function Practice() {
                 {mathPageImages.map((image, index) => (
                   <div key={image} className="overflow-hidden rounded-xl border bg-white p-1 shadow-lg sm:p-2" style={{ borderColor: 'rgba(148, 163, 184, 0.2)' }}>
                     <img
-                      src={`${import.meta.env.BASE_URL}${image}`}
+                      src={assetUrl(image)}
                       alt={`Math question page ${index + 1}`}
                       className="mx-auto w-full object-contain"
                     />
@@ -641,7 +647,7 @@ export default function Practice() {
                 {currentQuestion.figure_image && (
                   <div className="mb-6 overflow-hidden rounded-xl border bg-white p-3 shadow-lg" style={{ borderColor: 'rgba(148, 163, 184, 0.2)' }}>
                     <img
-                      src={`${import.meta.env.BASE_URL}${currentQuestion.figure_image}`}
+                      src={assetUrl(currentQuestion.figure_image)}
                       alt={currentQuestion.figure_alt ?? 'Question figure'}
                       className="mx-auto max-h-[420px] w-full object-contain"
                     />
@@ -776,7 +782,7 @@ export default function Practice() {
                     {choiceImage ? (
                       <span className="flex-1 overflow-hidden rounded-lg bg-white p-2 sm:p-3">
                         <img
-                          src={`${import.meta.env.BASE_URL}${choiceImage}`}
+                          src={assetUrl(choiceImage)}
                           alt={`Choice ${letter}`}
                           className="min-h-12 max-h-40 w-full object-contain object-left sm:max-h-52"
                         />
