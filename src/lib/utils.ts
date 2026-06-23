@@ -33,15 +33,10 @@ export function calculatePredictedScore(
   const timedAccuracy = Math.min(1, accuracy * timeMultiplier);
   const rawScore = 200 + timedAccuracy * 600;
 
-  // Early practice samples are noisy. Shrink predictions toward a neutral
-  // 500 until the user has answered enough questions to justify confidence.
-  const reliability = Math.min(1, total / 80);
-  const conservativeScore = 500 + (rawScore - 500) * reliability;
-
-  // Use SAT-like 10 point increments and avoid showing a perfect 800 until
-  // there is a meaningful sample size.
-  const cappedScore = total < 80 ? Math.min(760, conservativeScore) : conservativeScore;
-  return Math.round(Math.min(800, Math.max(200, cappedScore)) / 10) * 10;
+  // Predicted score should reflect current performance, even for new users.
+  // Reliability/sample size can be communicated separately; don't suppress a
+  // legitimately strong early performance.
+  return Math.round(Math.min(800, Math.max(200, rawScore)) / 10) * 10;
 }
 
 export function calculateMasteryDelta(
