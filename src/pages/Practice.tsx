@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useStore } from '@/store/useStore';
-import { cn, formatTime, calculateConfidenceWeight, updateMasteryScore, calculatePredictedScore } from '@/lib/utils';
+import { cn, formatTime, calculateConfidenceWeight, updateMasteryScore, calculatePredictedScore, calculateNextReviewSession } from '@/lib/utils';
 import { getChoiceDisplay } from '@/lib/questionSanitizer';
 import type { UserAnswer } from '@/types';
 import {
@@ -46,7 +46,7 @@ export default function Practice() {
   const [isAnswered, setIsAnswered] = useState(false);
   const [elapsedTime, setElapsedTime] = useState(0);
   const [questionElapsedTime, setQuestionElapsedTime] = useState(0);
-  const [questionStartTime, setQuestionStartTime] = useState(Date.now());
+  const [questionStartTime, setQuestionStartTime] = useState(() => Date.now());
   const [showGrid, setShowGrid] = useState(false);
   const [maskAnswers, setMaskAnswers] = useState(false);
   const [eliminateMode, setEliminateMode] = useState(false);
@@ -170,6 +170,10 @@ export default function Practice() {
       questionsCorrect: (userSkills[currentQuestion.skill]?.questionsCorrect ?? 0) + (isCorrect ? 1 : 0),
       lastUpdated: Date.now(),
       sessionCounter: (userSkills[currentQuestion.skill]?.sessionCounter ?? 0) + 1,
+      nextReviewSession: calculateNextReviewSession(
+        (userSkills[currentQuestion.skill]?.sessionCounter ?? 0) + 1,
+        newMastery
+      ),
     });
 
     setIsAnswered(true);
@@ -469,7 +473,7 @@ export default function Practice() {
             {currentQuestion.figure_image && (
               <div className="mb-6 overflow-hidden rounded-xl border bg-white p-3 shadow-lg" style={{ borderColor: 'rgba(148, 163, 184, 0.2)' }}>
                 <img
-                  src={currentQuestion.figure_image}
+                  src={`${import.meta.env.BASE_URL}${currentQuestion.figure_image}`}
                   alt={currentQuestion.figure_alt ?? 'Question figure'}
                   className="mx-auto max-h-[420px] w-full object-contain"
                 />
@@ -836,8 +840,10 @@ export default function Practice() {
 
         <button
           onClick={handleNext}
-          className="flex items-center gap-1 rounded-lg px-3 py-2 text-sm transition-colors hover:bg-white/5"
+          disabled={!isAnswered}
+          className="flex items-center gap-1 rounded-lg px-3 py-2 text-sm transition-colors disabled:opacity-40 disabled:cursor-not-allowed hover:bg-white/5"
           style={{ color: 'var(--text-secondary)' }}
+          title={!isAnswered ? 'Submit an answer before moving on' : undefined}
         >
           {currentSession.currentQuestionIndex < currentSession.questions.length - 1 ? 'Next' : 'Finish'}
           <ChevronRight className="h-4 w-4" />

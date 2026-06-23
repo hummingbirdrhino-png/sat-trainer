@@ -8,7 +8,9 @@ export default function TopBar() {
 
   const today = new Date().toISOString().split('T')[0];
   const todayGoal = dailyGoals.find((g) => g.date === today);
-  const goalProgress = todayGoal ? (todayGoal.completed / todayGoal.target) * 100 : 0;
+  const goalProgress = todayGoal && todayGoal.target > 0
+    ? Math.min(100, (todayGoal.completed / todayGoal.target) * 100)
+    : 0;
 
   const navItems = [
     { path: '/app', label: 'Practice', icon: BookOpen },

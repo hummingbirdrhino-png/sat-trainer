@@ -148,7 +148,14 @@ export const useStore = create<AppState>()(
       // User data
       userAnswers: [],
       addUserAnswer: (answer) =>
-        set((state) => ({ userAnswers: [...state.userAnswers, answer] })),
+        set((state) => ({
+          userAnswers: [
+            ...state.userAnswers.filter(
+              (existing) => !(existing.sessionId === answer.sessionId && existing.questionId === answer.questionId)
+            ),
+            answer,
+          ],
+        })),
       userSkills: {},
       updateUserSkill: (skill, update) =>
         set((state) => ({

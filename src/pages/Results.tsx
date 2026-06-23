@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { useStore } from '@/store/useStore';
 import { formatTime, getSkillColor } from '@/lib/utils';
 import {
@@ -18,15 +18,16 @@ export default function Results() {
   const { currentSession, sessionSummaries } = useStore();
 
   if (!currentSession) {
-    navigate('/app');
-    return null;
+    return <Navigate to="/app" replace />;
   }
 
   const answers = Object.values(currentSession.answers);
   const correct = answers.filter((a) => a.isCorrect).length;
   const total = currentSession.questions.length;
   const score = Math.round((correct / total) * 100);
-  const timeTaken = Math.floor((Date.now() - currentSession.startTime) / 1000);
+  const timeTaken = currentSession.isComplete && sessionSummaries[0]?.id === currentSession.id
+    ? sessionSummaries[0].timeTakenSeconds
+    : Math.floor((Date.now() - currentSession.startTime) / 1000);
 
   // Skill breakdown
   const skillStats: Record<string, { correct: number; total: number }> = {};
