@@ -43,7 +43,6 @@ export default function Dashboard() {
     userSkills,
     sessionSummaries,
     userAnswers,
-    settings,
     dailyGoals,
   } = useStore();
 
@@ -72,36 +71,45 @@ export default function Dashboard() {
   const predictedScore = rwPredictedScore !== null && mathPredictedScore !== null ? rwPredictedScore + mathPredictedScore : null;
 
   const streak = dailyGoals.length > 0
-    ? dailyGoals.sort((a, b) => b.date.localeCompare(a.date))[0]?.streak ?? 0
+    ? [...dailyGoals].sort((a, b) => b.date.localeCompare(a.date))[0]?.streak ?? 0
     : 0;
 
-  // Chart data - SAT score trend
+  const getSessionCorrectCount = (session: { correctCount?: number; correctAnswers?: number }) =>
+    session.correctCount ?? session.correctAnswers ?? 0;
+  const getSessionSkills = (session: { skillsPracticed?: string[] }) =>
+    Array.isArray(session.skillsPracticed) ? session.skillsPracticed : [];
+
+  // Chart data - section score trend
   const scoreChartData = useMemo(() => {
     const sorted = [...sessionSummaries].sort((a, b) => a.date - b.date).slice(-14);
     return {
       labels: sorted.map((s) => formatDate(s.date)),
       datasets: [
         {
-          label: 'Predicted SAT Score',
-          data: sorted.map((s) => s.predictedSatScore),
-          borderColor: '#3B82F6',
-          backgroundColor: 'rgba(59, 130, 246, 0.1)',
-          fill: true,
-          tension: 0.4,
+          label: 'Reading & Writing',
+          data: sorted.map((s) => ((s.section ?? 'reading_writing') === 'math' ? null : s.predictedSatScore)),
+          borderColor: '#60A5FA',
+          backgroundColor: 'rgba(96, 165, 250, 0.12)',
+          fill: false,
+          tension: 0.35,
           pointRadius: 4,
-          pointBackgroundColor: '#3B82F6',
+          pointBackgroundColor: '#60A5FA',
+          spanGaps: true,
         },
         {
-          label: 'Target',
-          data: sorted.map(() => settings.targetSatScore),
-          borderColor: 'rgba(148, 163, 184, 0.3)',
-          borderDash: [5, 5],
-          pointRadius: 0,
+          label: 'Math',
+          data: sorted.map((s) => (s.section === 'math' ? s.predictedSatScore : null)),
+          borderColor: '#A78BFA',
+          backgroundColor: 'rgba(167, 139, 250, 0.12)',
           fill: false,
+          tension: 0.35,
+          pointRadius: 4,
+          pointBackgroundColor: '#A78BFA',
+          spanGaps: true,
         },
       ],
     };
-  }, [sessionSummaries, settings.targetSatScore]);
+  }, [sessionSummaries]);
 
   // Mastery doughnut
   const masteryChartData = useMemo(() => {
@@ -214,10 +222,7 @@ export default function Dashboard() {
           value={predictedScore?.toString() ?? '—'}
           icon={TrendingUp}
           color="var(--accent-blue)"
-          trend={sessionSummaries.length > 1
-            ? `${sessionSummaries[0].predictedSatScore - sessionSummaries[1].predictedSatScore > 0 ? '+' : ''}${sessionSummaries[0].predictedSatScore - sessionSummaries[1].predictedSatScore} pts`
-            : 'Baseline'
-          }
+          trend={predictedScore !== null ? 'Combined RW + Math estimate' : 'Answer both sections to unlock total'}
         />
         <StatCard
           label="RW Score"
@@ -264,7 +269,7 @@ export default function Dashboard() {
           style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'rgba(148, 163, 184, 0.1)', height: 320 }}
         >
           <h3 className="mb-4 font-semibold" style={{ color: 'var(--text-primary)' }}>
-            SAT Score Trend
+            Section Score Trend
           </h3>
           <div className="h-[250px]">
             {sessionSummaries.length > 0 ? (
@@ -414,7 +419,7 @@ export default function Dashboard() {
                 </div>
                 <div className="flex items-center gap-3">
                   <div className="hidden sm:flex gap-1">
-                    {session.skillsPracticed.slice(0, 3).map((skill) => (
+                    {getSessionSkills(session).slice(0, 3).map((skill) => (
                       <span
                         key={skill}
                         className="rounded px-2 py-0.5 text-[10px] font-semibold"
@@ -441,7 +446,7 @@ export default function Dashboard() {
                       {session.score}%
                     </span>
                     <p className="text-[10px]" style={{ color: 'var(--text-muted)' }}>
-                      {session.correctCount}/{session.totalQuestions}
+                      {getSessionCorrectCount(session)}/{session.totalQuestions}
                     </p>
                   </div>
                 </div>
