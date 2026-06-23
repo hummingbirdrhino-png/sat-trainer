@@ -95,6 +95,8 @@ export default function Practice() {
 
   const isMockMode = currentSession?.mode === 'mock';
   const isAdaptiveMode = currentSession?.mode === 'adaptive';
+  const isRandomMode = currentSession?.mode === 'random';
+  const isEndlessMode = isAdaptiveMode || isRandomMode;
 
   // Redirect if no session
   useEffect(() => {
@@ -112,13 +114,17 @@ export default function Practice() {
   const isBookmarked = bookmarks.some((b) => b.questionId === currentQuestion.id);
   const answeredCount = Object.keys(currentSession.answers).length;
 
-  const pickNextAdaptiveQuestion = (session = currentSession): Question => {
+  const pickNextEndlessQuestion = (session = currentSession): Question => {
     const allQuestions = useStore.getState().questions;
     const availableQuestions = (useStore.getState().isPro ? allQuestions : allQuestions.slice(0, 25))
       .filter((q) => q.id !== currentQuestion.id);
     const recentlySeen = new Set(session.questions.slice(-10).map((q) => q.id));
     const freshQuestions = availableQuestions.filter((q) => !recentlySeen.has(q.id));
     const pool = freshQuestions.length ? freshQuestions : availableQuestions;
+
+    if (isRandomMode) {
+      return pool[Math.floor(Math.random() * pool.length)] ?? currentQuestion;
+    }
 
     const skills = [...new Set(pool.map((q) => q.skill))];
     const skillWeights = skills.map((skill) => {
@@ -251,8 +257,8 @@ export default function Practice() {
   };
 
   const handleNext = () => {
-    if (isAdaptiveMode) {
-      const nextQuestion = pickNextAdaptiveQuestion();
+    if (isEndlessMode) {
+      const nextQuestion = pickNextEndlessQuestion();
       setCurrentSession({
         ...currentSession,
         questions: [...currentSession.questions, nextQuestion],
@@ -287,7 +293,7 @@ export default function Practice() {
     });
   };
 
-  const handleEndAdaptivePractice = () => {
+  const handleEndPractice = () => {
     persistAnswers();
     setCurrentSession(null);
     navigate('/app');
@@ -421,12 +427,12 @@ export default function Practice() {
       >
         <div className="flex items-center gap-4">
           <button
-            onClick={isAdaptiveMode ? handleEndAdaptivePractice : () => navigate('/app')}
+            onClick={isEndlessMode ? handleEndPractice : () => navigate('/app')}
             className="flex items-center gap-1 rounded-lg px-2 py-1 text-sm transition-colors hover:bg-white/5"
             style={{ color: 'var(--text-secondary)' }}
           >
             <ArrowLeft className="h-4 w-4" />
-            {isAdaptiveMode ? 'End Practice' : 'Exit'}
+            {isEndlessMode ? 'End Practice' : 'Exit'}
           </button>
 
           <div className="flex items-center gap-2 rounded-lg px-3 py-1" style={{ backgroundColor: 'var(--bg-elevated)' }}>
@@ -441,7 +447,7 @@ export default function Practice() {
 
           <div className="flex items-center gap-1 rounded-lg px-3 py-1" style={{ backgroundColor: 'var(--bg-elevated)' }}>
             <span className="font-mono text-sm" style={{ color: 'var(--text-muted)' }}>
-              {isAdaptiveMode
+              {isEndlessMode
                 ? `${answeredCount} answered`
                 : `${currentSession.currentQuestionIndex + 1} / ${currentSession.questions.length}`}
             </span>
@@ -900,8 +906,8 @@ export default function Practice() {
 
         <div className="flex items-center gap-2">
           {/* Mini progress dots */}
-          {(isAdaptiveMode ? currentSession.questions.slice(-20) : currentSession.questions.slice(0, 20)).map((q, dotIdx) => {
-            const idx = isAdaptiveMode ? Math.max(0, currentSession.questions.length - 20) + dotIdx : dotIdx;
+          {(isEndlessMode ? currentSession.questions.slice(-20) : currentSession.questions.slice(0, 20)).map((q, dotIdx) => {
+            const idx = isEndlessMode ? Math.max(0, currentSession.questions.length - 20) + dotIdx : dotIdx;
             return (
             <div
               key={q.id}
@@ -916,7 +922,7 @@ export default function Practice() {
           )})}
           {currentSession.questions.length > 20 && (
             <span className="text-xs" style={{ color: 'var(--text-muted)' }}>
-              {isAdaptiveMode ? `${currentSession.questions.length} seen` : `+${currentSession.questions.length - 20}`}
+              {isEndlessMode ? `${currentSession.questions.length} seen` : `+${currentSession.questions.length - 20}`}
             </span>
           )}
         </div>
@@ -928,7 +934,7 @@ export default function Practice() {
           style={{ color: 'var(--text-secondary)' }}
           title={!isAnswered ? 'Submit an answer before moving on' : undefined}
         >
-          {isAdaptiveMode ? 'Next Question' : currentSession.currentQuestionIndex < currentSession.questions.length - 1 ? 'Next' : 'Finish'}
+          {isEndlessMode ? 'Next Question' : currentSession.currentQuestionIndex < currentSession.questions.length - 1 ? 'Next' : 'Finish'}
           <ChevronRight className="h-4 w-4" />
         </button>
       </div>

@@ -60,7 +60,8 @@ export interface Bookmark {
 }
 
 export type PracticeMode = 
-  | 'adaptive' 
+  | 'adaptive'
+  | 'random' 
   | 'focused' 
   | 'mock' 
   | 'review_wrong' 

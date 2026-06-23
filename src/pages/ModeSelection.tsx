@@ -11,6 +11,7 @@ import {
 import type { PracticeMode } from '@/types';
 import {
   Brain,
+  Shuffle,
   Target,
   Timer,
   RotateCcw,
@@ -39,6 +40,13 @@ const modes: ModeCard[] = [
     icon: Brain,
     color: 'var(--accent-blue)',
     badge: 'Recommended',
+  },
+  {
+    id: 'random',
+    title: 'Random Practice',
+    subtitle: 'Endless fully random drill. Still updates mastery.',
+    icon: Shuffle,
+    color: '#A855F7',
   },
   {
     id: 'focused',
@@ -115,6 +123,9 @@ export default function ModeSelection() {
       case 'adaptive':
         selectedQuestions = selectAdaptiveQuestions(isPro ? questions : questions.slice(0, 25), userSkills, 1);
         break;
+      case 'random':
+        selectedQuestions = selectAdaptiveQuestions(isPro ? questions : questions.slice(0, 25), userSkills, 1);
+        break;
       case 'mock':
         selectedQuestions = selectMockTestQuestions(questions);
         break;
@@ -147,7 +158,7 @@ export default function ModeSelection() {
       startTime: Date.now(),
       isComplete: false,
       questionCount: selectedQuestions.length,
-      isEndless: mode === 'adaptive',
+      isEndless: mode === 'adaptive' || mode === 'random',
     };
 
     setCurrentSession(session);
