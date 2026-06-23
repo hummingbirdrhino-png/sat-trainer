@@ -129,13 +129,13 @@ Generated files:
 
 - `public/math_questions.json` — 826 SAT Math question records.
 - `public/math_questions_summary.json` — summary counts/domains/skills/difficulties/import notes.
-- `public/math_figures/` — 855 rendered PDF page images used to preserve exact math notation, graphs, tables, and answer-choice visuals.
+- `public/math_figures/` — rendered question-only PDF crops used to preserve exact math notation, graphs, tables, and answer-choice visuals without exposing the answer/rationale during practice.
 - `scripts/parse_math_pdf.py` — parser used to regenerate the Math JSON/page images from the source PDF.
 
 Important Math parsing notes:
 
 - The PDF stores many equations, fractions, graphs, and tables as positioned visual/image snippets, so plain text extraction often omits the actual math symbols.
-- For display fidelity, each Math question includes `page_image` and `page_images`; these should be treated as the authoritative student-facing rendering until a richer math renderer is built.
+- For display fidelity, each Math question includes `page_image` and `page_images`; these are question-only crops and should be treated as the authoritative student-facing rendering until a richer math renderer is built.
 - Structured fields like `domain`, `skill`, `difficulty`, `question_type`, `correct_answer`, and `rationale` are extracted for filtering/adaptive/mastery/search.
 - Some multiple-choice graph/table answer choices have label-only text (`A.`, `B.`, etc.) because the choice content is visual; render the page image for those.
 - The PDF exposes one specific skill label under each broad domain in extracted text. `skill_level_2` is currently `null`; if a later source exposes deeper subskill metadata, preserve it rather than flattening to broad domains.

@@ -3,7 +3,7 @@
 
 The Math PDF stores many equations/fractions/graphs as positioned image snippets, so
 plain text extraction loses key math. This parser preserves exact visual fidelity by
-creating rendered page image(s) for each question and also extracts searchable
+creating rendered question-only image crop(s) for each question and also extracts searchable
 metadata, answers, choices, and rationale text when available.
 """
 from __future__ import annotations
@@ -127,10 +127,24 @@ def extract_sections(raw: str):
     return question, choices, correct, rationale, question_type
 
 
-def render_page(page: fitz.Page, out: Path):
+def answer_marker_y(page: fitz.Page) -> float | None:
+    candidates = []
+    for x0, y0, x1, y1, txt in line_text(page):
+        stripped = txt.strip()
+        if stripped.startswith('Correct Answer:') or stripped == 'Rationale':
+            candidates.append(y0)
+    return min(candidates) if candidates else None
+
+
+def render_question_crop(page: fitz.Page, out: Path):
     if out.exists():
         return
-    pix = page.get_pixmap(matrix=fitz.Matrix(1.5, 1.5), alpha=False)
+    # Crop before Correct Answer/Rationale so practice mode does not reveal the answer.
+    marker_y = answer_marker_y(page)
+    rect = page.rect
+    if marker_y is not None and marker_y > 120:
+        rect = fitz.Rect(0, 0, page.rect.width, max(120, marker_y - 8))
+    pix = page.get_pixmap(matrix=fitz.Matrix(1.75, 1.75), alpha=False, clip=rect)
     pix.save(out)
 
 
@@ -166,9 +180,12 @@ def main():
         image_blocks = 0
         for n, pno in enumerate(page_indexes, start=1):
             suffix = '' if len(page_indexes) == 1 else f'_p{n}'
-            img_name = f'{qid}{suffix}.png'
-            render_page(doc[pno], IMG_DIR / img_name)
-            page_images.append(f'math_figures/{img_name}')
+            marker_y = answer_marker_y(doc[pno])
+            # If a continuation page starts directly with rationale, do not include it in practice display.
+            if marker_y is None or marker_y > 120:
+                img_name = f'{qid}{suffix}.png'
+                render_question_crop(doc[pno], IMG_DIR / img_name)
+                page_images.append(f'math_figures/{img_name}')
             image_blocks += sum(1 for b in doc[pno].get_text('dict').get('blocks', []) if b.get('type') == 1)
 
         if len(page_indexes) > 1:
@@ -197,7 +214,7 @@ def main():
             'page_images': page_images,
             'has_visual_math': visual_math_likely,
             'image_block_count': image_blocks,
-            'parse_notes': ['page_images_preserve_equations_graphs_tables; plain_text_may_omit_math_symbols'],
+            'parse_notes': ['page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols'],
         }
         questions.append(rec)
         domains[rec['domain']] += 1
@@ -220,7 +237,7 @@ def main():
         'source_pdf': str(PDF_PATH),
         'question_count': len(questions),
         'pdf_page_count': doc.page_count,
-        'rendered_page_image_count': sum(len(q['page_images']) for q in questions),
+        'rendered_question_image_count': sum(len(q['page_images']) for q in questions),
         'multi_page_question_count': multipage,
         'domains': dict(sorted(domains.items())),
         'skills': dict(sorted(skills.items())),
@@ -229,7 +246,7 @@ def main():
         'missing_correct_answer_count': len(missing_correct),
         'missing_correct_answer_examples': missing_correct[:25],
         'notes': [
-            'Math equations/fractions/graphs are often embedded visually in the PDF, so page_images are authoritative for display.',
+            'Math equations/fractions/graphs are often embedded visually in the PDF, so page_images are question-only visual crops for practice display.',
             'Structured text is useful for metadata/search/adaptive targeting but may omit symbols/equations.',
             'skill_level_2 is currently null because the PDF header exposes one skill label under each domain in extracted text.',
         ],

@@ -624,7 +624,7 @@ export default function Practice() {
             {isMathQuestion && mathPageImages.length > 0 ? (
               <div className="space-y-4">
                 <div className="rounded-xl border p-3 text-sm" style={{ backgroundColor: 'var(--bg-elevated)', borderColor: 'rgba(96, 165, 250, 0.25)', color: 'var(--text-secondary)' }}>
-                  Math questions are rendered from the official PDF page image so equations, graphs, and tables stay exact.
+                  Math questions are rendered from official PDF crops so equations, graphs, and tables stay exact without showing the answer key.
                 </div>
                 {mathPageImages.map((image, index) => (
                   <div key={image} className="overflow-hidden rounded-xl border bg-white p-2 shadow-lg" style={{ borderColor: 'rgba(148, 163, 184, 0.2)' }}>

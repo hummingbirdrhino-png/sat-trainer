@@ -2,7 +2,7 @@
   "source_pdf": "work/math-pdf/sat_math_question_bank.pdf",
   "question_count": 826,
   "pdf_page_count": 855,
-  "rendered_page_image_count": 855,
+  "rendered_question_image_count": 852,
   "multi_page_question_count": 28,
   "domains": {
     "Advanced Math": 220,
@@ -43,7 +43,7 @@
   "missing_correct_answer_count": 0,
   "missing_correct_answer_examples": [],
   "notes": [
-    "Math equations/fractions/graphs are often embedded visually in the PDF, so page_images are authoritative for display.",
+    "Math equations/fractions/graphs are often embedded visually in the PDF, so page_images are question-only visual crops for practice display.",
     "Structured text is useful for metadata/search/adaptive targeting but may omit symbols/equations.",
     "skill_level_2 is currently null because the PDF header exposes one skill label under each domain in extracted text."
   ]
