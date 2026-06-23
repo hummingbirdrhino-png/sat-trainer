@@ -1,11 +1,33 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { CheckCircle2, CreditCard, Lock, Sparkles } from 'lucide-react';
+import { CheckCircle2, CreditCard, KeyRound, Lock, Sparkles } from 'lucide-react';
 import { useStore } from '@/store/useStore';
 
 const checkoutUrl = import.meta.env.VITE_CHECKOUT_URL as string | undefined;
+const ownerAccessCode = import.meta.env.VITE_OWNER_ACCESS_CODE as string | undefined;
 
 export default function Upgrade() {
   const { isPro, unlockProDemo } = useStore();
+  const [accessCode, setAccessCode] = useState('');
+  const [message, setMessage] = useState('');
+
+  const handleOwnerUnlock = (event: React.FormEvent) => {
+    event.preventDefault();
+
+    if (!ownerAccessCode) {
+      setMessage('Owner access is not configured yet.');
+      return;
+    }
+
+    if (accessCode.trim() === ownerAccessCode) {
+      unlockProDemo();
+      setAccessCode('');
+      setMessage('Owner Pro access unlocked on this browser.');
+      return;
+    }
+
+    setMessage('That access code is not correct.');
+  };
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-12">
@@ -46,6 +68,29 @@ export default function Upgrade() {
           <Link to="/app" className="flex items-center justify-center rounded-xl border px-5 py-4 font-bold transition hover:bg-white/5" style={{ borderColor: 'rgba(148,163,184,.25)' }}>
             Back to app
           </Link>
+        </div>
+
+        <div className="mt-6 rounded-xl border p-4" style={{ borderColor: 'rgba(148,163,184,.18)', backgroundColor: 'rgba(15,23,42,.22)' }}>
+          <div className="mb-2 flex items-center gap-2 font-semibold">
+            <KeyRound className="h-4 w-4 text-blue-400" /> Owner access
+          </div>
+          <form onSubmit={handleOwnerUnlock} className="flex flex-col gap-2 sm:flex-row">
+            <input
+              value={accessCode}
+              onChange={(event) => setAccessCode(event.target.value)}
+              className="min-w-0 flex-1 rounded-lg border px-3 py-2 outline-none focus:border-blue-500"
+              style={{ backgroundColor: 'var(--bg-base)', borderColor: 'rgba(148,163,184,.25)', color: 'var(--text-primary)' }}
+              placeholder="Enter owner code"
+              type="password"
+            />
+            <button type="submit" className="rounded-lg bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-400">
+              Unlock
+            </button>
+          </form>
+          <p className="mt-2 text-xs" style={{ color: 'var(--text-muted)' }}>
+            Use this to give yourself full Pro access without going through checkout.
+          </p>
+          {message && <p className="mt-2 text-sm" style={{ color: message.includes('unlocked') ? 'var(--accent-emerald)' : 'var(--accent-amber)' }}>{message}</p>}
         </div>
 
         {!checkoutUrl && (
