@@ -13,8 +13,19 @@ export function calculatePredictedScore(
   _difficultyWeights?: number[]
 ): number {
   if (total === 0) return 400;
-  const baseScore = 200 + (correct / total) * 600;
-  return Math.round(Math.min(800, Math.max(200, baseScore)));
+
+  const accuracy = correct / total;
+  const rawScore = 200 + accuracy * 600;
+
+  // Early practice samples are noisy. Shrink predictions toward a neutral
+  // 500 until the user has answered enough questions to justify confidence.
+  const reliability = Math.min(1, total / 80);
+  const conservativeScore = 500 + (rawScore - 500) * reliability;
+
+  // Use SAT-like 10 point increments and avoid showing a perfect 800 until
+  // there is a meaningful sample size.
+  const cappedScore = total < 80 ? Math.min(760, conservativeScore) : conservativeScore;
+  return Math.round(Math.min(800, Math.max(200, cappedScore)) / 10) * 10;
 }
 
 export function calculateMasteryDelta(
