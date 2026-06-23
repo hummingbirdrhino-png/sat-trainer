@@ -46,14 +46,27 @@ export default function Dashboard() {
     dailyGoals,
   } = useStore();
 
+  const normalizedSkills = Object.entries(userSkills).map(([key, skill]) => {
+    const fallbackLabel = key.includes(':') ? key.split(':').slice(1).join(':') : key;
+    return {
+      ...skill,
+      skill: skill?.skill ?? skill?.displaySkill ?? fallbackLabel,
+      displaySkill: skill?.displaySkill ?? skill?.skill ?? fallbackLabel,
+      section: skill?.section ?? (key.startsWith('math:') ? 'math' : 'reading_writing'),
+      questionsAnswered: skill?.questionsAnswered ?? 0,
+      questionsCorrect: skill?.questionsCorrect ?? 0,
+      masteryScore: skill?.masteryScore ?? 0,
+    };
+  });
+
   const readingAnswers = userAnswers.filter((answer) => (answer.section ?? 'reading_writing') !== 'math');
   const mathAnswers = userAnswers.filter((answer) => answer.section === 'math');
-  const sectionSkills = (section: 'reading_writing' | 'math') => Object.values(userSkills).filter((skill) => (skill.section ?? 'reading_writing') === section);
-  const averageMastery = (skills: typeof userSkills[keyof typeof userSkills][]) =>
+  const sectionSkills = (section: 'reading_writing' | 'math') => normalizedSkills.filter((skill) => (skill.section ?? 'reading_writing') === section);
+  const averageMastery = (skills: typeof normalizedSkills) =>
     skills.reduce((sum, skill) => sum + (skill?.masteryScore ?? 0), 0) / Math.max(skills.length, 1) || 0;
   const rwMastery = averageMastery(sectionSkills('reading_writing'));
   const mathMastery = averageMastery(sectionSkills('math'));
-  const overallMastery = averageMastery(Object.values(userSkills));
+  const overallMastery = averageMastery(normalizedSkills);
 
   const totalAnswered = userAnswers.length;
   const avgTime = totalAnswered > 0
@@ -113,7 +126,7 @@ export default function Dashboard() {
 
   // Mastery doughnut
   const masteryChartData = useMemo(() => {
-    const skills = Object.values(userSkills);
+    const skills = normalizedSkills;
     if (skills.length === 0) {
       return {
         labels: ['No Data'],
@@ -128,11 +141,11 @@ export default function Dashboard() {
         borderWidth: 0,
       }],
     };
-  }, [userSkills]);
+  }, [normalizedSkills]);
 
   // Skill accuracy bar chart
   const accuracyChartData = useMemo(() => {
-    const skills = Object.values(userSkills);
+    const skills = normalizedSkills;
     return {
       labels: skills.map((s) => { const label = s.displaySkill ?? s.skill; return label.slice(0, 15) + (label.length > 15 ? '...' : ''); }),
       datasets: [{
@@ -145,7 +158,7 @@ export default function Dashboard() {
         borderWidth: 1,
       }],
     };
-  }, [userSkills]);
+  }, [normalizedSkills]);
 
   // Heatmap data (last 90 days)
   const heatmapData = useMemo(() => {
@@ -243,7 +256,7 @@ export default function Dashboard() {
           value={`${Math.round(overallMastery)}%`}
           icon={Target}
           color="var(--accent-amber)"
-          trend={`${Object.keys(userSkills).length} skills tracked`}
+          trend={`${normalizedSkills.length} skills tracked`}
         />
         <StatCard
           label="Avg Time / Question"
@@ -291,7 +304,7 @@ export default function Dashboard() {
             Skill Mastery
           </h3>
           <div className="h-[250px]">
-            {Object.keys(userSkills).length > 0 ? (
+            {normalizedSkills.length > 0 ? (
               <Doughnut data={masteryChartData} options={doughnutOptions} />
             ) : (
               <div className="flex h-full items-center justify-center" style={{ color: 'var(--text-muted)' }}>
@@ -343,7 +356,7 @@ export default function Dashboard() {
             Accuracy by Skill
           </h3>
           <div className="h-[200px]">
-            {Object.keys(userSkills).length > 0 ? (
+            {normalizedSkills.length > 0 ? (
               <Bar
                 data={accuracyChartData}
                 options={{
