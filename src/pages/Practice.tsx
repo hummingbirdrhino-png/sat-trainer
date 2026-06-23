@@ -367,7 +367,7 @@ export default function Practice() {
       }
 
       const key = e.key.toUpperCase();
-      if (e.shiftKey && (key === 'E' || e.key === 'Enter')) {
+      if (e.shiftKey && (key === 'E' || key === 'ENTER')) {
         e.preventDefault();
         eliminateAllButSelected();
       } else if (['A', 'B', 'C', 'D'].includes(key)) {
@@ -701,6 +701,17 @@ export default function Practice() {
                 Reveal
               </button>
             </div>
+          )}
+
+          {!isAnswered && selectedAnswer && (
+            <button
+              onClick={eliminateAllButSelected}
+              className="mb-4 w-full rounded-lg border px-4 py-2 text-sm font-semibold transition-all hover:bg-white/5"
+              style={{ borderColor: 'rgba(96, 165, 250, 0.35)', color: 'var(--accent-blue)' }}
+              title="Shortcut: Shift+E or Shift+Enter"
+            >
+              100% confident — eliminate other choices
+            </button>
           )}
 
           {/* Confidence Score */}
