@@ -1,0 +1,109 @@
+export interface Question {
+  id: string;
+  domain: string;
+  skill: string;
+  difficulty: 'Easy' | 'Medium' | 'Hard';
+  passage: string;
+  stem: string;
+  choices: string[];
+  correct_answer: string;
+  rationale: string;
+  has_graph: boolean;
+}
+
+export interface AuthUser {
+  id: string;
+  name: string;
+  email: string;
+  password: string;
+  createdAt: number;
+}
+
+export interface UserAnswer {
+  questionId: string;
+  selectedAnswer: string;
+  isCorrect: boolean;
+  eliminatedChoices: string[];
+  confidenceLevel: number;
+  timeSpentSeconds: number;
+  timestamp: number;
+  sessionId: string;
+}
+
+export interface UserSkill {
+  skill: string;
+  masteryScore: number;
+  questionsAnswered: number;
+  questionsCorrect: number;
+  lastUpdated: number;
+  sessionCounter: number;
+  nextReviewSession: number;
+}
+
+export interface SessionSummary {
+  id: string;
+  mode: PracticeMode;
+  score: number;
+  totalQuestions: number;
+  correctCount: number;
+  skillsPracticed: string[];
+  timeTakenSeconds: number;
+  predictedSatScore: number;
+  date: number;
+}
+
+export interface Bookmark {
+  questionId: string;
+  createdAt: number;
+}
+
+export type PracticeMode = 
+  | 'adaptive' 
+  | 'focused' 
+  | 'mock' 
+  | 'review_wrong' 
+  | 'weak_spots' 
+  | 'bookmarked';
+
+export interface PracticeSession {
+  id: string;
+  mode: PracticeMode;
+  currentQuestionIndex: number;
+  questions: Question[];
+  answers: Record<string, UserAnswer>;
+  markedForReview: string[];
+  startTime: number;
+  isComplete: boolean;
+  focusedSkills?: string[];
+  mockModule?: number;
+}
+
+export type Theme = 'dark' | 'light' | 'sepia' | 'high-contrast' | 'pure-black';
+export type FontFamily = 'sans' | 'serif' | 'dyslexic';
+export type FontSize = 'small' | 'medium' | 'large';
+
+export interface AppSettings {
+  theme: Theme;
+  fontFamily: FontFamily;
+  fontSize: FontSize;
+  dailyGoalTarget: number;
+  notificationsEnabled: boolean;
+  reminderTime: string;
+  aiExplanationsEnabled: boolean;
+  targetSatScore: number;
+}
+
+export interface DailyGoal {
+  date: string;
+  target: number;
+  completed: number;
+  streak: number;
+}
+
+export interface Highlight {
+  id: string;
+  questionId: string;
+  startOffset: number;
+  endOffset: number;
+  color: string;
+}

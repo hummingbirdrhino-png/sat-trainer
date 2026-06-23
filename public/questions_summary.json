@@ -1,0 +1,30 @@
+{
+  "source": "questionbank-export-2026-6-22.pdf",
+  "pdf_pages": 634,
+  "questions": 596,
+  "domains": [
+    "Craft and Structure",
+    "Expression of Ideas",
+    "Information and Ideas",
+    "Standard English"
+  ],
+  "skills": [
+    "Boundaries",
+    "Central Ideas and Details",
+    "Command of Evidence",
+    "Cross-Text Connections",
+    "Cross-text Connections",
+    "Form, Structure, and",
+    "Inferences",
+    "Rhetorical Synthesis",
+    "Text Structure and",
+    "Transitions",
+    "Words in Context"
+  ],
+  "difficulties": {
+    "Easy": 192,
+    "Medium": 194,
+    "Hard": 210
+  },
+  "parse_failures": 0
+}
