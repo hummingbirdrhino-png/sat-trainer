@@ -107,3 +107,16 @@ Many graph/table questions use cropped figure images in `public/figures`. The st
 - Vercel project exists but has deployment protection issues; GitHub Pages is the reliable live path right now.
 - Some PDF extraction artifacts may still exist, though many split-word issues were cleaned.
 - SAT Math has not been added yet. Recommended next architecture: add `section: "reading_writing" | "math"`, separate math question bank, and separate RW/Math/total score predictions.
+
+## SAT Math question bank link
+
+Isaac provided this Google Drive PDF link for the SAT Math question bank, but it was not parsed in this free-tier session due to low remaining credits:
+
+https://drive.google.com/file/d/1i3v10obENa-iosFyqllGYTreFa_FUlgq/view?usp=drivesdk
+
+Recommended next step in paid Clawbite account:
+1. Download this PDF.
+2. Inspect page count and extraction quality with PyMuPDF.
+3. Build a separate `public/math_questions.json` or merge into `questions.json` with a `section` field.
+4. Add math-specific domains/topics and figure extraction.
+5. Add section selector and separate RW/Math/Total predicted scores.
