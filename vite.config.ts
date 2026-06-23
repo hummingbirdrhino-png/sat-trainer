@@ -12,6 +12,7 @@ export default defineConfig({
     allowedHosts: [
       'archive-tri-played-powerful.trycloudflare.com',
       'marriage-physician-hundred-songs.trycloudflare.com',
+      'helen-inclusive-constantly-pope.trycloudflare.com',
       'floppy-steaks-love.loca.lt',
     ],
   },
