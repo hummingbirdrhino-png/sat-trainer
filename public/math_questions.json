@@ -5824,13 +5824,18 @@
     "parse_notes": [
       "page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols"
     ],
-    "choice_latex": {},
+    "choice_latex": {
+      "A": "t=4d",
+      "B": "t=\\frac{1}{25}d",
+      "C": "t=25d",
+      "D": "t=\\frac{1}{4}d"
+    },
     "choice_text": {},
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_latex_vision",
+      "B": "verified_latex_vision",
+      "C": "verified_latex_vision",
+      "D": "verified_latex_vision"
     }
   },
   {
@@ -5901,13 +5906,18 @@
     "parse_notes": [
       "page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols"
     ],
-    "choice_latex": {},
+    "choice_latex": {
+      "A": "2x+4=6",
+      "B": "x+3=3",
+      "C": "3x+2=4",
+      "D": "2x+3=6"
+    },
     "choice_text": {},
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_latex_vision",
+      "B": "verified_latex_vision",
+      "C": "verified_latex_vision",
+      "D": "verified_latex_vision"
     }
   },
   {
@@ -6035,13 +6045,18 @@
     "parse_notes": [
       "page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols"
     ],
-    "choice_latex": {},
+    "choice_latex": {
+      "A": "2c",
+      "B": "2+c",
+      "C": "\\frac{c}{c}",
+      "D": "\\frac{c}{2}"
+    },
     "choice_text": {},
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_latex_vision",
+      "B": "verified_latex_vision",
+      "C": "verified_latex_vision",
+      "D": "verified_latex_vision"
     }
   },
   {
@@ -6161,7 +6176,12 @@
     "parse_notes": [
       "page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols"
     ],
-    "choice_latex": {},
+    "choice_latex": {
+      "A": "\\text{Each game costs }\\$25\\text{.}",
+      "B": "\\text{The video game system costs }\\$100\\text{.}",
+      "C": "\\text{The video game system costs }\\$25\\text{.}",
+      "D": "\\text{Each game costs }\\$100\\text{.}"
+    },
     "choice_text": {
       "A": "Each game costs \n.",
       "B": "The video game system costs \n.",
@@ -6169,10 +6189,10 @@
       "D": "Each game costs \n."
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_latex_vision",
+      "B": "verified_latex_vision",
+      "C": "verified_latex_vision",
+      "D": "verified_latex_vision"
     }
   },
   {
@@ -6319,13 +6339,18 @@
     "parse_notes": [
       "page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols"
     ],
-    "choice_latex": {},
+    "choice_latex": {
+      "A": "(1,2)",
+      "B": "(1,5)",
+      "C": "(2,3)",
+      "D": "(2,7)"
+    },
     "choice_text": {},
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_latex_vision",
+      "B": "verified_latex_vision",
+      "C": "verified_latex_vision",
+      "D": "verified_latex_vision"
     }
   },
   {
@@ -6396,13 +6421,18 @@
     "parse_notes": [
       "page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols"
     ],
-    "choice_latex": {},
+    "choice_latex": {
+      "A": "(3,9)",
+      "B": "(6,15)",
+      "C": "(8,10)",
+      "D": "(12,18)"
+    },
     "choice_text": {},
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_latex_vision",
+      "B": "verified_latex_vision",
+      "C": "verified_latex_vision",
+      "D": "verified_latex_vision"
     }
   },
   {
@@ -6472,13 +6502,18 @@
     "parse_notes": [
       "page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols"
     ],
-    "choice_latex": {},
+    "choice_latex": {
+      "A": "16",
+      "B": "23",
+      "C": "30",
+      "D": "38"
+    },
     "choice_text": {},
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_latex_vision",
+      "B": "verified_latex_vision",
+      "C": "verified_latex_vision",
+      "D": "verified_latex_vision"
     }
   },
   {
@@ -6662,13 +6697,18 @@
     "parse_notes": [
       "page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols"
     ],
-    "choice_latex": {},
+    "choice_latex": {
+      "A": "5",
+      "B": "20",
+      "C": "25",
+      "D": "30"
+    },
     "choice_text": {},
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_latex_vision",
+      "B": "verified_latex_vision",
+      "C": "verified_latex_vision",
+      "D": "verified_latex_vision"
     }
   },
   {
@@ -6808,13 +6848,18 @@
     "parse_notes": [
       "page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols"
     ],
-    "choice_latex": {},
+    "choice_latex": {
+      "A": "11",
+      "B": "80",
+      "C": "96",
+      "D": "704"
+    },
     "choice_text": {},
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_latex_vision",
+      "B": "verified_latex_vision",
+      "C": "verified_latex_vision",
+      "D": "verified_latex_vision"
     }
   },
   {
@@ -7013,13 +7058,18 @@
     "parse_notes": [
       "page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols"
     ],
-    "choice_latex": {},
+    "choice_latex": {
+      "A": "y=5x+6",
+      "B": "y=5x+11",
+      "C": "y=6x+5",
+      "D": "y=6x+11"
+    },
     "choice_text": {},
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_latex_vision",
+      "B": "verified_latex_vision",
+      "C": "verified_latex_vision",
+      "D": "verified_latex_vision"
     }
   },
   {
@@ -7113,13 +7163,18 @@
     "parse_notes": [
       "page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols"
     ],
-    "choice_latex": {},
+    "choice_latex": {
+      "A": "9x+3y=141",
+      "B": "9x+3y=3",
+      "C": "3x+9y=141",
+      "D": "3x+9y=3"
+    },
     "choice_text": {},
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_latex_vision",
+      "B": "verified_latex_vision",
+      "C": "verified_latex_vision",
+      "D": "verified_latex_vision"
     }
   },
   {
@@ -7547,13 +7602,18 @@
     "parse_notes": [
       "page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols"
     ],
-    "choice_latex": {},
+    "choice_latex": {
+      "A": "f(x)=2x+42",
+      "B": "f(x)=32x+36",
+      "C": "f(x)=4x+2",
+      "D": "f(x)=8x+2"
+    },
     "choice_text": {},
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_latex_vision",
+      "B": "verified_latex_vision",
+      "C": "verified_latex_vision",
+      "D": "verified_latex_vision"
     }
   },
   {
@@ -7763,13 +7823,18 @@
     "parse_notes": [
       "page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols"
     ],
-    "choice_latex": {},
+    "choice_latex": {
+      "A": "90-(85+78+98)\\le 4G",
+      "B": "4G+85+78+98\\ge 360",
+      "C": "\\frac{G+85+78+98}{4}\\ge 90",
+      "D": "\\frac{85+78+98}{4}\\ge 90-4G"
+    },
     "choice_text": {},
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_latex_vision",
+      "B": "verified_latex_vision",
+      "C": "verified_latex_vision",
+      "D": "verified_latex_vision"
     }
   },
   {
@@ -7858,16 +7923,19 @@
       "page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols"
     ],
     "choice_latex": {
-      "B": "0"
+      "B": "0",
+      "A": "-\\frac{1}{2}",
+      "C": "\\frac{1}{2}",
+      "D": "\\frac{3}{2}"
     },
     "choice_text": {
       "B": "0"
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
+      "A": "verified_latex_vision",
       "B": "verified_text_layer",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "C": "verified_latex_vision",
+      "D": "verified_latex_vision"
     }
   },
   {
@@ -7937,13 +8005,18 @@
     "parse_notes": [
       "page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols"
     ],
-    "choice_latex": {},
+    "choice_latex": {
+      "A": "f(x)=-\\frac{1}{4}x-12",
+      "B": "f(x)=-\\frac{1}{4}x+16",
+      "C": "f(x)=-\\frac{1}{4}x+2",
+      "D": "f(x)=-\\frac{1}{4}x-14"
+    },
     "choice_text": {},
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_latex_vision",
+      "B": "verified_latex_vision",
+      "C": "verified_latex_vision",
+      "D": "verified_latex_vision"
     }
   },
   {
@@ -8056,13 +8129,18 @@
     "parse_notes": [
       "page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols"
     ],
-    "choice_latex": {},
+    "choice_latex": {
+      "A": "B=550+\\frac{x}{212}",
+      "B": "B=550-\\frac{x}{212}",
+      "C": "B=212+\\frac{x}{550}",
+      "D": "B=212-\\frac{x}{550}"
+    },
     "choice_text": {},
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_latex_vision",
+      "B": "verified_latex_vision",
+      "C": "verified_latex_vision",
+      "D": "verified_latex_vision"
     }
   },
   {
@@ -8140,7 +8218,12 @@
     "parse_notes": [
       "page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols"
     ],
-    "choice_latex": {},
+    "choice_latex": {
+      "A": "(-4,0)",
+      "B": "(0,5)",
+      "C": "(2,1)",
+      "D": "(2,-1)"
+    },
     "choice_text": {
       "A": "(\n, \n)",
       "B": "(\n, \n)",
@@ -8148,10 +8231,10 @@
       "D": "(\n, \n)"
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_latex_vision",
+      "B": "verified_latex_vision",
+      "C": "verified_latex_vision",
+      "D": "verified_latex_vision"
     }
   },
   {
@@ -8214,13 +8297,18 @@
     "parse_notes": [
       "page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols"
     ],
-    "choice_latex": {},
+    "choice_latex": {
+      "A": "f(x)=2x+3",
+      "B": "f(x)=3x+2",
+      "C": "f(x)=4x+1",
+      "D": "f(x)=5x"
+    },
     "choice_text": {},
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_latex_vision",
+      "B": "verified_latex_vision",
+      "C": "verified_latex_vision",
+      "D": "verified_latex_vision"
     }
   },
   {
@@ -8319,15 +8407,17 @@
     ],
     "choice_latex": {
       "C": "5",
-      "D": "13"
+      "D": "13",
+      "A": "-13",
+      "B": "-5"
     },
     "choice_text": {
       "C": "5",
       "D": "13"
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
+      "A": "verified_latex_vision",
+      "B": "verified_latex_vision",
       "C": "verified_text_layer",
       "D": "verified_text_layer"
     }
@@ -8383,12 +8473,16 @@
     "parse_notes": [
       "page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols"
     ],
-    "choice_latex": {},
+    "choice_latex": {
+      "A": "y=-2x-8",
+      "B": "y=x-8",
+      "C": "y=-x-8"
+    },
     "choice_text": {},
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
+      "A": "verified_latex_vision",
+      "B": "verified_latex_vision",
+      "C": "verified_latex_vision",
       "D": "fallback_image_needs_latex_review"
     }
   },
