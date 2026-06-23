@@ -367,7 +367,7 @@ export default function Practice() {
       }
 
       const key = e.key.toUpperCase();
-      if (e.shiftKey && key === 'E') {
+      if (e.shiftKey && (key === 'E' || e.key === 'Enter')) {
         e.preventDefault();
         eliminateAllButSelected();
       } else if (['A', 'B', 'C', 'D'].includes(key)) {
