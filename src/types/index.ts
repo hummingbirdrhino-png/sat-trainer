@@ -16,6 +16,7 @@ export interface Question {
   stem: string;
   question?: string;
   choices: string[];
+  choice_images?: Record<string, string>;
   correct_answer: string;
   rationale: string;
   has_graph: boolean;

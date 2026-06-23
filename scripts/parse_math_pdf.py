@@ -18,7 +18,9 @@ PDF_PATH = Path('work/math-pdf/sat_math_question_bank.pdf')
 OUT_JSON = Path('public/math_questions.json')
 SUMMARY_JSON = Path('public/math_questions_summary.json')
 IMG_DIR = Path('public/math_figures')
+CHOICE_DIR = Path('public/math_choices')
 IMG_DIR.mkdir(parents=True, exist_ok=True)
+CHOICE_DIR.mkdir(parents=True, exist_ok=True)
 
 ID_RE = re.compile(r'Question ID:\s*([A-Za-z0-9]+)')
 CORRECT_RE = re.compile(r'Correct Answer:\s*(.+?)(?=\nRationale\n|\nRationale\r?\n|\Z)', re.S)
@@ -148,10 +150,48 @@ def render_question_crop(page: fitz.Page, out: Path):
     pix.save(out)
 
 
+def answer_choice_rects(page: fitz.Page) -> dict[str, fitz.Rect]:
+    lines = line_text(page)
+    labels = []
+    for x0, y0, x1, y1, txt in lines:
+        m = re.match(r'^([ABCD])\.\s*', txt.strip())
+        if m and y0 > 120:
+            labels.append((m.group(1), y0))
+    if not labels:
+        return {}
+    # Only keep first A-D set before answer/rationale.
+    seen = {}
+    for letter, y in labels:
+        seen.setdefault(letter, y)
+    if not all(letter in seen for letter in 'ABCD'):
+        return {}
+    marker_y = answer_marker_y(page) or page.rect.height
+    rects = {}
+    ordered = [(letter, seen[letter]) for letter in 'ABCD']
+    for idx, (letter, y) in enumerate(ordered):
+        next_y = ordered[idx + 1][1] if idx + 1 < len(ordered) else marker_y
+        bottom = max(y + 18, min(next_y - 2, marker_y - 4))
+        rects[letter] = fitz.Rect(12, max(0, y - 6), page.rect.width - 12, bottom)
+    return rects
+
+
+def render_choice_crops(page: fitz.Page, qid: str) -> dict[str, str]:
+    rects = answer_choice_rects(page)
+    rendered = {}
+    for letter, rect in rects.items():
+        out = CHOICE_DIR / f'{qid}_{letter}.png'
+        pix = page.get_pixmap(matrix=fitz.Matrix(2.0, 2.0), alpha=False, clip=rect)
+        pix.save(out)
+        rendered[letter] = f'math_choices/{out.name}'
+    return rendered
+
+
 def main():
     doc = fitz.open(PDF_PATH)
     # Remove stale generated images for deterministic output.
     for old in IMG_DIR.glob('math_*.png'):
+        old.unlink()
+    for old in CHOICE_DIR.glob('math_*.png'):
         old.unlink()
 
     starts = []
@@ -177,15 +217,18 @@ def main():
         question, choices, correct, rationale, qtype = extract_sections(raw)
 
         page_images = []
+        choice_images = {}
         image_blocks = 0
         for n, pno in enumerate(page_indexes, start=1):
             suffix = '' if len(page_indexes) == 1 else f'_p{n}'
             marker_y = answer_marker_y(doc[pno])
             # If a continuation page starts directly with rationale, do not include it in practice display.
             if marker_y is None or marker_y > 120:
-                img_name = f'{qid}{suffix}.png'
+                img_name = f'{qid}{suffix}_qcrop.png'
                 render_question_crop(doc[pno], IMG_DIR / img_name)
                 page_images.append(f'math_figures/{img_name}')
+                if n == 1:
+                    choice_images = render_choice_crops(doc[pno], qid)
             image_blocks += sum(1 for b in doc[pno].get_text('dict').get('blocks', []) if b.get('type') == 1)
 
         if len(page_indexes) > 1:
@@ -206,6 +249,7 @@ def main():
             'calculator': None,
             'question': question,
             'choices': choices,
+            'choice_images': choice_images,
             'correct_answer': correct,
             'rationale': rationale,
             'page': start + 1,
@@ -238,6 +282,7 @@ def main():
         'question_count': len(questions),
         'pdf_page_count': doc.page_count,
         'rendered_question_image_count': sum(len(q['page_images']) for q in questions),
+        'rendered_choice_image_count': sum(len(q.get('choice_images', {})) for q in questions),
         'multi_page_question_count': multipage,
         'domains': dict(sorted(domains.items())),
         'skills': dict(sorted(skills.items())),

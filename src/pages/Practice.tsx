@@ -705,6 +705,7 @@ export default function Practice() {
             <div className="mb-6 space-y-3">
               {currentQuestion.choices.map((choice, index) => {
                 const { letter, text } = getChoiceDisplay(choice, index);
+                const choiceImage = currentQuestion.choice_images?.[letter];
 
                 return (
                   <button
@@ -757,7 +758,17 @@ export default function Practice() {
                     >
                       {letter}
                     </span>
-                    {renderFormattedText(text, cn('flex-1 text-sm leading-relaxed', getAnswerTextStyle(letter)))}
+                    {choiceImage ? (
+                      <span className="flex-1 overflow-hidden rounded-md bg-white p-2">
+                        <img
+                          src={`${import.meta.env.BASE_URL}${choiceImage}`}
+                          alt={`Choice ${letter}`}
+                          className="max-h-24 w-full object-contain object-left"
+                        />
+                      </span>
+                    ) : (
+                      renderFormattedText(text, cn('flex-1 text-sm leading-relaxed', getAnswerTextStyle(letter)))
+                    )}
                   </button>
                 );
               })}

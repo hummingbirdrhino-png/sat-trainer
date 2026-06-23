@@ -129,7 +129,8 @@ Generated files:
 
 - `public/math_questions.json` — 826 SAT Math question records.
 - `public/math_questions_summary.json` — summary counts/domains/skills/difficulties/import notes.
-- `public/math_figures/` — rendered question-only PDF crops used to preserve exact math notation, graphs, tables, and answer-choice visuals without exposing the answer/rationale during practice.
+- `public/math_figures/` — rendered question-only PDF crops used to preserve exact math notation, graphs, and tables without exposing the answer/rationale during practice.
+- `public/math_choices/` — rendered A/B/C/D choice crops for Math questions whose answer choices are visual equations/graphs/tables.
 - `scripts/parse_math_pdf.py` — parser used to regenerate the Math JSON/page images from the source PDF.
 
 Important Math parsing notes:
