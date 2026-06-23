@@ -3176,8 +3176,8 @@
     },
     "choice_parse_status": {
       "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
+      "B": "verified_plain_text",
+      "C": "verified_plain_text",
       "D": "fallback_image_needs_latex_review"
     }
   },
@@ -3417,10 +3417,10 @@
       "D": "The number of minutes spent biking for each minute spent running"
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_plain_text",
+      "B": "verified_plain_text",
+      "C": "verified_plain_text",
+      "D": "verified_plain_text"
     }
   },
   {
@@ -4042,10 +4042,10 @@
       "D": "The average number of years it takes similar trees to grow 14 feet"
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_plain_text",
+      "B": "verified_plain_text",
+      "C": "verified_plain_text",
+      "D": "verified_plain_text"
     }
   },
   {
@@ -4864,10 +4864,10 @@
       "D": "Zero"
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_plain_text",
+      "B": "verified_plain_text",
+      "C": "verified_plain_text",
+      "D": "verified_plain_text"
     }
   },
   {
@@ -5150,10 +5150,10 @@
       "D": "The team star ted with 120 tons of cargo to move."
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_plain_text",
+      "B": "verified_plain_text",
+      "C": "verified_plain_text",
+      "D": "verified_plain_text"
     }
   },
   {
@@ -7253,10 +7253,10 @@
       "D": "The average price per gallon on December 1, 2014"
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_plain_text",
+      "B": "verified_plain_text",
+      "C": "verified_plain_text",
+      "D": "verified_plain_text"
     }
   },
   {
@@ -9299,10 +9299,10 @@
       "D": "The difference in the total cost, in dollars, between the number of binders and notebooks purchased"
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_plain_text",
+      "B": "verified_plain_text",
+      "C": "verified_plain_text",
+      "D": "verified_plain_text"
     }
   },
   {
@@ -9373,10 +9373,10 @@
       "D": "Infinitely many"
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_plain_text",
+      "B": "verified_plain_text",
+      "C": "verified_plain_text",
+      "D": "verified_plain_text"
     }
   },
   {
@@ -10271,10 +10271,10 @@
       "D": "The total number of cups of jam in the small containers"
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_plain_text",
+      "B": "verified_plain_text",
+      "C": "verified_plain_text",
+      "D": "verified_plain_text"
     }
   },
   {
@@ -11291,10 +11291,10 @@
       "D": "It took Marisol 45 hours to drive from City A to City B."
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_plain_text",
+      "B": "verified_plain_text",
+      "C": "verified_plain_text",
+      "D": "verified_plain_text"
     }
   },
   {
@@ -12165,7 +12165,7 @@
       "A": "fallback_image_needs_latex_review",
       "B": "fallback_image_needs_latex_review",
       "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "D": "verified_plain_text"
     }
   },
   {
@@ -13547,10 +13547,10 @@
       "D": "I and III only"
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_plain_text",
+      "B": "verified_plain_text",
+      "C": "verified_plain_text",
+      "D": "verified_plain_text"
     }
   },
   {
@@ -16629,10 +16629,10 @@
       "D": "The total amount, in dollars, Anthony will spend on small cheese pizzas"
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_plain_text",
+      "B": "verified_plain_text",
+      "C": "verified_plain_text",
+      "D": "verified_plain_text"
     }
   },
   {
@@ -17175,10 +17175,10 @@
       "D": "The number of feet Sheila’s bicycle traveled from the time she began applying the brakes until the bicycle came to a complete stop"
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_plain_text",
+      "B": "verified_plain_text",
+      "C": "verified_plain_text",
+      "D": "verified_plain_text"
     }
   },
   {
@@ -18781,10 +18781,10 @@
       "D": "The increase in the length, in centimeters, of the spring for each one-newton increase in the weight of the object"
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_plain_text",
+      "B": "verified_plain_text",
+      "C": "verified_plain_text",
+      "D": "verified_plain_text"
     }
   },
   {
@@ -18914,10 +18914,10 @@
       "D": "I and III only"
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_plain_text",
+      "B": "verified_plain_text",
+      "C": "verified_plain_text",
+      "D": "verified_plain_text"
     }
   },
   {
@@ -19132,10 +19132,10 @@
       "D": "The number of salads bought during the day"
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_plain_text",
+      "B": "verified_plain_text",
+      "C": "verified_plain_text",
+      "D": "verified_plain_text"
     }
   },
   {
@@ -19917,10 +19917,10 @@
       "D": "The total number of trees in the residential area"
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_plain_text",
+      "B": "verified_plain_text",
+      "C": "verified_plain_text",
+      "D": "verified_plain_text"
     }
   },
   {
@@ -20180,10 +20180,10 @@
       "D": "The total amount that the electrician charges"
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_plain_text",
+      "B": "verified_plain_text",
+      "C": "verified_plain_text",
+      "D": "verified_plain_text"
     }
   },
   {
@@ -21952,10 +21952,10 @@
       "D": "The snow leopard population in this area is predicted to be 550 in the year 2030."
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_plain_text",
+      "B": "verified_plain_text",
+      "C": "verified_plain_text",
+      "D": "verified_plain_text"
     }
   },
   {
@@ -23642,6 +23642,7 @@
       "page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols"
     ],
     "choice_latex": {
+      "A": "-1",
       "B": "0",
       "C": "2",
       "D": "3"
@@ -23653,7 +23654,7 @@
       "D": "3"
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
+      "A": "verified_text_layer",
       "B": "verified_text_layer",
       "C": "verified_text_layer",
       "D": "verified_text_layer"
@@ -23972,10 +23973,10 @@
       "D": "Zero"
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_plain_text",
+      "B": "verified_plain_text",
+      "C": "verified_plain_text",
+      "D": "verified_plain_text"
     }
   },
   {
@@ -25174,7 +25175,9 @@
     "parse_notes": [
       "page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols"
     ],
-    "choice_latex": {},
+    "choice_latex": {
+      "C": "\\text{I and II}"
+    },
     "choice_text": {
       "A": "I only",
       "B": "II only",
@@ -25182,10 +25185,10 @@
       "D": "Neither I nor II"
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_plain_text",
+      "B": "verified_plain_text",
+      "C": "verified_text_layer",
+      "D": "verified_plain_text"
     }
   },
   {
@@ -25485,9 +25488,9 @@
       "D": "The estimated percent decrease in the beetle population for this species and area every \n years after"
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
+      "A": "verified_plain_text",
       "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
+      "C": "verified_plain_text",
       "D": "fallback_image_needs_latex_review"
     }
   },
@@ -26043,10 +26046,10 @@
       "D": "The maximum revenue, in dollars, that the company can make"
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_plain_text",
+      "B": "verified_plain_text",
+      "C": "verified_plain_text",
+      "D": "verified_plain_text"
     }
   },
   {
@@ -26474,10 +26477,10 @@
       "D": "The estimated data traffic, in terabytes, in 2010"
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_plain_text",
+      "B": "verified_plain_text",
+      "C": "verified_plain_text",
+      "D": "verified_plain_text"
     }
   },
   {
@@ -26758,7 +26761,9 @@
     "parse_notes": [
       "page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols"
     ],
-    "choice_latex": {},
+    "choice_latex": {
+      "C": "\\text{I and II}"
+    },
     "choice_text": {
       "A": "I only",
       "B": "II only",
@@ -26766,10 +26771,10 @@
       "D": "Neither I nor II"
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_plain_text",
+      "B": "verified_plain_text",
+      "C": "verified_text_layer",
+      "D": "verified_plain_text"
     }
   },
   {
@@ -31151,7 +31156,10 @@
     "parse_notes": [
       "page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols"
     ],
-    "choice_latex": {},
+    "choice_latex": {
+      "B": "\\text{Two}",
+      "C": "\\text{One}"
+    },
     "choice_text": {
       "A": "Three",
       "B": "Two",
@@ -31159,10 +31167,10 @@
       "D": "Zero"
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_plain_text",
+      "B": "verified_text_layer",
+      "C": "verified_text_layer",
+      "D": "verified_plain_text"
     }
   },
   {
@@ -31693,10 +31701,10 @@
       "D": "Zero"
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_plain_text",
+      "B": "verified_plain_text",
+      "C": "verified_plain_text",
+      "D": "verified_plain_text"
     }
   },
   {
@@ -32160,6 +32168,8 @@
       "page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols"
     ],
     "choice_latex": {
+      "A": "-5",
+      "B": "-2",
       "C": "2",
       "D": "5"
     },
@@ -32170,8 +32180,8 @@
       "D": "5"
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
+      "A": "verified_text_layer",
+      "B": "verified_text_layer",
       "C": "verified_text_layer",
       "D": "verified_text_layer"
     }
@@ -33194,10 +33204,10 @@
       "D": "The speed of the object 1.4 seconds after being thrown straight up in the air is approximately 1.64 feet per second."
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_plain_text",
+      "B": "verified_plain_text",
+      "C": "verified_plain_text",
+      "D": "verified_plain_text"
     }
   },
   {
@@ -34132,6 +34142,7 @@
       "page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols"
     ],
     "choice_latex": {
+      "A": "-0.28",
       "B": "0.28",
       "C": "27",
       "D": "880"
@@ -34143,7 +34154,7 @@
       "D": "880"
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
+      "A": "verified_text_layer",
       "B": "verified_text_layer",
       "C": "verified_text_layer",
       "D": "verified_text_layer"
@@ -37047,10 +37058,10 @@
       "D": "The maximum speed, in feet per second, of the object"
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_plain_text",
+      "B": "verified_plain_text",
+      "C": "verified_plain_text",
+      "D": "verified_plain_text"
     }
   },
   {
@@ -37171,10 +37182,10 @@
       "D": "For every increase in depth by 100 meters, the number of brachiopod species decreases by 10%."
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_plain_text",
+      "B": "verified_plain_text",
+      "C": "verified_plain_text",
+      "D": "verified_plain_text"
     }
   },
   {
@@ -39272,10 +39283,10 @@
       "D": "There are no solutions."
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_plain_text",
+      "B": "verified_plain_text",
+      "C": "verified_plain_text",
+      "D": "verified_plain_text"
     }
   },
   {
@@ -39607,10 +39618,10 @@
       "D": "The percent increase in the estimated number of employees each year"
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_plain_text",
+      "B": "verified_plain_text",
+      "C": "verified_plain_text",
+      "D": "verified_plain_text"
     }
   },
   {
@@ -41398,10 +41409,10 @@
       "D": "The time at which the projectile hits the ground"
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_plain_text",
+      "B": "verified_plain_text",
+      "C": "verified_plain_text",
+      "D": "verified_plain_text"
     }
   },
   {
@@ -41892,7 +41903,9 @@
     "parse_notes": [
       "page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols"
     ],
-    "choice_latex": {},
+    "choice_latex": {
+      "C": "\\text{I and II}"
+    },
     "choice_text": {
       "A": "I only",
       "B": "II only",
@@ -41900,10 +41913,10 @@
       "D": "Neither I nor II"
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_plain_text",
+      "B": "verified_plain_text",
+      "C": "verified_text_layer",
+      "D": "verified_plain_text"
     }
   },
   {
@@ -42258,7 +42271,10 @@
     "parse_notes": [
       "page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols"
     ],
-    "choice_latex": {},
+    "choice_latex": {
+      "B": "\\text{One}",
+      "C": "\\text{Two}"
+    },
     "choice_text": {
       "A": "Zero",
       "B": "One",
@@ -42266,10 +42282,10 @@
       "D": "More than two"
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_plain_text",
+      "B": "verified_text_layer",
+      "C": "verified_text_layer",
+      "D": "verified_plain_text"
     }
   },
   {
@@ -43206,10 +43222,10 @@
       "D": "It is doubtful that the percent of all US teens who are heavy texters is 35%."
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_plain_text",
+      "B": "verified_plain_text",
+      "C": "verified_plain_text",
+      "D": "verified_plain_text"
     }
   },
   {
@@ -44042,10 +44058,10 @@
       "D": "The median mass of group 1 is less than the median mass of group 2."
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_plain_text",
+      "B": "verified_plain_text",
+      "C": "verified_plain_text",
+      "D": "verified_plain_text"
     }
   },
   {
@@ -44181,10 +44197,10 @@
       "D": "All fourth-grade students in the county in which the school is located"
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_plain_text",
+      "B": "verified_plain_text",
+      "C": "verified_plain_text",
+      "D": "verified_plain_text"
     }
   },
   {
@@ -44339,7 +44355,9 @@
     "parse_notes": [
       "page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols"
     ],
-    "choice_latex": {},
+    "choice_latex": {
+      "D": "\\text{I and II}"
+    },
     "choice_text": {
       "A": "Neither",
       "B": "I only",
@@ -44347,10 +44365,10 @@
       "D": "I and II"
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_plain_text",
+      "B": "verified_plain_text",
+      "C": "verified_plain_text",
+      "D": "verified_text_layer"
     }
   },
   {
@@ -44445,10 +44463,10 @@
       "D": "Between 90 and 100 minutes"
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_plain_text",
+      "B": "verified_plain_text",
+      "C": "verified_plain_text",
+      "D": "verified_plain_text"
     }
   },
   {
@@ -44672,10 +44690,10 @@
       "D": "mean < mode < median"
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_plain_text",
+      "B": "verified_plain_text",
+      "C": "verified_plain_text",
+      "D": "verified_plain_text"
     }
   },
   {
@@ -46213,7 +46231,12 @@
     "parse_notes": [
       "page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols"
     ],
-    "choice_latex": {},
+    "choice_latex": {
+      "A": "30\\%",
+      "B": "60\\%",
+      "C": "62.5\\%",
+      "D": "120\\%"
+    },
     "choice_text": {
       "A": "30%",
       "B": "60%",
@@ -46221,10 +46244,10 @@
       "D": "120%"
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_text_layer",
+      "B": "verified_text_layer",
+      "C": "verified_text_layer",
+      "D": "verified_text_layer"
     }
   },
   {
@@ -46906,10 +46929,10 @@
       "D": "Approximately 30% of all largemouth bass in the pond weigh more than 2 pounds."
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_plain_text",
+      "B": "verified_plain_text",
+      "C": "verified_plain_text",
+      "D": "verified_plain_text"
     }
   },
   {
@@ -47359,10 +47382,10 @@
       "D": "The least number of boxes sold by one student"
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_plain_text",
+      "B": "verified_plain_text",
+      "C": "verified_plain_text",
+      "D": "verified_plain_text"
     }
   },
   {
@@ -47536,10 +47559,10 @@
       "D": "The median height of Group B is larger than the median height of Group A."
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_plain_text",
+      "B": "verified_plain_text",
+      "C": "verified_plain_text",
+      "D": "verified_plain_text"
     }
   },
   {
@@ -48077,10 +48100,10 @@
       "D": "It is plausible that the mean distance hiked for all visitors is between 4 and 5 miles."
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_plain_text",
+      "B": "verified_plain_text",
+      "C": "verified_plain_text",
+      "D": "verified_plain_text"
     }
   },
   {
@@ -48198,10 +48221,10 @@
       "D": "There is not enough information to compare the means of the data sets."
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_plain_text",
+      "B": "verified_plain_text",
+      "C": "verified_plain_text",
+      "D": "verified_plain_text"
     }
   },
   {
@@ -48582,10 +48605,10 @@
       "D": "Standard deviation"
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_plain_text",
+      "B": "verified_plain_text",
+      "C": "verified_plain_text",
+      "D": "verified_plain_text"
     }
   },
   {
@@ -49122,10 +49145,10 @@
       "D": "All professors at all California State Universities"
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_plain_text",
+      "B": "verified_plain_text",
+      "C": "verified_plain_text",
+      "D": "verified_plain_text"
     }
   },
   {
@@ -49221,10 +49244,10 @@
       "D": "Every 10 years between 1940 and 2010, the average increase in minimum wage was 0.488 dollars."
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_plain_text",
+      "B": "verified_plain_text",
+      "C": "verified_plain_text",
+      "D": "verified_plain_text"
     }
   },
   {
@@ -49448,10 +49471,10 @@
       "D": "Theresa’s speed reached its maximum during the last ten minutes."
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_plain_text",
+      "B": "verified_plain_text",
+      "C": "verified_plain_text",
+      "D": "verified_plain_text"
     }
   },
   {
@@ -49556,7 +49579,7 @@
       "A": "fallback_image_needs_latex_review",
       "B": "fallback_image_needs_latex_review",
       "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "D": "verified_plain_text"
     }
   },
   {
@@ -50128,10 +50151,10 @@
       "D": "An exponential decay model"
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_plain_text",
+      "B": "verified_plain_text",
+      "C": "verified_plain_text",
+      "D": "verified_plain_text"
     }
   },
   {
@@ -50285,10 +50308,10 @@
       "D": "The median of data set B is equal to the median of data set A, and the range of data set B is equal to the range of data set A."
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_plain_text",
+      "B": "verified_plain_text",
+      "C": "verified_plain_text",
+      "D": "verified_plain_text"
     }
   },
   {
@@ -52556,10 +52579,10 @@
       "D": "Sample A had a smaller sample size."
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_plain_text",
+      "B": "verified_plain_text",
+      "C": "verified_plain_text",
+      "D": "verified_plain_text"
     }
   },
   {
@@ -53252,10 +53275,10 @@
       "D": "The survey sample is biased because it is not representative of all city residents."
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_plain_text",
+      "B": "verified_plain_text",
+      "C": "verified_plain_text",
+      "D": "verified_plain_text"
     }
   },
   {
@@ -53413,10 +53436,10 @@
       "D": "The mean of data set A is greater than the mean of data set B."
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_plain_text",
+      "B": "verified_plain_text",
+      "C": "verified_plain_text",
+      "D": "verified_plain_text"
     }
   },
   {
@@ -53479,7 +53502,12 @@
     "parse_notes": [
       "page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols"
     ],
-    "choice_latex": {},
+    "choice_latex": {
+      "A": "2003-2004",
+      "B": "2008-2009",
+      "C": "2009-2010",
+      "D": "2010-2011"
+    },
     "choice_text": {
       "A": "2003–2004",
       "B": "2008–2009",
@@ -53487,10 +53515,10 @@
       "D": "2010–2011"
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_text_layer",
+      "B": "verified_text_layer",
+      "C": "verified_text_layer",
+      "D": "verified_text_layer"
     }
   },
   {
@@ -53785,7 +53813,7 @@
       "A": "fallback_image_needs_latex_review",
       "B": "fallback_image_needs_latex_review",
       "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "D": "verified_plain_text"
     }
   },
   {
@@ -53847,10 +53875,10 @@
       "D": "324 meters per second"
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_plain_text",
+      "B": "verified_plain_text",
+      "C": "verified_plain_text",
+      "D": "verified_plain_text"
     }
   },
   {
@@ -54359,7 +54387,12 @@
     "parse_notes": [
       "page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols"
     ],
-    "choice_latex": {},
+    "choice_latex": {
+      "A": "1:2",
+      "B": "2:3",
+      "C": "3:4",
+      "D": "2:1"
+    },
     "choice_text": {
       "A": "1 : 2",
       "B": "2 : 3",
@@ -54367,10 +54400,10 @@
       "D": "2 : 1"
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_text_layer",
+      "B": "verified_text_layer",
+      "C": "verified_text_layer",
+      "D": "verified_text_layer"
     }
   },
   {
@@ -54554,10 +54587,10 @@
       "D": "All students in the city"
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_plain_text",
+      "B": "verified_plain_text",
+      "C": "verified_plain_text",
+      "D": "verified_plain_text"
     }
   },
   {
@@ -54753,10 +54786,10 @@
       "D": "I and III only"
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_plain_text",
+      "B": "verified_plain_text",
+      "C": "verified_plain_text",
+      "D": "verified_plain_text"
     }
   },
   {
@@ -54834,10 +54867,10 @@
       "D": "Plausible values of the number of the students at the school who support a menu change are between 295 and 305."
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_plain_text",
+      "B": "verified_plain_text",
+      "C": "verified_plain_text",
+      "D": "verified_plain_text"
     }
   },
   {
@@ -56016,10 +56049,10 @@
       "D": "Most people who like this book will dislike this movie."
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_plain_text",
+      "B": "verified_plain_text",
+      "C": "verified_plain_text",
+      "D": "verified_plain_text"
     }
   },
   {
@@ -56097,10 +56130,10 @@
       "D": "Standard deviation"
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_plain_text",
+      "B": "verified_plain_text",
+      "C": "verified_plain_text",
+      "D": "verified_plain_text"
     }
   },
   {
@@ -56612,10 +56645,10 @@
       "D": "Neither the means nor the medians are different."
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_plain_text",
+      "B": "verified_plain_text",
+      "C": "verified_plain_text",
+      "D": "verified_plain_text"
     }
   },
   {
@@ -56746,7 +56779,12 @@
     "parse_notes": [
       "page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols"
     ],
-    "choice_latex": {},
+    "choice_latex": {
+      "A": "4.1\\%",
+      "B": "5.1\\%",
+      "C": "5.2\\%",
+      "D": "5.4\\%"
+    },
     "choice_text": {
       "A": "4.1%",
       "B": "5.1%",
@@ -56754,10 +56792,10 @@
       "D": "5.4%"
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_text_layer",
+      "B": "verified_text_layer",
+      "C": "verified_text_layer",
+      "D": "verified_text_layer"
     }
   },
   {
@@ -57675,10 +57713,10 @@
       "D": "The show did not allow viewers enough time to respond to the poll."
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_plain_text",
+      "B": "verified_plain_text",
+      "C": "verified_plain_text",
+      "D": "verified_plain_text"
     }
   },
   {
@@ -58026,7 +58064,12 @@
     "parse_notes": [
       "page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols"
     ],
-    "choice_latex": {},
+    "choice_latex": {
+      "A": "6.0\\%",
+      "B": "12.0\\%",
+      "C": "13.3\\%",
+      "D": "14.0\\%"
+    },
     "choice_text": {
       "A": "6.0%",
       "B": "12.0%",
@@ -58034,10 +58077,10 @@
       "D": "14.0%"
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_text_layer",
+      "B": "verified_text_layer",
+      "C": "verified_text_layer",
+      "D": "verified_text_layer"
     }
   },
   {
@@ -59204,7 +59247,12 @@
     "parse_notes": [
       "page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols"
     ],
-    "choice_latex": {},
+    "choice_latex": {
+      "A": "3\\%",
+      "B": "11\\%",
+      "C": "16\\%",
+      "D": "32\\%"
+    },
     "choice_text": {
       "A": "3%",
       "B": "11%",
@@ -59212,10 +59260,10 @@
       "D": "32%"
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_text_layer",
+      "B": "verified_text_layer",
+      "C": "verified_text_layer",
+      "D": "verified_text_layer"
     }
   },
   {
@@ -59285,9 +59333,9 @@
       "D": "The sampling method is not flawed and is likely to produce an unbiased estimate of the mean number of children per household in the\ncommunity."
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
+      "A": "verified_plain_text",
       "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
+      "C": "verified_plain_text",
       "D": "fallback_image_needs_latex_review"
     }
   },
@@ -59888,7 +59936,12 @@
     "parse_notes": [
       "page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols"
     ],
-    "choice_latex": {},
+    "choice_latex": {
+      "A": "0.05\\%",
+      "B": "0.95\\%",
+      "C": "1.22\\%",
+      "D": "7.45\\%"
+    },
     "choice_text": {
       "A": "0.05%",
       "B": "0.95%",
@@ -59896,10 +59949,10 @@
       "D": "7.45%"
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_text_layer",
+      "B": "verified_text_layer",
+      "C": "verified_text_layer",
+      "D": "verified_text_layer"
     }
   },
   {
@@ -60831,10 +60884,10 @@
       "D": "There is no association between the elevation and the temperature."
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_plain_text",
+      "B": "verified_plain_text",
+      "C": "verified_plain_text",
+      "D": "verified_plain_text"
     }
   },
   {
@@ -61415,10 +61468,10 @@
       "D": "The best estimate for the number of customers who purchased fruit last Thursday is 375."
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_plain_text",
+      "B": "verified_plain_text",
+      "C": "verified_plain_text",
+      "D": "verified_plain_text"
     }
   },
   {
@@ -61658,10 +61711,10 @@
       "D": "It is less than 34 or greater than 40."
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_plain_text",
+      "B": "verified_plain_text",
+      "C": "verified_plain_text",
+      "D": "verified_plain_text"
     }
   },
   {
@@ -61903,10 +61956,10 @@
       "D": "Range of the high temperatures"
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_plain_text",
+      "B": "verified_plain_text",
+      "C": "verified_plain_text",
+      "D": "verified_plain_text"
     }
   },
   {
@@ -62193,10 +62246,10 @@
       "D": "Macaroni"
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_plain_text",
+      "B": "verified_plain_text",
+      "C": "verified_plain_text",
+      "D": "verified_plain_text"
     }
   },
   {
@@ -62514,7 +62567,9 @@
     "parse_notes": [
       "page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols"
     ],
-    "choice_latex": {},
+    "choice_latex": {
+      "C": "\\text{I and II}"
+    },
     "choice_text": {
       "A": "I only",
       "B": "II only",
@@ -62522,10 +62577,10 @@
       "D": "Neither I nor II"
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_plain_text",
+      "B": "verified_plain_text",
+      "C": "verified_text_layer",
+      "D": "verified_plain_text"
     }
   },
   {
@@ -62753,10 +62808,10 @@
       "D": "Account A earns less money per year than Account B at first but eventually earns more money per year."
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_plain_text",
+      "B": "verified_plain_text",
+      "C": "verified_plain_text",
+      "D": "verified_plain_text"
     }
   },
   {
@@ -63691,10 +63746,10 @@
       "D": "1.5 times the amount of blue paint used in the second batch"
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_plain_text",
+      "B": "verified_plain_text",
+      "C": "verified_plain_text",
+      "D": "verified_plain_text"
     }
   },
   {
@@ -64399,10 +64454,10 @@
       "D": "There is not enough information to compare the standard deviations."
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_plain_text",
+      "B": "verified_plain_text",
+      "C": "verified_plain_text",
+      "D": "verified_plain_text"
     }
   },
   {
@@ -69720,10 +69775,10 @@
       "D": "No additional information is needed."
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
+      "A": "verified_plain_text",
+      "B": "verified_plain_text",
       "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "D": "verified_plain_text"
     }
   },
   {

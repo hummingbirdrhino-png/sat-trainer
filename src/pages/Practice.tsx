@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useStore } from '@/store/useStore';
-import { cn, formatTime, calculateConfidenceWeight, updateMasteryScore, calculatePredictedScore, calculateNextReviewSession, getSkillKey, getSkillColor } from '@/lib/utils';
+import { cn, formatTime, calculateConfidenceWeight, updateMasteryScore, calculatePredictedScore, calculateNextReviewSession, getSkillKey, getSkillColor, getMockTotalSeconds } from '@/lib/utils';
 import { getChoiceDisplay } from '@/lib/questionSanitizer';
 import LatexMath from '@/components/LatexMath';
 import type { Question, UserAnswer } from '@/types';
@@ -155,6 +155,8 @@ export default function Practice() {
   const isMathQuestion = currentQuestion.section === 'math';
   const mathPageImages = currentQuestion.page_images?.length ? currentQuestion.page_images : currentQuestion.page_image ? [currentQuestion.page_image] : [];
   const isStudentProduced = currentQuestion.question_type === 'student_produced_response';
+  const mockTotalSeconds = getMockTotalSeconds(currentSession.section ?? (isMathSession ? 'math' : 'reading_writing'));
+  const mockRemainingSeconds = Math.max(0, mockTotalSeconds - elapsedTime);
   const isMarked = currentSession.markedForReview.includes(currentQuestion.id);
   const isBookmarked = bookmarks.some((b) => b.questionId === currentQuestion.id);
   const answeredCount = Object.keys(currentSession.answers).length;
@@ -206,6 +208,11 @@ export default function Practice() {
     }, 1000);
     return () => clearInterval(timerRef.current);
   }, [currentSession.startTime, questionStartTime]);
+
+  useEffect(() => {
+    if (!isMockMode || currentSession.isComplete || elapsedTime < mockTotalSeconds) return;
+    handleFinish();
+  }, [elapsedTime, isMockMode, mockTotalSeconds, currentSession.isComplete]);
 
   // Reset state on question change
   useEffect(() => {
@@ -563,7 +570,7 @@ export default function Practice() {
               {isMockMode ? 'Test' : 'Question'}
             </span>
             <span className="font-mono text-sm font-bold" style={{ color: 'var(--text-primary)' }}>
-              {formatTime(isMockMode ? elapsedTime : questionElapsedTime)}
+              {formatTime(isMockMode ? mockRemainingSeconds : questionElapsedTime)}
             </span>
           </div>
 
@@ -854,8 +861,14 @@ export default function Practice() {
                     ) : choiceText ? (
                       renderFormattedText(choiceText, cn('flex-1 text-base leading-relaxed sm:text-lg', getAnswerTextStyle(letter)))
                     ) : choiceImage ? (
-                      <span className="flex-1 rounded-lg border border-dashed px-3 py-2 text-sm leading-relaxed" style={{ color: 'var(--text-secondary)', borderColor: 'rgba(148, 163, 184, 0.25)' }}>
-                        Choice {letter} needs LaTeX review. Use the question image for now.
+                      <span className="flex-1 overflow-hidden rounded-lg bg-white p-2 sm:p-3">
+                        <img
+                          src={assetUrl(choiceImage)}
+                          alt={`Choice ${letter}`}
+                          className="min-h-12 max-h-40 w-full object-contain object-left sm:max-h-52"
+                          loading="lazy"
+                          decoding="async"
+                        />
                       </span>
                     ) : (
                       <span className="flex-1 text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
@@ -1039,13 +1052,10 @@ export default function Practice() {
                 AI Explanation
               </h3>
               <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
-                AI explanations are generated on-demand to help you understand why the correct answer is right
-                and why other choices are wrong. This feature requires an internet connection.
+                This section uses the official rationale from the question bank and summarizes what to focus on when reviewing this item.
               </p>
               <p className="mt-2 text-sm" style={{ color: 'var(--text-secondary)' }}>
-                <strong>Correct answer ({currentQuestion.correct_answer}):</strong> The rationale from the official
-                College Board materials states that this choice best answers the question because it aligns
-                with the evidence presented in the passage.
+                <strong>Correct answer ({currentQuestion.correct_answer}):</strong> Review the explanation above, then retry similar questions in weak-spot or focused practice.
               </p>
             </div>
           )}

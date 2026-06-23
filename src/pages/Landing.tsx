@@ -94,7 +94,7 @@ export default function Landing() {
           ))}
         </div>
         <div className="mt-5 flex items-center justify-center gap-2 text-sm" style={{ color: 'var(--text-muted)' }}>
-          <Lock className="h-4 w-4" /> Payments can be connected with Stripe or Lemon Squeezy when you’re ready.
+          <Lock className="h-4 w-4" /> Secure checkout integration can be connected when you’re ready to sell Pro access.
         </div>
       </section>
 

@@ -9,6 +9,16 @@ export function cn(...inputs: ClassValue[]) {
 // SAT Scoring utilities
 export const TARGET_SECONDS_PER_QUESTION = 71;
 
+export function getMockTotalSeconds(section: 'reading_writing' | 'math' = 'reading_writing'): number {
+  return section === 'math' ? 70 * 60 : 64 * 60;
+}
+
+export function getSectionScoreRange(section?: string): { min: number; max: number } {
+  return section === 'math' || section === 'reading_writing'
+    ? { min: 200, max: 800 }
+    : { min: 400, max: 1600 };
+}
+
 export function calculateTimeMultiplier(timeSpentSeconds?: number): number {
   if (!timeSpentSeconds || timeSpentSeconds <= 0) return 1;
 
@@ -25,10 +35,11 @@ export function calculatePredictedScore(
   total: number,
   averageTimeSeconds?: number,
   averageMastery?: number,
-  _difficultyWeights?: number[]
+  difficultyWeights?: number[]
 ): number {
   if (total === 0) return 400;
 
+  void difficultyWeights;
   const accuracy = correct / total;
   const timeMultiplier = calculateTimeMultiplier(averageTimeSeconds);
   const timedAccuracy = Math.min(1, accuracy * timeMultiplier);
@@ -200,12 +211,17 @@ export function selectWeakSpotQuestions(
   return selected;
 }
 
-export function selectMockTestQuestions(questions: Question[]): Question[] {
-  const easy = sampleQuestions(questions.filter((q) => q.difficulty === 'Easy'), 9);
-  const medium = sampleQuestions(questions.filter((q) => q.difficulty === 'Medium'), 12);
-  const hard = sampleQuestions(questions.filter((q) => q.difficulty === 'Hard'), 6);
+export function selectMockTestQuestions(questions: Question[], section: 'reading_writing' | 'math' = 'reading_writing'): Question[] {
+  const targetCount = section === 'math' ? 44 : 54;
+  const easyTarget = section === 'math' ? 14 : 18;
+  const mediumTarget = section === 'math' ? 18 : 24;
+  const hardTarget = Math.max(0, targetCount - easyTarget - mediumTarget);
+
+  const easy = sampleQuestions(questions.filter((q) => q.difficulty === 'Easy'), easyTarget);
+  const medium = sampleQuestions(questions.filter((q) => q.difficulty === 'Medium'), mediumTarget);
+  const hard = sampleQuestions(questions.filter((q) => q.difficulty === 'Hard'), hardTarget);
   const selectedIds = new Set([...easy, ...medium, ...hard].map((q) => q.id));
-  const fill = shuffleArray(questions.filter((q) => !selectedIds.has(q.id))).slice(0, Math.max(0, 27 - selectedIds.size));
+  const fill = shuffleArray(questions.filter((q) => !selectedIds.has(q.id))).slice(0, Math.max(0, targetCount - selectedIds.size));
 
   return shuffleArray([...easy, ...medium, ...hard, ...fill]);
 }

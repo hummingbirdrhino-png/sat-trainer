@@ -96,7 +96,7 @@ export default function Upgrade() {
         {!checkoutUrl && (
           <p className="mt-4 flex items-start gap-2 rounded-lg bg-amber-500/10 p-3 text-sm text-amber-200">
             <Lock className="mt-0.5 h-4 w-4 shrink-0" />
-            Payment link not connected yet. Add a Stripe or Lemon Squeezy checkout URL as <code>VITE_CHECKOUT_URL</code>. For now, this button enables Pro locally so you can test the funnel.
+            Checkout is not connected yet. Add a hosted checkout URL as <code>VITE_CHECKOUT_URL</code>. For now, this button enables Pro locally so you can test the funnel.
           </p>
         )}
 

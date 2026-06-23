@@ -19,7 +19,7 @@ function simpleChoiceToLatex(value) {
   if (/[\n]|[A-Za-z]{4,}/.test(text)) return null;
 
   const normalized = text
-    .replace(/−/g, '-')
+    .replace(/[−–—]/g, '-')
     .replace(/÷/g, '\\div ')
     .replace(/×/g, '\\times ')
     .replace(/≤/g, '\\le ')
@@ -30,6 +30,29 @@ function simpleChoiceToLatex(value) {
   // Plain integers/decimals/commas/currency are safe and look better as text than screenshots.
   if (/^\$?-?\d[\d,]*(?:\.\d+)?(?:\^\\circ)?$/.test(normalized)) {
     return normalized.replace(/^\$/, '\\$');
+  }
+
+  if (/^-?\d[\d,]*(?:\.\d+)?\s*%$/.test(normalized)) {
+    return normalized.replace(/%$/, '\\%');
+  }
+
+  if (/^\d+(?:\.\d+)?\s*:\s*\d+(?:\.\d+)?$/.test(normalized)) {
+    return normalized.replace(/\s*:\s*/, ':');
+  }
+
+  const unitMatch = normalized.match(/^(-?\d[\d,]*(?:\.\d+)?)\s+(meters per second|feet per second|miles per hour|feet|meters|dollars|minutes|hours|years|degrees)$/i);
+  if (unitMatch) {
+    return `${unitMatch[1]}\\text{ ${unitMatch[2]} }`;
+  }
+
+  const exactTextChoices = new Set([
+    'exactly one', 'exactly two', 'infinitely many', 'zero',
+    'none', 'one', 'two', 'three', 'more than two',
+    'i only', 'ii only', 'iii only', 'i and ii', 'i and iii', 'ii and iii', 'i, ii, and iii', 'neither i nor ii',
+    'mean', 'median', 'range', 'standard deviation',
+  ]);
+  if (exactTextChoices.has(text.toLowerCase())) {
+    return `\\text{${text.replace(/[{}]/g, '')}}`;
   }
 
   // Simple fractions such as 3/17.
@@ -68,6 +91,8 @@ for (const q of questions) {
       choice_parse_status[letter] = 'verified_text_layer';
       verifiedChoices += 1;
       hasLatex = true;
+    } else if (text && !/\n/.test(text) && !['and', '%'].includes(text.trim().toLowerCase()) && text.length >= 3) {
+      choice_parse_status[letter] = 'verified_plain_text';
     } else if (q.choice_images?.[letter]) {
       choice_parse_status[letter] = 'fallback_image_needs_latex_review';
       fallbackChoices += 1;

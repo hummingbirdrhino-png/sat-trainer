@@ -61,7 +61,7 @@ const modes: ModeCard[] = [
   {
     id: 'mock',
     title: 'Mock Test',
-    subtitle: '54 questions, 64 minutes. Simulates the real SAT.',
+    subtitle: 'Section-length practice with SAT-style difficulty mix.',
     icon: Timer,
     color: 'var(--accent-amber)',
     badge: 'Full Test',
@@ -118,6 +118,13 @@ export default function ModeSelection() {
     (s) => s.sessionCounter >= s.nextReviewSession
   ).length;
 
+  const getModeSubtitle = (mode: ModeCard) => {
+    if (mode.id !== 'mock') return mode.subtitle;
+    return selectedSection === 'math'
+      ? '44 Math questions, about 70 minutes. SAT-style difficulty mix.'
+      : '54 Reading & Writing questions, about 64 minutes. SAT-style difficulty mix.';
+  };
+
   const startMode = (mode: PracticeMode) => {
     if (!activeQuestions.length) return;
 
@@ -136,7 +143,7 @@ export default function ModeSelection() {
         selectedQuestions = shuffleArray(isPro ? activeQuestions : activeQuestions.slice(0, 25)).slice(0, 1);
         break;
       case 'mock':
-        selectedQuestions = selectMockTestQuestions(activeQuestions);
+        selectedQuestions = selectMockTestQuestions(activeQuestions, selectedSection);
         break;
       case 'review_wrong':
         selectedQuestions = activeQuestions.filter((q) =>
@@ -323,7 +330,7 @@ export default function ModeSelection() {
                     {mode.title}
                   </h3>
                   <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
-                    {mode.subtitle}
+                    {getModeSubtitle(mode)}
                   </p>
                 </div>
 
