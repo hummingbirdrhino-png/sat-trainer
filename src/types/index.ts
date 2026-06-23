@@ -26,6 +26,9 @@ export interface Question {
   question?: string;
   question_parts?: MathQuestionPart[];
   choices: string[];
+  choice_latex?: Record<string, string>;
+  choice_text?: Record<string, string>;
+  choice_parse_status?: Record<string, 'verified_text_layer' | 'plain_text' | 'fallback_image_needs_latex_review' | 'missing' | string>;
   choice_images?: Record<string, string>;
   correct_answer: string;
   rationale: string;

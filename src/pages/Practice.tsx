@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useStore } from '@/store/useStore';
 import { cn, formatTime, calculateConfidenceWeight, updateMasteryScore, calculatePredictedScore, calculateNextReviewSession, getSkillKey, getSkillColor } from '@/lib/utils';
 import { getChoiceDisplay } from '@/lib/questionSanitizer';
+import LatexMath from '@/components/LatexMath';
 import type { Question, UserAnswer } from '@/types';
 import {
   ChevronLeft,
@@ -791,6 +792,8 @@ export default function Practice() {
             <div className="mb-6 space-y-3">
               {currentQuestion.choices.map((choice, index) => {
                 const { letter, text } = getChoiceDisplay(choice, index);
+                const choiceLatex = currentQuestion.choice_latex?.[letter];
+                const choiceText = currentQuestion.choice_text?.[letter] ?? text;
                 const choiceImage = currentQuestion.choice_images?.[letter];
 
                 return (
@@ -844,17 +847,15 @@ export default function Practice() {
                     >
                       {letter}
                     </span>
-                    {text ? (
-                      renderFormattedText(text, cn('flex-1 text-base leading-relaxed sm:text-lg', getAnswerTextStyle(letter)))
+                    {choiceLatex ? (
+                      <span className={cn('flex-1 text-base leading-relaxed sm:text-lg', getAnswerTextStyle(letter))}>
+                        <LatexMath value={choiceLatex} />
+                      </span>
+                    ) : choiceText ? (
+                      renderFormattedText(choiceText, cn('flex-1 text-base leading-relaxed sm:text-lg', getAnswerTextStyle(letter)))
                     ) : choiceImage ? (
-                      <span className="flex-1 overflow-hidden rounded-lg bg-white p-2 sm:p-3">
-                        <img
-                          src={assetUrl(choiceImage)}
-                          alt={`Choice ${letter}`}
-                          className="min-h-12 max-h-40 w-full object-contain object-left sm:max-h-52"
-                          loading="lazy"
-                          decoding="async"
-                        />
+                      <span className="flex-1 rounded-lg border border-dashed px-3 py-2 text-sm leading-relaxed" style={{ color: 'var(--text-secondary)', borderColor: 'rgba(148, 163, 184, 0.25)' }}>
+                        Choice {letter} needs LaTeX review. Use the question image for now.
                       </span>
                     ) : (
                       <span className="flex-1 text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
