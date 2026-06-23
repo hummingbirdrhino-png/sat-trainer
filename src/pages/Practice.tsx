@@ -405,7 +405,7 @@ export default function Practice() {
   }, [selectedAnswer, isAnswered, currentQuestion, eliminatedChoices]);
 
   const getAnswerButtonStyle = (choice: string) => {
-    const baseStyle = 'w-full rounded-lg border-2 px-5 py-4 text-left transition-all duration-200 flex items-start gap-3';
+    const baseStyle = 'w-full min-h-14 rounded-lg border-2 px-4 py-4 text-left transition-all duration-200 flex items-start gap-3 sm:px-5';
 
     if (isAnswered) {
       if (choice === currentQuestion.correct_answer) {
@@ -439,16 +439,16 @@ export default function Practice() {
   };
 
   return (
-    <div className="flex h-[calc(100vh-4rem)] flex-col">
+    <div className="flex h-[calc(100dvh-4rem)] min-h-0 flex-col pb-[env(safe-area-inset-bottom)]">
       {/* Practice Toolbar */}
       <div
-        className="flex items-center justify-between border-b px-4 py-2"
+        className="flex flex-wrap items-center justify-between gap-2 border-b px-3 py-2 sm:px-4"
         style={{
           backgroundColor: 'var(--bg-glass)',
           borderColor: 'rgba(148, 163, 184, 0.1)',
         }}
       >
-        <div className="flex items-center gap-4">
+        <div className="flex min-w-0 flex-wrap items-center gap-2 sm:gap-4">
           <button
             onClick={isEndlessMode ? handleEndPractice : () => navigate('/app')}
             className="flex items-center gap-1 rounded-lg px-2 py-1 text-sm transition-colors hover:bg-white/5"
@@ -477,12 +477,12 @@ export default function Practice() {
           </div>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex max-w-full items-center gap-1 overflow-x-auto sm:gap-2">
           {/* Tools */}
           <button
             onClick={() => setEliminateMode(!eliminateMode)}
             className={cn(
-              'rounded-lg p-2 transition-colors',
+              'min-h-10 min-w-10 rounded-lg p-2 transition-colors',
               eliminateMode && 'bg-blue-500/20'
             )}
             style={{ color: eliminateMode ? 'var(--accent-blue)' : 'var(--text-secondary)' }}
@@ -494,7 +494,7 @@ export default function Practice() {
           <button
             onClick={() => setHighlightMode(!highlightMode)}
             className={cn(
-              'rounded-lg p-2 transition-colors',
+              'min-h-10 min-w-10 rounded-lg p-2 transition-colors',
               highlightMode && 'bg-yellow-500/20'
             )}
             style={{ color: highlightMode ? '#FDE047' : 'var(--text-secondary)' }}
@@ -505,7 +505,7 @@ export default function Practice() {
 
           <button
             onClick={() => setMaskAnswers(!maskAnswers)}
-            className="rounded-lg p-2 transition-colors hover:bg-white/5"
+            className="min-h-10 min-w-10 rounded-lg p-2 transition-colors hover:bg-white/5"
             style={{ color: 'var(--text-secondary)' }}
             title="Mask Answers"
           >
@@ -514,7 +514,7 @@ export default function Practice() {
 
           <button
             onClick={() => setFontSize((s) => Math.max(12, s - 1))}
-            className="rounded-lg p-2 transition-colors hover:bg-white/5"
+            className="min-h-10 min-w-10 rounded-lg p-2 transition-colors hover:bg-white/5"
             style={{ color: 'var(--text-secondary)' }}
             title="Decrease Font"
           >
@@ -523,7 +523,7 @@ export default function Practice() {
 
           <button
             onClick={() => setFontSize((s) => Math.min(20, s + 1))}
-            className="rounded-lg p-2 transition-colors hover:bg-white/5"
+            className="min-h-10 min-w-10 rounded-lg p-2 transition-colors hover:bg-white/5"
             style={{ color: 'var(--text-secondary)' }}
             title="Increase Font"
           >
@@ -532,7 +532,7 @@ export default function Practice() {
 
           <button
             onClick={() => setShowGrid(!showGrid)}
-            className="rounded-lg p-2 transition-colors hover:bg-white/5"
+            className="min-h-10 min-w-10 rounded-lg p-2 transition-colors hover:bg-white/5"
             style={{ color: 'var(--text-secondary)' }}
             title="Question Grid"
           >
@@ -542,7 +542,7 @@ export default function Practice() {
           <button
             onClick={() => toggleMarkedForReview(currentQuestion.id)}
             className={cn(
-              'rounded-lg p-2 transition-colors',
+              'min-h-10 min-w-10 rounded-lg p-2 transition-colors',
               isMarked && 'bg-amber-500/20'
             )}
             style={{ color: isMarked ? 'var(--accent-amber)' : 'var(--text-secondary)' }}
@@ -554,10 +554,10 @@ export default function Practice() {
       </div>
 
       {/* Main Content */}
-      <div className="flex flex-1 overflow-hidden">
+      <div className="flex min-h-0 flex-1 flex-col overflow-hidden md:flex-row">
         {/* Passage Panel */}
         <div
-          className="flex-1 overflow-y-auto border-r p-6"
+          className="max-h-[42dvh] flex-1 overflow-y-auto border-b p-4 md:max-h-none md:border-b-0 md:border-r md:p-6"
           style={{
             backgroundColor: 'var(--bg-surface)',
             borderColor: 'rgba(148, 163, 184, 0.1)',
@@ -599,7 +599,7 @@ export default function Practice() {
 
         {/* Question Panel */}
         <div
-          className="flex flex-1 flex-col overflow-y-auto p-6"
+          className="min-h-0 flex flex-1 flex-col overflow-y-auto p-4 md:p-6"
           style={{ backgroundColor: 'var(--bg-base)' }}
         >
           {/* Question Stem */}
@@ -661,7 +661,7 @@ export default function Practice() {
                           e.stopPropagation();
                           toggleEliminate(letter);
                         }}
-                        className="absolute right-3 top-1/2 -translate-y-1/2 rounded p-1 opacity-0 transition-opacity group-hover:opacity-100 hover:bg-rose-500/20"
+                        className="absolute right-3 top-1/2 min-h-9 min-w-9 -translate-y-1/2 rounded p-2 opacity-100 transition-opacity hover:bg-rose-500/20 sm:opacity-0 sm:group-hover:opacity-100"
                         style={{ color: 'var(--accent-rose)' }}
                         title="Eliminate"
                       >
@@ -922,7 +922,7 @@ export default function Practice() {
 
       {/* Bottom Navigation Bar */}
       <div
-        className="flex items-center justify-between border-t px-6 py-3"
+        className="flex items-center justify-between gap-2 border-t px-3 py-3 sm:px-6"
         style={{
           backgroundColor: 'var(--bg-glass)',
           borderColor: 'rgba(148, 163, 184, 0.1)',
@@ -931,14 +931,14 @@ export default function Practice() {
         <button
           onClick={handlePrevious}
           disabled={currentSession.currentQuestionIndex === 0}
-          className="flex items-center gap-1 rounded-lg px-3 py-2 text-sm transition-colors disabled:opacity-30 hover:bg-white/5"
+          className="min-h-11 flex items-center gap-1 rounded-lg px-3 py-2 text-sm transition-colors disabled:opacity-30 hover:bg-white/5"
           style={{ color: 'var(--text-secondary)' }}
         >
           <ChevronLeft className="h-4 w-4" />
           Previous
         </button>
 
-        <div className="flex items-center gap-2">
+        <div className="hidden items-center gap-2 sm:flex">
           {/* Mini progress dots */}
           {(isEndlessMode ? currentSession.questions.slice(-20) : currentSession.questions.slice(0, 20)).map((q, dotIdx) => {
             const idx = isEndlessMode ? Math.max(0, currentSession.questions.length - 20) + dotIdx : dotIdx;
@@ -964,7 +964,7 @@ export default function Practice() {
         <button
           onClick={handleNext}
           disabled={!isAnswered}
-          className="flex items-center gap-1 rounded-lg px-3 py-2 text-sm transition-colors disabled:opacity-40 disabled:cursor-not-allowed hover:bg-white/5"
+          className="min-h-11 flex items-center gap-1 rounded-lg px-3 py-2 text-sm transition-colors disabled:opacity-40 disabled:cursor-not-allowed hover:bg-white/5"
           style={{ color: 'var(--text-secondary)' }}
           title={!isAnswered ? 'Submit an answer before moving on' : undefined}
         >
