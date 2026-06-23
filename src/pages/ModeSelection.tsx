@@ -101,7 +101,8 @@ export default function ModeSelection() {
     : calculatePredictedScore(
         userAnswers.filter((a) => a.isCorrect).length,
         userAnswers.length,
-        userAnswers.length > 0 ? userAnswers.reduce((sum, answer) => sum + answer.timeSpentSeconds, 0) / userAnswers.length : undefined
+        userAnswers.length > 0 ? userAnswers.reduce((sum, answer) => sum + answer.timeSpentSeconds, 0) / userAnswers.length : undefined,
+        overallMastery
       );
 
   const dueForReview = Object.values(userSkills).filter(

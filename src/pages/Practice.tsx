@@ -322,7 +322,10 @@ export default function Practice() {
       predictedSatScore: calculatePredictedScore(
         correct,
         total,
-        answers.length > 0 ? answers.reduce((sum, answer) => sum + answer.timeSpentSeconds, 0) / answers.length : undefined
+        answers.length > 0 ? answers.reduce((sum, answer) => sum + answer.timeSpentSeconds, 0) / answers.length : undefined,
+        currentSession.questions.length > 0
+          ? currentSession.questions.reduce((sum, question) => sum + (useStore.getState().userSkills[question.skill]?.masteryScore ?? 0), 0) / currentSession.questions.length
+          : undefined
       ),
       date: Date.now(),
     };

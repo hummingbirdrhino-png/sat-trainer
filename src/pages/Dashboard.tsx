@@ -60,7 +60,7 @@ export default function Dashboard() {
 
   const predictedScore = sessionSummaries.length > 0
     ? sessionSummaries[0].predictedSatScore
-    : calculatePredictedScore(totalCorrect, totalAnswered, avgTime);
+    : calculatePredictedScore(totalCorrect, totalAnswered, avgTime, overallMastery);
 
   const streak = dailyGoals.length > 0
     ? dailyGoals.sort((a, b) => b.date.localeCompare(a.date))[0]?.streak ?? 0

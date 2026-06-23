@@ -24,6 +24,7 @@ export function calculatePredictedScore(
   correct: number,
   total: number,
   averageTimeSeconds?: number,
+  averageMastery?: number,
   _difficultyWeights?: number[]
 ): number {
   if (total === 0) return 400;
@@ -31,12 +32,14 @@ export function calculatePredictedScore(
   const accuracy = correct / total;
   const timeMultiplier = calculateTimeMultiplier(averageTimeSeconds);
   const timedAccuracy = Math.min(1, accuracy * timeMultiplier);
-  const rawScore = 200 + timedAccuracy * 600;
+  const performanceScore = 200 + timedAccuracy * 600;
+  const masteryScore = averageMastery === undefined ? performanceScore : 200 + (averageMastery / 100) * 600;
 
-  // Predicted score should reflect current performance, even for new users.
-  // Reliability/sample size can be communicated separately; don't suppress a
-  // legitimately strong early performance.
-  return Math.round(Math.min(800, Math.max(200, rawScore)) / 10) * 10;
+  // Mastery is the anti-guessing signal: confidence, consistency, skill history,
+  // and timing all flow into mastery. Blend it with raw performance so a lucky
+  // streak helps, but does not dominate the prediction.
+  const blendedScore = masteryScore * 0.65 + performanceScore * 0.35;
+  return Math.round(Math.min(800, Math.max(200, blendedScore)) / 10) * 10;
 }
 
 export function calculateMasteryDelta(
