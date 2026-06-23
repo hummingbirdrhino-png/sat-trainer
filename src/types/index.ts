@@ -24,6 +24,9 @@ export interface Question {
   passage: string;
   stem: string;
   question?: string;
+  question_latex?: string | null;
+  question_text?: string | null;
+  question_parse_status?: 'verified_latex' | 'verified_text' | 'fallback_image_needs_latex_review' | string | null;
   question_parts?: MathQuestionPart[];
   choices: string[];
   choice_latex?: Record<string, string>;

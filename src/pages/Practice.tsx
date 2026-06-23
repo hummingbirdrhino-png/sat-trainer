@@ -111,6 +111,14 @@ export default function Practice() {
     return `${normalizedBase}${cleanPath}`;
   };
 
+  const renderLatexBlock = (latex: string) => (
+    <div className="rounded-2xl border p-4 shadow-lg sm:p-6" style={{ backgroundColor: 'var(--bg-base)', borderColor: 'rgba(148, 163, 184, 0.16)' }}>
+      <div className="text-base leading-8 sm:text-lg" style={{ color: 'var(--text-primary)' }}>
+        <LatexMath value={latex} displayMode />
+      </div>
+    </div>
+  );
+
   const renderMathQuestionParts = (parts = currentQuestion.question_parts ?? []) => (
     <div className="rounded-2xl border p-4 shadow-lg sm:p-6" style={{ backgroundColor: 'var(--bg-base)', borderColor: 'rgba(148, 163, 184, 0.16)' }}>
       <div className="flex flex-wrap items-center gap-x-1.5 gap-y-3 text-base leading-8 sm:text-lg" style={{ color: 'var(--text-primary)' }}>
@@ -129,9 +137,6 @@ export default function Practice() {
           return <span key={`${part.text}-${index}`}>{part.text}</span>;
         })}
       </div>
-      <p className="mt-3 text-xs" style={{ color: 'var(--text-muted)' }}>
-        Rendered from structured Math text. If notation looks incomplete, use the PDF-rendered question crop.
-      </p>
     </div>
   );
 
@@ -706,7 +711,9 @@ export default function Practice() {
               lineHeight: '1.7',
             }}
           >
-            {isMathQuestion && mathPageImages.length > 0 ? (
+            {isMathQuestion && currentQuestion.question_latex ? (
+              renderLatexBlock(currentQuestion.question_latex)
+            ) : isMathQuestion && mathPageImages.length > 0 ? (
               <div className="space-y-4">
                 {mathPageImages.map((image, index) => (
                   <div key={image} className="overflow-hidden rounded-2xl border bg-white p-2 shadow-xl sm:p-4" style={{ borderColor: 'rgba(148, 163, 184, 0.22)' }}>

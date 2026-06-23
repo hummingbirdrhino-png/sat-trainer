@@ -463,7 +463,8 @@
     "choice_latex": {
       "A": "3",
       "C": "4",
-      "D": "6"
+      "D": "6",
+      "B": "\\frac{1}{2}"
     },
     "choice_text": {
       "A": "3",
@@ -472,7 +473,7 @@
     },
     "choice_parse_status": {
       "A": "verified_text_layer",
-      "B": "fallback_image_needs_latex_review",
+      "B": "verified_latex_vision",
       "C": "verified_text_layer",
       "D": "verified_text_layer"
     }
@@ -581,15 +582,17 @@
     ],
     "choice_latex": {
       "C": "2",
-      "D": "3"
+      "D": "3",
+      "A": "-2",
+      "B": "-1"
     },
     "choice_text": {
       "C": "2",
       "D": "3"
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
+      "A": "verified_latex_vision",
+      "B": "verified_latex_vision",
       "C": "verified_text_layer",
       "D": "verified_text_layer"
     }
@@ -853,13 +856,18 @@
     "parse_notes": [
       "page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols"
     ],
-    "choice_latex": {},
+    "choice_latex": {
+      "A": "(-\\frac{26}{3}, 0)",
+      "B": "(-\\frac{9}{2}, 0)",
+      "C": "(-\\frac{11}{3}, 0)",
+      "D": "(-\\frac{17}{3}, 0)"
+    },
     "choice_text": {},
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_latex_vision",
+      "B": "verified_latex_vision",
+      "C": "verified_latex_vision",
+      "D": "verified_latex_vision"
     }
   },
   {
@@ -1105,13 +1113,18 @@
     "parse_notes": [
       "page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols"
     ],
-    "choice_latex": {},
+    "choice_latex": {
+      "A": "\\begin{cases}4x + 2y = 86\\\\3x + 5y = 166\\end{cases}",
+      "B": "\\begin{cases}4x + 3y = 86\\\\2x + 5y = 166\\end{cases}",
+      "C": "\\begin{cases}4x + 2y = 166\\\\3x + 5y = 86\\end{cases}",
+      "D": "\\begin{cases}4x + 3y = 166\\\\2x + 5y = 86\\end{cases}"
+    },
     "choice_text": {},
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_latex_vision",
+      "B": "verified_latex_vision",
+      "C": "verified_latex_vision",
+      "D": "verified_latex_vision"
     }
   },
   {
@@ -1181,13 +1194,18 @@
     "parse_notes": [
       "page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols"
     ],
-    "choice_latex": {},
+    "choice_latex": {
+      "A": "-17",
+      "B": "-13",
+      "C": "13",
+      "D": "17"
+    },
     "choice_text": {},
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_latex_vision",
+      "B": "verified_latex_vision",
+      "C": "verified_latex_vision",
+      "D": "verified_latex_vision"
     }
   },
   {
@@ -1305,10 +1323,12 @@
     "parse_notes": [
       "page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols"
     ],
-    "choice_latex": {},
+    "choice_latex": {
+      "A": "y = 270x - 135"
+    },
     "choice_text": {},
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
+      "A": "verified_latex_vision",
       "B": "fallback_image_needs_latex_review",
       "C": "fallback_image_needs_latex_review",
       "D": "fallback_image_needs_latex_review"
@@ -1773,7 +1793,11 @@
     "parse_notes": [
       "page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols"
     ],
-    "choice_latex": {},
+    "choice_latex": {
+      "B": "\\text{The length is }10\\text{ m, and the width is }8\\text{ m.}",
+      "C": "\\text{The length is }8\\text{ m, and the width is }10\\text{ m.}",
+      "D": "\\text{The length is }8\\text{ m less than the perimeter, and the width is }10\\text{ m less than the perimeter.}"
+    },
     "choice_text": {
       "A": "The length is \n less than the perimeter, and the width is \n less than the perimeter.",
       "B": "The length is \n, and the width is \n.",
@@ -1782,9 +1806,9 @@
     },
     "choice_parse_status": {
       "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "B": "verified_latex_vision",
+      "C": "verified_latex_vision",
+      "D": "verified_latex_vision"
     }
   },
   {
@@ -1920,13 +1944,18 @@
     "parse_notes": [
       "page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols"
     ],
-    "choice_latex": {},
+    "choice_latex": {
+      "A": "w-5<20",
+      "B": "w-5>20",
+      "C": "w+5<20",
+      "D": "w+5>20"
+    },
     "choice_text": {},
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_latex_vision",
+      "B": "verified_latex_vision",
+      "C": "verified_latex_vision",
+      "D": "verified_latex_vision"
     }
   },
   {
@@ -2016,15 +2045,17 @@
     ],
     "choice_latex": {
       "C": "3",
-      "D": "9"
+      "D": "9",
+      "A": "\\frac{4}{3}",
+      "B": "\\frac{7}{3}"
     },
     "choice_text": {
       "C": "3",
       "D": "9"
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
+      "A": "verified_latex_vision",
+      "B": "verified_latex_vision",
       "C": "verified_text_layer",
       "D": "verified_text_layer"
     }
@@ -2176,13 +2207,18 @@
     "parse_notes": [
       "page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols"
     ],
-    "choice_latex": {},
+    "choice_latex": {
+      "A": "10n+9n+70=100",
+      "B": "10n+9n+7n=100",
+      "C": "4n+10=100",
+      "D": "5n+10=100"
+    },
     "choice_text": {},
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_latex_vision",
+      "B": "verified_latex_vision",
+      "C": "verified_latex_vision",
+      "D": "verified_latex_vision"
     }
   },
   {
@@ -2276,13 +2312,18 @@
     "parse_notes": [
       "page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols"
     ],
-    "choice_latex": {},
+    "choice_latex": {
+      "A": "f(x)=28x+34",
+      "B": "f(x)=3x+38",
+      "C": "f(x)=4x+3",
+      "D": "f(x)=7x+3"
+    },
     "choice_text": {},
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_latex_vision",
+      "B": "verified_latex_vision",
+      "C": "verified_latex_vision",
+      "D": "verified_latex_vision"
     }
   },
   {
@@ -2376,13 +2417,18 @@
     "parse_notes": [
       "page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols"
     ],
-    "choice_latex": {},
+    "choice_latex": {
+      "A": "y=x+84",
+      "B": "y=\\frac{1}{84}x",
+      "C": "y=84x",
+      "D": "y=x-84"
+    },
     "choice_text": {},
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_latex_vision",
+      "B": "verified_latex_vision",
+      "C": "verified_latex_vision",
+      "D": "verified_latex_vision"
     }
   },
   {
@@ -2452,13 +2498,18 @@
     "parse_notes": [
       "page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols"
     ],
-    "choice_latex": {},
+    "choice_latex": {
+      "A": "0",
+      "B": "1",
+      "C": "2",
+      "D": "8"
+    },
     "choice_text": {},
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_latex_vision",
+      "B": "verified_latex_vision",
+      "C": "verified_latex_vision",
+      "D": "verified_latex_vision"
     }
   },
   {
@@ -2528,13 +2579,18 @@
     "parse_notes": [
       "page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols"
     ],
-    "choice_latex": {},
+    "choice_latex": {
+      "A": "24",
+      "B": "15",
+      "C": "12",
+      "D": "5"
+    },
     "choice_text": {},
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_latex_vision",
+      "B": "verified_latex_vision",
+      "C": "verified_latex_vision",
+      "D": "verified_latex_vision"
     }
   },
   {
@@ -2604,13 +2660,18 @@
     "parse_notes": [
       "page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols"
     ],
-    "choice_latex": {},
+    "choice_latex": {
+      "A": "0.3x+0.7y\\ge 400",
+      "B": "0.7x+0.3y\\le 400",
+      "C": "\\frac{x}{3}+\\frac{y}{7}\\le 400",
+      "D": "30x+70y\\ge 400"
+    },
     "choice_text": {},
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_latex_vision",
+      "B": "verified_latex_vision",
+      "C": "verified_latex_vision",
+      "D": "verified_latex_vision"
     }
   },
   {
@@ -2886,13 +2947,18 @@
     "parse_notes": [
       "page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols"
     ],
-    "choice_latex": {},
+    "choice_latex": {
+      "A": "0.96x+0.02y=(0.04)(24)",
+      "B": "0.02x+0.96y=(0.04)(24)",
+      "C": "0.96x+0.02y=24",
+      "D": "0.02x+0.96y=24"
+    },
     "choice_text": {},
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_latex_vision",
+      "B": "verified_latex_vision",
+      "C": "verified_latex_vision",
+      "D": "verified_latex_vision"
     }
   },
   {
@@ -3167,7 +3233,10 @@
     "parse_notes": [
       "page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols"
     ],
-    "choice_latex": {},
+    "choice_latex": {
+      "A": "\\text{The monthly sales revenue, in dollars, from selling }x\\text{ tape dispensers}",
+      "D": "\\text{The monthly cost, in dollars, of creating }x\\text{ tape dispensers}"
+    },
     "choice_text": {
       "A": "The monthly sales revenue, in dollars, from selling \n tape dispensers",
       "B": "The monthly sales revenue, in dollars, from each tape dispenser sold",
@@ -3175,10 +3244,10 @@
       "D": "The monthly cost, in dollars, of creating \n tape dispensers"
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
+      "A": "verified_latex_vision",
       "B": "verified_plain_text",
       "C": "verified_plain_text",
-      "D": "fallback_image_needs_latex_review"
+      "D": "verified_latex_vision"
     }
   },
   {
@@ -3256,13 +3325,18 @@
     "parse_notes": [
       "page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols"
     ],
-    "choice_latex": {},
+    "choice_latex": {
+      "A": "\\begin{cases}5s+12p=2{,}300\\\\s+p=250\\end{cases}",
+      "B": "12s+5p=2{,}300",
+      "C": "\\begin{cases}5s+12p=250\\\\s+p=2{,}300\\end{cases}",
+      "D": "\\begin{cases}12s+5p=250\\\\s+p=2{,}300\\end{cases}"
+    },
     "choice_text": {},
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_latex_vision",
+      "B": "verified_latex_vision",
+      "C": "verified_latex_vision",
+      "D": "verified_latex_vision"
     }
   },
   {
@@ -3332,10 +3406,12 @@
     "parse_notes": [
       "page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols"
     ],
-    "choice_latex": {},
+    "choice_latex": {
+      "A": "18\\le n\\le 135"
+    },
     "choice_text": {},
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
+      "A": "verified_latex_vision",
       "B": "fallback_image_needs_latex_review",
       "C": "fallback_image_needs_latex_review",
       "D": "fallback_image_needs_latex_review"
