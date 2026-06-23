@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useStore } from '@/store/useStore';
-import { cn, formatTime, calculateConfidenceWeight, updateMasteryScore, calculatePredictedScore, calculateNextReviewSession, getSkillKey } from '@/lib/utils';
+import { cn, formatTime, calculateConfidenceWeight, updateMasteryScore, calculatePredictedScore, calculateNextReviewSession, getSkillKey, getSkillColor } from '@/lib/utils';
 import { getChoiceDisplay } from '@/lib/questionSanitizer';
 import type { Question, UserAnswer } from '@/types';
 import {
@@ -127,6 +127,9 @@ export default function Practice() {
           return <span key={`${part.text}-${index}`}>{part.text}</span>;
         })}
       </div>
+      <p className="mt-3 text-xs" style={{ color: 'var(--text-muted)' }}>
+        Rendered from structured Math text. If notation looks incomplete, use the PDF-rendered question crop.
+      </p>
     </div>
   );
 
@@ -245,13 +248,42 @@ export default function Practice() {
 
   const normalizeStudentResponse = (value: string) => value.trim().toLowerCase().replace(/\s+/g, '');
 
+  const parseNumericAnswer = (value: string): number | null => {
+    const normalized = normalizeStudentResponse(value)
+      .replace(/^either/i, '')
+      .replace(/[−–—]/g, '-')
+      .replace(/^\+/, '');
+
+    if (!normalized) return null;
+
+    const fractionMatch = normalized.match(/^(-?\d+(?:\.\d+)?)\/(-?\d+(?:\.\d+)?)$/);
+    if (fractionMatch) {
+      const numerator = Number(fractionMatch[1]);
+      const denominator = Number(fractionMatch[2]);
+      if (!Number.isFinite(numerator) || !Number.isFinite(denominator) || denominator === 0) return null;
+      return numerator / denominator;
+    }
+
+    const decimalValue = Number(normalized);
+    return Number.isFinite(decimalValue) ? decimalValue : null;
+  };
+
   const isCorrectStudentResponse = (value: string, correctAnswer: string) => {
     const normalized = normalizeStudentResponse(value);
+    const submittedNumber = parseNumericAnswer(value);
+
     return correctAnswer
       .split(/,|\band\b|\bor\b/i)
-      .map((answer) => normalizeStudentResponse(answer.replace(/^either\s+/i, '')))
+      .map((answer) => answer.replace(/^either\s+/i, '').trim())
       .filter(Boolean)
-      .includes(normalized);
+      .some((answer) => {
+        if (normalizeStudentResponse(answer) === normalized) return true;
+
+        const correctNumber = parseNumericAnswer(answer);
+        if (submittedNumber === null || correctNumber === null) return false;
+
+        return Math.abs(submittedNumber - correctNumber) <= 0.0006;
+      });
   };
 
   const eliminateAllButSelected = () => {
@@ -659,9 +691,7 @@ export default function Practice() {
               lineHeight: '1.7',
             }}
           >
-            {isMathQuestion && currentQuestion.question_parts?.length ? (
-              renderMathQuestionParts()
-            ) : isMathQuestion && mathPageImages.length > 0 ? (
+            {isMathQuestion && mathPageImages.length > 0 ? (
               <div className="space-y-4">
                 {mathPageImages.map((image, index) => (
                   <div key={image} className="overflow-hidden rounded-2xl border bg-white p-2 shadow-xl sm:p-4" style={{ borderColor: 'rgba(148, 163, 184, 0.22)' }}>
@@ -675,6 +705,8 @@ export default function Practice() {
                   </div>
                 ))}
               </div>
+            ) : isMathQuestion && currentQuestion.question_parts?.length ? (
+              renderMathQuestionParts()
             ) : (
               <>
                 {currentQuestion.figure_image && (
@@ -1151,20 +1183,4 @@ export default function Practice() {
       </div>
     </div>
   );
-}
-
-function getSkillColor(skill: string): string {
-  const colors: Record<string, string> = {
-    Inferences: '#3B82F6',
-    'Central Ideas and Details': '#10B981',
-    'Command of Evidence': '#F59E0B',
-    'Words in Context': '#8B5CF6',
-    'Text Structure and Purpose': '#EC4899',
-    'Cross-Text Connections': '#06B6D4',
-    'Rhetorical Synthesis': '#F43F5E',
-    Transitions: '#84CC16',
-    Boundaries: '#6366F1',
-    'Form, Structure, and Sense': '#14B8A6',
-  };
-  return colors[skill] ?? '#6B7280';
 }

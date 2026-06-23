@@ -8,6 +8,7 @@ import {
   calculatePredictedScore,
   getUniqueSkills,
   cn,
+  shuffleArray,
 } from '@/lib/utils';
 import type { PracticeMode, QuestionSection } from '@/types';
 import {
@@ -132,7 +133,7 @@ export default function ModeSelection() {
         selectedQuestions = selectAdaptiveQuestions(isPro ? activeQuestions : activeQuestions.slice(0, 25), userSkills, 1);
         break;
       case 'random':
-        selectedQuestions = selectAdaptiveQuestions(isPro ? activeQuestions : activeQuestions.slice(0, 25), userSkills, 1);
+        selectedQuestions = shuffleArray(isPro ? activeQuestions : activeQuestions.slice(0, 25)).slice(0, 1);
         break;
       case 'mock':
         selectedQuestions = selectMockTestQuestions(activeQuestions);
