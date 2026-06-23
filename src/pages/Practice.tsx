@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useStore } from '@/store/useStore';
 import { cn, formatTime, calculateConfidenceWeight, updateMasteryScore, calculatePredictedScore, calculateNextReviewSession } from '@/lib/utils';
 import { getChoiceDisplay } from '@/lib/questionSanitizer';
-import type { UserAnswer } from '@/types';
+import type { Question, UserAnswer } from '@/types';
 import {
   ChevronLeft,
   ChevronRight,
@@ -71,6 +71,7 @@ export default function Practice() {
   );
 
   const isMockMode = currentSession?.mode === 'mock';
+  const isAdaptiveMode = currentSession?.mode === 'adaptive';
 
   // Redirect if no session
   useEffect(() => {
@@ -86,6 +87,40 @@ export default function Practice() {
 
   const isMarked = currentSession.markedForReview.includes(currentQuestion.id);
   const isBookmarked = bookmarks.some((b) => b.questionId === currentQuestion.id);
+  const answeredCount = Object.keys(currentSession.answers).length;
+
+  const pickNextAdaptiveQuestion = (session = currentSession): Question => {
+    const allQuestions = useStore.getState().questions;
+    const availableQuestions = (useStore.getState().isPro ? allQuestions : allQuestions.slice(0, 25))
+      .filter((q) => q.id !== currentQuestion.id);
+    const recentlySeen = new Set(session.questions.slice(-10).map((q) => q.id));
+    const freshQuestions = availableQuestions.filter((q) => !recentlySeen.has(q.id));
+    const pool = freshQuestions.length ? freshQuestions : availableQuestions;
+
+    const skills = [...new Set(pool.map((q) => q.skill))];
+    const skillWeights = skills.map((skill) => {
+      const skillData = useStore.getState().userSkills[skill];
+      const mastery = skillData?.masteryScore ?? 0;
+      const answered = skillData?.questionsAnswered ?? 0;
+      return { skill, weight: Math.max(0.15, (100 - mastery) / 100) * (answered < 3 ? 1.5 : 1) };
+    });
+    const totalWeight = skillWeights.reduce((sum, item) => sum + item.weight, 0);
+    let rand = Math.random() * totalWeight;
+    let chosenSkill = skillWeights[0]?.skill;
+
+    for (const item of skillWeights) {
+      rand -= item.weight;
+      if (rand <= 0) {
+        chosenSkill = item.skill;
+        break;
+      }
+    }
+
+    const skillPool = pool.filter((q) => q.skill === chosenSkill);
+    const finalPool = skillPool.length ? skillPool : pool;
+    return finalPool[Math.floor(Math.random() * finalPool.length)] ?? currentQuestion;
+  };
+
 
   // Timer
   useEffect(() => {
@@ -193,6 +228,17 @@ export default function Practice() {
   };
 
   const handleNext = () => {
+    if (isAdaptiveMode) {
+      const nextQuestion = pickNextAdaptiveQuestion();
+      setCurrentSession({
+        ...currentSession,
+        questions: [...currentSession.questions, nextQuestion],
+        currentQuestionIndex: currentSession.currentQuestionIndex + 1,
+        questionCount: (currentSession.questionCount ?? currentSession.questions.length) + 1,
+      });
+      return;
+    }
+
     if (currentSession.currentQuestionIndex < currentSession.questions.length - 1) {
       setCurrentSession({
         ...currentSession,
@@ -210,6 +256,18 @@ export default function Practice() {
         currentQuestionIndex: currentSession.currentQuestionIndex - 1,
       });
     }
+  };
+
+  const persistAnswers = () => {
+    Object.values(currentSession.answers).forEach((answer) => {
+      addUserAnswer(answer);
+    });
+  };
+
+  const handleEndAdaptivePractice = () => {
+    persistAnswers();
+    setCurrentSession(null);
+    navigate('/app');
   };
 
   const handleFinish = () => {
@@ -231,9 +289,7 @@ export default function Practice() {
     };
 
     // Save all answers
-    answers.forEach((answer) => {
-      addUserAnswer(answer);
-    });
+    persistAnswers();
 
     addSessionSummary(summary);
     setCurrentSession({ ...currentSession, isComplete: true });
@@ -342,12 +398,12 @@ export default function Practice() {
       >
         <div className="flex items-center gap-4">
           <button
-            onClick={() => navigate('/app')}
+            onClick={isAdaptiveMode ? handleEndAdaptivePractice : () => navigate('/app')}
             className="flex items-center gap-1 rounded-lg px-2 py-1 text-sm transition-colors hover:bg-white/5"
             style={{ color: 'var(--text-secondary)' }}
           >
             <ArrowLeft className="h-4 w-4" />
-            Exit
+            {isAdaptiveMode ? 'End Practice' : 'Exit'}
           </button>
 
           <div className="flex items-center gap-2 rounded-lg px-3 py-1" style={{ backgroundColor: 'var(--bg-elevated)' }}>
@@ -362,7 +418,9 @@ export default function Practice() {
 
           <div className="flex items-center gap-1 rounded-lg px-3 py-1" style={{ backgroundColor: 'var(--bg-elevated)' }}>
             <span className="font-mono text-sm" style={{ color: 'var(--text-muted)' }}>
-              {currentSession.currentQuestionIndex + 1} / {currentSession.questions.length}
+              {isAdaptiveMode
+                ? `${answeredCount} answered`
+                : `${currentSession.currentQuestionIndex + 1} / ${currentSession.questions.length}`}
             </span>
           </div>
         </div>
@@ -819,7 +877,9 @@ export default function Practice() {
 
         <div className="flex items-center gap-2">
           {/* Mini progress dots */}
-          {currentSession.questions.slice(0, 20).map((q, idx) => (
+          {(isAdaptiveMode ? currentSession.questions.slice(-20) : currentSession.questions.slice(0, 20)).map((q, dotIdx) => {
+            const idx = isAdaptiveMode ? Math.max(0, currentSession.questions.length - 20) + dotIdx : dotIdx;
+            return (
             <div
               key={q.id}
               className={cn(
@@ -830,10 +890,10 @@ export default function Practice() {
                 !currentSession.answers[q.id] && idx !== currentSession.currentQuestionIndex && 'bg-slate-600'
               )}
             />
-          ))}
+          )})}
           {currentSession.questions.length > 20 && (
             <span className="text-xs" style={{ color: 'var(--text-muted)' }}>
-              +{currentSession.questions.length - 20}
+              {isAdaptiveMode ? `${currentSession.questions.length} seen` : `+${currentSession.questions.length - 20}`}
             </span>
           )}
         </div>
@@ -845,7 +905,7 @@ export default function Practice() {
           style={{ color: 'var(--text-secondary)' }}
           title={!isAnswered ? 'Submit an answer before moving on' : undefined}
         >
-          {currentSession.currentQuestionIndex < currentSession.questions.length - 1 ? 'Next' : 'Finish'}
+          {isAdaptiveMode ? 'Next Question' : currentSession.currentQuestionIndex < currentSession.questions.length - 1 ? 'Next' : 'Finish'}
           <ChevronRight className="h-4 w-4" />
         </button>
       </div>

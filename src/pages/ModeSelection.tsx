@@ -113,7 +113,7 @@ export default function ModeSelection() {
     let selectedQuestions;
     switch (mode) {
       case 'adaptive':
-        selectedQuestions = selectAdaptiveQuestions(isPro ? questions : questions.slice(0, 25), userSkills, 10);
+        selectedQuestions = selectAdaptiveQuestions(isPro ? questions : questions.slice(0, 25), userSkills, 1);
         break;
       case 'mock':
         selectedQuestions = selectMockTestQuestions(questions);
@@ -146,6 +146,8 @@ export default function ModeSelection() {
       markedForReview: [],
       startTime: Date.now(),
       isComplete: false,
+      questionCount: selectedQuestions.length,
+      isEndless: mode === 'adaptive',
     };
 
     setCurrentSession(session);

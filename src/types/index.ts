@@ -78,6 +78,8 @@ export interface PracticeSession {
   isComplete: boolean;
   focusedSkills?: string[];
   mockModule?: number;
+  questionCount?: number;
+  isEndless?: boolean;
 }
 
 export type Theme = 'dark' | 'light' | 'sepia' | 'high-contrast' | 'pure-black';
