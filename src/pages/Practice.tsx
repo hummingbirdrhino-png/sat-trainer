@@ -56,6 +56,12 @@ export default function Practice() {
   const passageRef = useRef<HTMLDivElement | null>(null);
   const timerRef = useRef<ReturnType<typeof setInterval>>(undefined);
 
+  const formatPassageHtml = (text: string) => text
+    .replace(/\s*Text 1\s*/g, '<div class="mb-2 mt-1 text-xs font-bold uppercase tracking-[0.2em] text-blue-400">Text 1</div><p class="mb-5">')
+    .replace(/\s*Text 2\s*/g, '</p><div class="mb-2 mt-5 text-xs font-bold uppercase tracking-[0.2em] text-emerald-400">Text 2</div><p>')
+    .replace(/^(?!<div)/, '<p>')
+    .replace(/(?<!>)$/, '</p>');
+
   const renderFormattedText = (text: string, className?: string) => (
     <span
       className={className}
@@ -453,7 +459,7 @@ export default function Practice() {
             }}
           >
             {currentQuestion.passage ? (
-              <div>{renderFormattedText(currentQuestion.passage)}</div>
+              <div dangerouslySetInnerHTML={{ __html: formatPassageHtml(currentQuestion.passage) }} />
             ) : (
               <div className="italic opacity-50">No passage for this question.</div>
             )}
