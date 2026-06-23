@@ -45,6 +45,7 @@ export default function Practice() {
   const [showRationale, setShowRationale] = useState(false);
   const [isAnswered, setIsAnswered] = useState(false);
   const [elapsedTime, setElapsedTime] = useState(0);
+  const [questionElapsedTime, setQuestionElapsedTime] = useState(0);
   const [questionStartTime, setQuestionStartTime] = useState(Date.now());
   const [showGrid, setShowGrid] = useState(false);
   const [maskAnswers, setMaskAnswers] = useState(false);
@@ -89,10 +90,12 @@ export default function Practice() {
   // Timer
   useEffect(() => {
     timerRef.current = setInterval(() => {
-      setElapsedTime(Math.floor((Date.now() - currentSession.startTime) / 1000));
+      const now = Date.now();
+      setElapsedTime(Math.floor((now - currentSession.startTime) / 1000));
+      setQuestionElapsedTime(Math.floor((now - questionStartTime) / 1000));
     }, 1000);
     return () => clearInterval(timerRef.current);
-  }, [currentSession.startTime]);
+  }, [currentSession.startTime, questionStartTime]);
 
   // Reset state on question change
   useEffect(() => {
@@ -100,7 +103,9 @@ export default function Practice() {
     setEliminatedChoices([]);
     setShowRationale(false);
     setIsAnswered(false);
-    setQuestionStartTime(Date.now());
+    const now = Date.now();
+    setQuestionStartTime(now);
+    setQuestionElapsedTime(0);
     setShowAiExplanation(false);
     setMaskAnswers(false);
 
@@ -343,8 +348,11 @@ export default function Practice() {
 
           <div className="flex items-center gap-2 rounded-lg px-3 py-1" style={{ backgroundColor: 'var(--bg-elevated)' }}>
             <Clock className="h-4 w-4" style={{ color: 'var(--accent-amber)' }} />
+            <span className="text-xs font-semibold uppercase tracking-wide" style={{ color: 'var(--text-muted)' }}>
+              {isMockMode ? 'Test' : 'Question'}
+            </span>
             <span className="font-mono text-sm font-bold" style={{ color: 'var(--text-primary)' }}>
-              {formatTime(elapsedTime)}
+              {formatTime(isMockMode ? elapsedTime : questionElapsedTime)}
             </span>
           </div>
 
