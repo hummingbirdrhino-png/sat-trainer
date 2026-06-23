@@ -9,7 +9,9 @@ import type {
 interface AppState {
   // Questions bank
   questions: Question[];
+  mathQuestions: Question[];
   setQuestions: (questions: Question[]) => void;
+  setMathQuestions: (questions: Question[]) => void;
 
   // Current user
   userId: string | null;
@@ -74,7 +76,9 @@ export const useStore = create<AppState>()(
     (set, get) => ({
       // Questions
       questions: [],
+      mathQuestions: [],
       setQuestions: (questions) => set({ questions }),
+      setMathQuestions: (mathQuestions) => set({ mathQuestions }),
 
       // User
       userId: null,

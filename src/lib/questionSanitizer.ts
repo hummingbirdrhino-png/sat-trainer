@@ -51,12 +51,21 @@ function splitChoices(choices: string[] = []): string[] {
 }
 
 export function sanitizeQuestion(question: Question): Question {
+  const isMath = question.section === 'math' || question.test === 'Math' || question.id?.startsWith('math_');
+  const stem = question.stem ?? question.question ?? '';
+
   return {
     ...question,
-    passage: question.figure_image ? String(question.passage ?? '').trim() : cleanQuestionText(question.passage),
-    stem: cleanQuestionText(question.stem),
+    section: isMath ? 'math' : (question.section ?? 'reading_writing'),
+    passage: isMath
+      ? String(question.passage ?? '').trim()
+      : question.figure_image ? String(question.passage ?? '').trim() : cleanQuestionText(question.passage),
+    stem: isMath ? cleanQuestionText(stem) : cleanQuestionText(stem),
+    question: question.question ? cleanQuestionText(question.question) : undefined,
     rationale: cleanQuestionText(question.rationale),
     choices: splitChoices(question.choices),
+    has_graph: Boolean(question.has_graph || question.page_image || question.page_images?.length),
+    question_type: question.question_type ?? (question.choices?.length ? 'multiple_choice' : 'student_produced_response'),
   };
 }
 

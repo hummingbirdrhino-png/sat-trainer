@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useStore } from '@/store/useStore';
 import {
@@ -8,7 +9,7 @@ import {
   getUniqueSkills,
   cn,
 } from '@/lib/utils';
-import type { PracticeMode } from '@/types';
+import type { PracticeMode, QuestionSection } from '@/types';
 import {
   Brain,
   Shuffle,
@@ -20,6 +21,7 @@ import {
   Zap,
   TrendingUp,
   BookOpen,
+  Calculator,
   ChevronRight,
 } from 'lucide-react';
 
@@ -88,7 +90,8 @@ const modes: ModeCard[] = [
 
 export default function ModeSelection() {
   const navigate = useNavigate();
-  const { questions, userSkills, bookmarks, userAnswers, sessionSummaries, displayName, isPro, setCurrentSession } = useStore();
+  const { questions, mathQuestions, userSkills, bookmarks, userAnswers, sessionSummaries, displayName, isPro, setCurrentSession } = useStore();
+  const [selectedSection, setSelectedSection] = useState<QuestionSection>('reading_writing');
 
   const overallMastery = Object.values(userSkills).reduce(
     (sum, s) => sum + (s?.masteryScore ?? 0),
@@ -109,10 +112,12 @@ export default function ModeSelection() {
     (s) => s.sessionCounter >= s.nextReviewSession
   ).length;
 
-  const skills = getUniqueSkills(questions);
+  const activeQuestions = selectedSection === 'math' ? mathQuestions : questions;
+  const sectionLabel = selectedSection === 'math' ? 'Math' : 'Reading & Writing';
+  const skills = getUniqueSkills(activeQuestions);
 
   const startMode = (mode: PracticeMode) => {
-    if (!questions.length) return;
+    if (!activeQuestions.length) return;
 
     const proOnlyModes: PracticeMode[] = ['mock', 'focused', 'review_wrong', 'weak_spots', 'bookmarked'];
     if (!isPro && proOnlyModes.includes(mode)) {
@@ -123,36 +128,37 @@ export default function ModeSelection() {
     let selectedQuestions;
     switch (mode) {
       case 'adaptive':
-        selectedQuestions = selectAdaptiveQuestions(isPro ? questions : questions.slice(0, 25), userSkills, 1);
+        selectedQuestions = selectAdaptiveQuestions(isPro ? activeQuestions : activeQuestions.slice(0, 25), userSkills, 1);
         break;
       case 'random':
-        selectedQuestions = selectAdaptiveQuestions(isPro ? questions : questions.slice(0, 25), userSkills, 1);
+        selectedQuestions = selectAdaptiveQuestions(isPro ? activeQuestions : activeQuestions.slice(0, 25), userSkills, 1);
         break;
       case 'mock':
-        selectedQuestions = selectMockTestQuestions(questions);
+        selectedQuestions = selectMockTestQuestions(activeQuestions);
         break;
       case 'review_wrong':
-        selectedQuestions = questions.filter((q) =>
+        selectedQuestions = activeQuestions.filter((q) =>
           wrongAnswers.some((wa) => wa.questionId === q.id)
         );
         if (selectedQuestions.length === 0) return;
         break;
       case 'weak_spots':
-        selectedQuestions = selectWeakSpotQuestions(questions, userSkills, 30);
+        selectedQuestions = selectWeakSpotQuestions(activeQuestions, userSkills, 30);
         break;
       case 'bookmarked':
-        selectedQuestions = questions.filter((q) =>
+        selectedQuestions = activeQuestions.filter((q) =>
           bookmarks.some((b) => b.questionId === q.id)
         );
         if (selectedQuestions.length === 0) return;
         break;
       default:
-        selectedQuestions = questions.slice(0, 10);
+        selectedQuestions = activeQuestions.slice(0, 10);
     }
 
     const session = {
       id: crypto.randomUUID(),
       mode,
+      section: selectedSection,
       currentQuestionIndex: 0,
       questions: selectedQuestions,
       answers: {},
@@ -183,14 +189,14 @@ export default function ModeSelection() {
           Welcome back, {displayName}
         </h1>
         <p className="text-lg" style={{ color: 'var(--text-secondary)' }}>
-          Ready to sharpen your skills?
+          Ready to sharpen your {sectionLabel} skills?
         </p>
       </div>
 
       {!isPro && (
         <div className="mb-8 rounded-2xl border p-5 text-center" style={{ backgroundColor: 'rgba(59, 130, 246, 0.08)', borderColor: 'rgba(96, 165, 250, 0.35)' }}>
           <p className="font-semibold text-blue-300">Free plan: starter access to 25 questions.</p>
-          <p className="mt-1 text-sm" style={{ color: 'var(--text-secondary)' }}>Unlock Pro for the full 596-question bank, mock tests, focused drills, bookmarks, and weak-spot review.</p>
+          <p className="mt-1 text-sm" style={{ color: 'var(--text-secondary)' }}>Unlock Pro for the full question banks, mock tests, focused drills, bookmarks, and weak-spot review.</p>
           <button onClick={() => navigate('/upgrade')} className="mt-4 rounded-lg bg-blue-500 px-5 py-2 text-sm font-bold text-white hover:bg-blue-400">
             Upgrade to Pro
           </button>
@@ -223,6 +229,39 @@ export default function ModeSelection() {
           color="var(--accent-emerald)"
           trend={`${skills.length} skills tracked`}
         />
+      </div>
+
+      {/* Section Selector */}
+      <div className="mb-8 rounded-2xl border p-4" style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'rgba(148, 163, 184, 0.12)' }}>
+        <div className="mb-3 flex items-center gap-2">
+          <Calculator className="h-5 w-5" style={{ color: 'var(--accent-blue)' }} />
+          <h2 className="text-lg font-bold" style={{ color: 'var(--text-primary)' }}>Choose Section</h2>
+        </div>
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+          {([
+            { id: 'reading_writing' as const, label: 'Reading & Writing', count: questions.length, description: 'Current SAT Reading and Writing practice bank' },
+            { id: 'math' as const, label: 'Math', count: mathQuestions.length, description: 'New SAT Math bank with visual equation/page rendering' },
+          ]).map((section) => (
+            <button
+              key={section.id}
+              onClick={() => setSelectedSection(section.id)}
+              className={cn(
+                'rounded-xl border-2 p-4 text-left transition-all',
+                selectedSection === section.id ? 'border-blue-500 bg-blue-500/10' : 'border-slate-700/50 hover:border-slate-500'
+              )}
+            >
+              <div className="flex items-center justify-between gap-3">
+                <div>
+                  <p className="font-bold" style={{ color: 'var(--text-primary)' }}>{section.label}</p>
+                  <p className="mt-1 text-sm" style={{ color: 'var(--text-secondary)' }}>{section.description}</p>
+                </div>
+                <span className="rounded-full px-3 py-1 text-xs font-bold" style={{ backgroundColor: 'var(--bg-elevated)', color: 'var(--text-secondary)' }}>
+                  {section.count} questions
+                </span>
+              </div>
+            </button>
+          ))}
+        </div>
       </div>
 
       {/* Mode Grid */}

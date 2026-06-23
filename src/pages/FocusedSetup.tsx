@@ -6,7 +6,7 @@ import { Check, ArrowRight, Sliders } from 'lucide-react';
 
 export default function FocusedSetup() {
   const navigate = useNavigate();
-  const { questions, userSkills, setCurrentSession, currentSession } = useStore();
+  const { questions, mathQuestions, userSkills, setCurrentSession, currentSession } = useStore();
   const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
   const [questionCount, setQuestionCount] = useState(20);
 
@@ -18,7 +18,8 @@ export default function FocusedSetup() {
 
   if (!currentSession || currentSession.mode !== 'focused') return null;
 
-  const skills = getUniqueSkills(questions);
+  const activeQuestions = currentSession.section === 'math' ? mathQuestions : questions;
+  const skills = getUniqueSkills(activeQuestions);
 
   const toggleSkill = (skill: string) => {
     setSelectedSkills((prev) =>
@@ -29,7 +30,7 @@ export default function FocusedSetup() {
   const handleStart = () => {
     if (selectedSkills.length === 0) return;
 
-    const filteredQuestions = questions.filter((q) => selectedSkills.includes(q.skill));
+    const filteredQuestions = activeQuestions.filter((q) => selectedSkills.includes(q.skill));
     const shuffled = shuffleArray(filteredQuestions);
     const selectedQuestions = shuffled.slice(0, Math.min(questionCount, shuffled.length));
 
@@ -70,7 +71,7 @@ export default function FocusedSetup() {
             const isSelected = selectedSkills.includes(skill);
             const skillData = userSkills[skill];
             const mastery = skillData?.masteryScore ?? 0;
-            const questionCount = questions.filter((q) => q.skill === skill).length;
+            const questionCount = activeQuestions.filter((q) => q.skill === skill).length;
 
             return (
               <button
@@ -161,10 +162,10 @@ export default function FocusedSetup() {
             </button>
           ))}
           <button
-            onClick={() => setQuestionCount(questions.length)}
+            onClick={() => setQuestionCount(activeQuestions.length)}
             className={cn(
               'rounded-lg border-2 px-5 py-2 text-sm font-medium transition-all',
-              questionCount === questions.length
+              questionCount === activeQuestions.length
                 ? 'border-blue-500 bg-blue-500/10 text-blue-400'
                 : 'border-slate-700 text-slate-400 hover:border-slate-500'
             )}

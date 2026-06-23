@@ -19,6 +19,7 @@ import {
   Clock,
   X,
   Sparkles,
+  Calculator,
   ArrowLeft,
 } from 'lucide-react';
 
@@ -54,6 +55,8 @@ export default function Practice() {
   const [, setHighlights] = useState<Array<{ id: string; start: number; end: number; color: string }>>([]);
   const [fontSize, setFontSize] = useState(16);
   const [showAiExplanation, setShowAiExplanation] = useState(false);
+  const [showCalculator, setShowCalculator] = useState(false);
+  const [studentResponse, setStudentResponse] = useState('');
   const passageRef = useRef<HTMLDivElement | null>(null);
   const timerRef = useRef<ReturnType<typeof setInterval>>(undefined);
 
@@ -102,6 +105,7 @@ export default function Practice() {
   const isAdaptiveMode = currentSession?.mode === 'adaptive';
   const isRandomMode = currentSession?.mode === 'random';
   const isEndlessMode = isAdaptiveMode || isRandomMode;
+  const isMathSession = currentSession?.section === 'math' || currentSession?.questions.some((q) => q.section === 'math');
 
   // Redirect if no session
   useEffect(() => {
@@ -115,12 +119,15 @@ export default function Practice() {
   const currentQuestion = currentSession.questions[currentSession.currentQuestionIndex];
   if (!currentQuestion) return null;
 
+  const isMathQuestion = currentQuestion.section === 'math';
+  const mathPageImages = currentQuestion.page_images?.length ? currentQuestion.page_images : currentQuestion.page_image ? [currentQuestion.page_image] : [];
+  const isStudentProduced = currentQuestion.question_type === 'student_produced_response';
   const isMarked = currentSession.markedForReview.includes(currentQuestion.id);
   const isBookmarked = bookmarks.some((b) => b.questionId === currentQuestion.id);
   const answeredCount = Object.keys(currentSession.answers).length;
 
   const pickNextEndlessQuestion = (session = currentSession): Question => {
-    const allQuestions = useStore.getState().questions;
+    const allQuestions = session.section === 'math' ? useStore.getState().mathQuestions : useStore.getState().questions;
     const availableQuestions = (useStore.getState().isPro ? allQuestions : allQuestions.slice(0, 25))
       .filter((q) => q.id !== currentQuestion.id);
     const recentlySeen = new Set(session.questions.slice(-10).map((q) => q.id));
@@ -177,11 +184,13 @@ export default function Practice() {
     setQuestionElapsedTime(0);
     setShowAiExplanation(false);
     setMaskAnswers(false);
+    setStudentResponse('');
 
     // Check if already answered
     const existingAnswer = currentSession.answers[currentQuestion.id];
     if (existingAnswer) {
       setSelectedAnswer(existingAnswer.selectedAnswer);
+      setStudentResponse(existingAnswer.selectedAnswer);
       setEliminatedChoices(existingAnswer.eliminatedChoices);
       setIsAnswered(true);
       if (!isMockMode) setShowRationale(true);
@@ -204,21 +213,35 @@ export default function Practice() {
     );
   };
 
+  const normalizeStudentResponse = (value: string) => value.trim().toLowerCase().replace(/\s+/g, '');
+
+  const isCorrectStudentResponse = (value: string, correctAnswer: string) => {
+    const normalized = normalizeStudentResponse(value);
+    return correctAnswer
+      .split(/,|\band\b|\bor\b/i)
+      .map((answer) => normalizeStudentResponse(answer.replace(/^either\s+/i, '')))
+      .filter(Boolean)
+      .includes(normalized);
+  };
+
   const eliminateAllButSelected = () => {
     if (isAnswered || !selectedAnswer) return;
     setEliminatedChoices(['A', 'B', 'C', 'D'].filter((choice) => choice !== selectedAnswer));
   };
 
   const handleSubmit = () => {
-    if (!selectedAnswer || isAnswered) return;
+    const submittedAnswer = currentQuestion.question_type === 'student_produced_response' ? studentResponse.trim() : selectedAnswer;
+    if (!submittedAnswer || isAnswered) return;
 
     const timeSpent = Math.floor((Date.now() - questionStartTime) / 1000);
-    const isCorrect = selectedAnswer === currentQuestion.correct_answer;
+    const isCorrect = currentQuestion.question_type === 'student_produced_response'
+      ? isCorrectStudentResponse(submittedAnswer, currentQuestion.correct_answer)
+      : submittedAnswer === currentQuestion.correct_answer;
     const confidenceLevel = eliminatedChoices.length;
 
     const answer: UserAnswer = {
       questionId: currentQuestion.id,
-      selectedAnswer,
+      selectedAnswer: submittedAnswer,
       isCorrect,
       eliminatedChoices,
       confidenceLevel,
@@ -484,6 +507,19 @@ export default function Practice() {
 
         <div className="flex max-w-full items-center gap-1 overflow-x-auto sm:gap-2">
           {/* Tools */}
+          {isMathSession && (
+            <button
+              onClick={() => setShowCalculator(!showCalculator)}
+              className={cn(
+                'min-h-10 min-w-10 rounded-lg p-2 transition-colors',
+                showCalculator && 'bg-blue-500/20'
+              )}
+              style={{ color: showCalculator ? 'var(--accent-blue)' : 'var(--text-secondary)' }}
+              title="Desmos Calculator"
+            >
+              <Calculator className="h-4 w-4" />
+            </button>
+          )}
           <button
             onClick={() => setEliminateMode(!eliminateMode)}
             className={cn(
@@ -585,19 +621,38 @@ export default function Practice() {
               lineHeight: '1.7',
             }}
           >
-            {currentQuestion.figure_image && (
-              <div className="mb-6 overflow-hidden rounded-xl border bg-white p-3 shadow-lg" style={{ borderColor: 'rgba(148, 163, 184, 0.2)' }}>
-                <img
-                  src={`${import.meta.env.BASE_URL}${currentQuestion.figure_image}`}
-                  alt={currentQuestion.figure_alt ?? 'Question figure'}
-                  className="mx-auto max-h-[420px] w-full object-contain"
-                />
+            {isMathQuestion && mathPageImages.length > 0 ? (
+              <div className="space-y-4">
+                <div className="rounded-xl border p-3 text-sm" style={{ backgroundColor: 'var(--bg-elevated)', borderColor: 'rgba(96, 165, 250, 0.25)', color: 'var(--text-secondary)' }}>
+                  Math questions are rendered from the official PDF page image so equations, graphs, and tables stay exact.
+                </div>
+                {mathPageImages.map((image, index) => (
+                  <div key={image} className="overflow-hidden rounded-xl border bg-white p-2 shadow-lg" style={{ borderColor: 'rgba(148, 163, 184, 0.2)' }}>
+                    <img
+                      src={`${import.meta.env.BASE_URL}${image}`}
+                      alt={`Math question page ${index + 1}`}
+                      className="mx-auto w-full object-contain"
+                    />
+                  </div>
+                ))}
               </div>
-            )}
-            {currentQuestion.passage ? (
-              <div dangerouslySetInnerHTML={{ __html: formatPassageHtml(currentQuestion.passage) }} />
             ) : (
-              <div className="italic opacity-50">No passage for this question.</div>
+              <>
+                {currentQuestion.figure_image && (
+                  <div className="mb-6 overflow-hidden rounded-xl border bg-white p-3 shadow-lg" style={{ borderColor: 'rgba(148, 163, 184, 0.2)' }}>
+                    <img
+                      src={`${import.meta.env.BASE_URL}${currentQuestion.figure_image}`}
+                      alt={currentQuestion.figure_alt ?? 'Question figure'}
+                      className="mx-auto max-h-[420px] w-full object-contain"
+                    />
+                  </div>
+                )}
+                {currentQuestion.passage ? (
+                  <div dangerouslySetInnerHTML={{ __html: formatPassageHtml(currentQuestion.passage) }} />
+                ) : (
+                  <div className="italic opacity-50">No passage for this question.</div>
+                )}
+              </>
             )}
           </div>
         </div>
@@ -646,7 +701,7 @@ export default function Practice() {
           </div>
 
           {/* Answer Choices */}
-          {!maskAnswers && (
+          {!maskAnswers && !isStudentProduced && (
             <div className="mb-6 space-y-3">
               {currentQuestion.choices.map((choice, index) => {
                 const { letter, text } = getChoiceDisplay(choice, index);
@@ -709,6 +764,30 @@ export default function Practice() {
             </div>
           )}
 
+          {!maskAnswers && isStudentProduced && (
+            <div className="mb-6 rounded-xl border p-4" style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'rgba(148, 163, 184, 0.16)' }}>
+              <label className="mb-2 block text-sm font-semibold" style={{ color: 'var(--text-primary)' }}>
+                Student-produced response
+              </label>
+              <input
+                value={studentResponse}
+                onChange={(event) => {
+                  setStudentResponse(event.target.value);
+                  setSelectedAnswer(event.target.value);
+                }}
+                disabled={isAnswered}
+                placeholder="Enter your answer"
+                className="w-full rounded-lg border px-4 py-3 font-mono text-lg outline-none transition-colors focus:border-blue-500 disabled:opacity-70"
+                style={{ backgroundColor: 'var(--bg-elevated)', borderColor: 'rgba(148, 163, 184, 0.2)', color: 'var(--text-primary)' }}
+              />
+              {isAnswered && (
+                <p className={cn('mt-3 text-sm font-semibold', isCorrectStudentResponse(selectedAnswer ?? '', currentQuestion.correct_answer) ? 'text-emerald-400' : 'text-rose-400')}>
+                  Correct answer: {currentQuestion.correct_answer}
+                </p>
+              )}
+            </div>
+          )}
+
           {maskAnswers && (
             <div className="mb-6 rounded-lg border border-dashed p-8 text-center" style={{ borderColor: 'var(--text-muted)' }}>
               <EyeOff className="mx-auto mb-2 h-8 w-8" style={{ color: 'var(--text-muted)' }} />
@@ -751,16 +830,16 @@ export default function Practice() {
             {!isAnswered ? (
               <button
                 onClick={handleSubmit}
-                disabled={!selectedAnswer}
+                disabled={isStudentProduced ? !studentResponse.trim() : !selectedAnswer}
                 className={cn(
                   'w-full rounded-lg py-3 font-semibold transition-all duration-200',
-                  selectedAnswer
+                  (isStudentProduced ? studentResponse.trim() : selectedAnswer)
                     ? 'hover:shadow-lg hover:shadow-blue-500/20'
                     : 'cursor-not-allowed opacity-40'
                 )}
                 style={{
-                  backgroundColor: selectedAnswer ? 'var(--accent-blue)' : 'var(--bg-elevated)',
-                  color: selectedAnswer ? '#fff' : 'var(--text-muted)',
+                  backgroundColor: (isStudentProduced ? studentResponse.trim() : selectedAnswer) ? 'var(--accent-blue)' : 'var(--bg-elevated)',
+                  color: (isStudentProduced ? studentResponse.trim() : selectedAnswer) ? '#fff' : 'var(--text-muted)',
                 }}
               >
                 <span className="flex items-center justify-center gap-2">
@@ -868,6 +947,28 @@ export default function Practice() {
           )}
         </div>
       </div>
+
+      {/* Desmos Calculator Overlay */}
+      {showCalculator && isMathSession && (
+        <div className="absolute inset-0 z-50 flex items-center justify-center bg-black/60 p-3 backdrop-blur-sm" onClick={() => setShowCalculator(false)}>
+          <div className="flex h-[86vh] w-full max-w-6xl flex-col overflow-hidden rounded-xl border" style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'rgba(148, 163, 184, 0.2)' }} onClick={(event) => event.stopPropagation()}>
+            <div className="flex items-center justify-between border-b px-4 py-3" style={{ borderColor: 'rgba(148, 163, 184, 0.14)' }}>
+              <div>
+                <h3 className="font-bold" style={{ color: 'var(--text-primary)' }}>Desmos Graphing Calculator</h3>
+                <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>College Board version embedded from Desmos</p>
+              </div>
+              <button onClick={() => setShowCalculator(false)} className="rounded-lg p-2 hover:bg-white/5" style={{ color: 'var(--text-secondary)' }}>
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+            <iframe
+              title="Desmos Graphing Calculator"
+              src="https://www.desmos.com/testing/cb-sat-ap/graphing"
+              className="h-full w-full flex-1 bg-white"
+            />
+          </div>
+        </div>
+      )}
 
       {/* Question Grid Overlay */}
       {showGrid && (

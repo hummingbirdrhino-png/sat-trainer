@@ -17,16 +17,21 @@ import { sanitizeQuestions } from '@/lib/questionSanitizer';
 import './App.css';
 
 function AppContent() {
-  const { setQuestions, setIsLoading } = useStore();
+  const { setQuestions, setMathQuestions, setIsLoading } = useStore();
 
   useEffect(() => {
-    // Load questions from JSON
+    // Load Reading/Writing and Math question banks from static JSON.
     const loadQuestions = async () => {
       setIsLoading(true);
       try {
-        const response = await fetch(`${import.meta.env.BASE_URL}questions.json`);
-        const data = await response.json();
-        setQuestions(sanitizeQuestions(data));
+        const [rwResponse, mathResponse] = await Promise.all([
+          fetch(`${import.meta.env.BASE_URL}questions.json`),
+          fetch(`${import.meta.env.BASE_URL}math_questions.json`),
+        ]);
+        const rwData = await rwResponse.json();
+        const mathData = mathResponse.ok ? await mathResponse.json() : [];
+        setQuestions(sanitizeQuestions(rwData));
+        setMathQuestions(sanitizeQuestions(mathData));
       } catch (error) {
         console.error('Failed to load questions:', error);
       } finally {
@@ -34,7 +39,7 @@ function AppContent() {
       }
     };
     loadQuestions();
-  }, [setQuestions, setIsLoading]);
+  }, [setQuestions, setMathQuestions, setIsLoading]);
 
   return (
     <div className="min-h-screen bg-[var(--bg-base)] text-[var(--text-primary)] transition-colors duration-300">

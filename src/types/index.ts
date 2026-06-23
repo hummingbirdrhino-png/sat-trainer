@@ -1,16 +1,35 @@
+export type QuestionSection = 'reading_writing' | 'math';
+export type QuestionType = 'multiple_choice' | 'student_produced_response';
+
 export interface Question {
   id: string;
+  source_id?: string;
+  section?: QuestionSection;
+  assessment?: string;
+  test?: string;
   domain: string;
   skill: string;
+  skill_level_1?: string | null;
+  skill_level_2?: string | null;
   difficulty: 'Easy' | 'Medium' | 'Hard';
   passage: string;
   stem: string;
+  question?: string;
   choices: string[];
   correct_answer: string;
   rationale: string;
   has_graph: boolean;
+  question_type?: QuestionType;
+  calculator?: boolean | null;
   figure_image?: string;
   figure_alt?: string;
+  page?: number;
+  pages?: number[];
+  page_image?: string;
+  page_images?: string[];
+  has_visual_math?: boolean;
+  image_block_count?: number;
+  parse_notes?: string[];
 }
 
 export interface AuthUser {
@@ -71,6 +90,7 @@ export type PracticeMode =
 export interface PracticeSession {
   id: string;
   mode: PracticeMode;
+  section?: QuestionSection;
   currentQuestionIndex: number;
   questions: Question[];
   answers: Record<string, UserAnswer>;
