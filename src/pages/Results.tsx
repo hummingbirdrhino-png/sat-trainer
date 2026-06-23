@@ -23,10 +23,14 @@ export default function Results() {
 
   const answers = Object.values(currentSession.answers);
   const correct = answers.filter((a) => a.isCorrect).length;
+  const answeredTotal = answers.length;
   const total = currentSession.questions.length;
+  const unanswered = Math.max(0, total - answeredTotal);
+  const incorrect = answeredTotal - correct;
   const score = Math.round((correct / total) * 100);
-  const timeTaken = currentSession.isComplete && sessionSummaries[0]?.id === currentSession.id
-    ? sessionSummaries[0].timeTakenSeconds
+  const currentSummary = sessionSummaries.find((summary) => summary.id === currentSession.id);
+  const timeTaken = currentSummary
+    ? currentSummary.timeTakenSeconds
     : Math.floor((Date.now() - currentSession.startTime) / 1000);
 
   // Skill breakdown
@@ -40,8 +44,10 @@ export default function Results() {
 
   // Predicted score
   const sectionLabel = currentSession.section === 'math' ? 'Math' : 'Reading/Writing';
-  const predictedScore = sessionSummaries.length > 0 ? sessionSummaries[0].predictedSatScore : 400;
-  const previousScore = sessionSummaries.length > 1 ? sessionSummaries[1].predictedSatScore : predictedScore;
+  const predictedScore = currentSummary?.predictedSatScore ?? 400;
+  const previousScore = sessionSummaries
+    .filter((summary) => summary.id !== currentSession.id && (summary.section ?? 'reading_writing') === (currentSession.section ?? 'reading_writing'))
+    .sort((a, b) => b.date - a.date)[0]?.predictedSatScore ?? predictedScore;
   const scoreChange = predictedScore - previousScore;
 
   // Distractor analysis
@@ -77,7 +83,7 @@ export default function Results() {
         </div>
 
         <p className="mb-2 text-lg" style={{ color: 'var(--text-secondary)' }}>
-          {correct} correct, {total - correct} incorrect out of {total} questions
+          {correct} correct, {incorrect} incorrect, {unanswered} unanswered out of {total} questions
         </p>
 
         <div className="flex items-center justify-center gap-4 text-sm" style={{ color: 'var(--text-muted)' }}>
@@ -186,6 +192,7 @@ export default function Results() {
           {currentSession.questions.map((q, idx) => {
             const answer = currentSession.answers[q.id];
             const isCorrect = answer?.isCorrect;
+            const isUnanswered = !answer;
 
             return (
               <div
@@ -193,17 +200,19 @@ export default function Results() {
                 className="flex items-center justify-between rounded-lg border px-4 py-3"
                 style={{
                   backgroundColor: 'var(--bg-surface)',
-                  borderColor: isCorrect ? 'rgba(16, 185, 129, 0.2)' : 'rgba(244, 63, 94, 0.2)',
+                  borderColor: isUnanswered ? 'rgba(148, 163, 184, 0.18)' : isCorrect ? 'rgba(16, 185, 129, 0.2)' : 'rgba(244, 63, 94, 0.2)',
                 }}
               >
                 <div className="flex items-center gap-3">
                   <span
                     className="flex h-8 w-8 items-center justify-center rounded-full"
                     style={{
-                      backgroundColor: isCorrect ? 'rgba(16, 185, 129, 0.15)' : 'rgba(244, 63, 94, 0.15)',
+                      backgroundColor: isUnanswered ? 'rgba(148, 163, 184, 0.12)' : isCorrect ? 'rgba(16, 185, 129, 0.15)' : 'rgba(244, 63, 94, 0.15)',
                     }}
                   >
-                    {isCorrect ? (
+                    {isUnanswered ? (
+                      <span className="h-2 w-2 rounded-full bg-slate-400" />
+                    ) : isCorrect ? (
                       <CheckCircle className="h-4 w-4 text-emerald-400" />
                     ) : (
                       <XCircle className="h-4 w-4 text-rose-400" />
@@ -219,7 +228,7 @@ export default function Results() {
                   </div>
                 </div>
                 <div className="text-right">
-                  <span className="font-mono text-sm" style={{ color: isCorrect ? 'var(--accent-emerald)' : 'var(--accent-rose)' }}>
+                  <span className="font-mono text-sm" style={{ color: isUnanswered ? 'var(--text-muted)' : isCorrect ? 'var(--accent-emerald)' : 'var(--accent-rose)' }}>
                     {answer?.selectedAnswer ?? '-'}
                   </span>
                   <span className="mx-1 text-xs" style={{ color: 'var(--text-muted)' }}>/</span>

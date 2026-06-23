@@ -104,6 +104,7 @@ export default function ModeSelection() {
   ) / Math.max(sectionSkillData.length, 1) || 0;
 
   const wrongAnswers = userAnswers.filter((a) => !a.isCorrect && (a.section ?? 'reading_writing') === selectedSection);
+  const sectionBookmarks = bookmarks.filter((bookmark) => activeQuestions.some((q) => q.id === bookmark.questionId));
   const sectionAnswers = userAnswers.filter((answer) => (answer.section ?? 'reading_writing') === selectedSection);
   const predictedScore = sectionAnswers.length > 0
     ? calculatePredictedScore(
@@ -156,7 +157,7 @@ export default function ModeSelection() {
         break;
       case 'bookmarked':
         selectedQuestions = activeQuestions.filter((q) =>
-          bookmarks.some((b) => b.questionId === q.id)
+          sectionBookmarks.some((b) => b.questionId === q.id)
         );
         if (selectedQuestions.length === 0) return;
         break;
@@ -282,7 +283,7 @@ export default function ModeSelection() {
           {modes.map((mode, index) => {
             const isDisabled =
               (mode.id === 'review_wrong' && wrongAnswers.length === 0) ||
-              (mode.id === 'bookmarked' && bookmarks.length === 0);
+              (mode.id === 'bookmarked' && sectionBookmarks.length === 0);
 
             return (
               <button
@@ -346,7 +347,7 @@ export default function ModeSelection() {
                 {isDisabled && (
                   <div className="absolute inset-0 flex items-center justify-center rounded-xl bg-black/5">
                     <span className="text-sm font-medium" style={{ color: 'var(--text-muted)' }}>
-                      {mode.id === 'review_wrong' ? 'No wrong answers yet' : 'No bookmarks yet'}
+                      {mode.id === 'review_wrong' ? 'No wrong answers yet' : 'No {sectionLabel} bookmarks yet'}
                     </span>
                   </div>
                 )}

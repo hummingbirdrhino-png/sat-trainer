@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useStore } from '@/store/useStore';
 import { cn, formatTime, calculateConfidenceWeight, updateMasteryScore, calculatePredictedScore, calculateNextReviewSession, getSkillKey, getSkillColor, getMockTotalSeconds } from '@/lib/utils';
@@ -60,6 +60,7 @@ export default function Practice() {
   const [studentResponse, setStudentResponse] = useState('');
   const passageRef = useRef<HTMLDivElement | null>(null);
   const timerRef = useRef<ReturnType<typeof setInterval>>(undefined);
+  const finishInProgressRef = useRef(false);
 
   const formatNotesHtml = (text: string) => {
     const marker = 'While researching a topic, a student has taken the following notes:';
@@ -209,11 +210,6 @@ export default function Practice() {
     return () => clearInterval(timerRef.current);
   }, [currentSession.startTime, questionStartTime]);
 
-  useEffect(() => {
-    if (!isMockMode || currentSession.isComplete || elapsedTime < mockTotalSeconds) return;
-    handleFinish();
-  }, [elapsedTime, isMockMode, mockTotalSeconds, currentSession.isComplete]);
-
   // Reset state on question change
   useEffect(() => {
     setSelectedAnswer(null);
@@ -356,14 +352,18 @@ export default function Practice() {
       setShowRationale(true);
     }
 
-    // Update daily goal
+    // Update daily goal and streak
     const today = new Date().toISOString().split('T')[0];
-    const existingGoal = useStore.getState().dailyGoals.find((g) => g.date === today);
+    const yesterday = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+    const goals = useStore.getState().dailyGoals;
+    const existingGoal = goals.find((g) => g.date === today);
+    const yesterdayGoal = goals.find((g) => g.date === yesterday);
+    const completed = (existingGoal?.completed ?? 0) + 1;
     updateDailyGoal({
       date: today,
       target: settings.dailyGoalTarget,
-      completed: (existingGoal?.completed ?? 0) + 1,
-      streak: existingGoal?.streak ?? 0,
+      completed,
+      streak: existingGoal?.streak ?? ((yesterdayGoal?.completed ?? 0) > 0 ? (yesterdayGoal?.streak ?? 0) + 1 : 1),
     });
   };
 
@@ -410,7 +410,9 @@ export default function Practice() {
     navigate('/app');
   };
 
-  const handleFinish = () => {
+  const handleFinish = useCallback(() => {
+    if (finishInProgressRef.current) return;
+    finishInProgressRef.current = true;
     const answers = Object.values(currentSession.answers);
     const correct = answers.filter((a) => a.isCorrect).length;
     const total = currentSession.questions.length;
@@ -442,7 +444,12 @@ export default function Practice() {
     addSessionSummary(summary);
     setCurrentSession({ ...currentSession, isComplete: true });
     navigate('/results');
-  };
+  }, [currentSession, addSessionSummary, navigate, setCurrentSession]);
+
+  useEffect(() => {
+    if (!isMockMode || currentSession.isComplete || elapsedTime < mockTotalSeconds) return;
+    handleFinish();
+  }, [elapsedTime, isMockMode, mockTotalSeconds, currentSession.isComplete, handleFinish]);
 
   const handleBookmark = () => {
     if (isBookmarked) {
@@ -556,12 +563,12 @@ export default function Practice() {
       >
         <div className="flex min-w-0 flex-wrap items-center gap-2 sm:gap-4">
           <button
-            onClick={isEndlessMode ? handleEndPractice : () => navigate('/app')}
+            onClick={handleEndPractice}
             className="flex items-center gap-1 rounded-lg px-2 py-1 text-sm transition-colors hover:bg-white/5"
             style={{ color: 'var(--text-secondary)' }}
           >
             <ArrowLeft className="h-4 w-4" />
-            {isEndlessMode ? 'End Practice' : 'Exit'}
+            {isEndlessMode ? 'End Practice' : 'Save & Exit'}
           </button>
 
           <div className="flex items-center gap-2 rounded-lg px-3 py-1" style={{ backgroundColor: 'var(--bg-elevated)' }}>
@@ -802,6 +809,7 @@ export default function Practice() {
                 const choiceLatex = currentQuestion.choice_latex?.[letter];
                 const choiceText = currentQuestion.choice_text?.[letter] ?? text;
                 const choiceImage = currentQuestion.choice_images?.[letter];
+                const shouldUseChoiceImage = Boolean(choiceImage && currentQuestion.choice_parse_status?.[letter] === 'fallback_image_needs_latex_review');
 
                 return (
                   <button
@@ -857,6 +865,16 @@ export default function Practice() {
                     {choiceLatex ? (
                       <span className={cn('flex-1 text-base leading-relaxed sm:text-lg', getAnswerTextStyle(letter))}>
                         <LatexMath value={choiceLatex} />
+                      </span>
+                    ) : shouldUseChoiceImage && choiceImage ? (
+                      <span className="flex-1 overflow-hidden rounded-lg bg-white p-2 sm:p-3">
+                        <img
+                          src={assetUrl(choiceImage)}
+                          alt={`Choice ${letter}`}
+                          className="min-h-12 max-h-40 w-full object-contain object-left sm:max-h-52"
+                          loading="lazy"
+                          decoding="async"
+                        />
                       </span>
                     ) : choiceText ? (
                       renderFormattedText(choiceText, cn('flex-1 text-base leading-relaxed sm:text-lg', getAnswerTextStyle(letter)))

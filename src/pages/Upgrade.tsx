@@ -37,7 +37,7 @@ export default function Upgrade() {
         </div>
         <h1 className="text-4xl font-black" style={{ fontFamily: 'var(--font-heading)' }}>Unlock SAT Trainer Pro</h1>
         <p className="mx-auto mt-3 max-w-xl" style={{ color: 'var(--text-secondary)' }}>
-          Full question-bank access, mock tests, focused drills, weak-spot review, and bookmarks.
+          Full Reading & Writing and Math access, section-length practice tests, focused drills, Desmos, weak-spot review, and bookmarks.
         </p>
       </div>
 
@@ -49,7 +49,7 @@ export default function Upgrade() {
             <p className="mt-2" style={{ color: 'var(--text-secondary)' }}>One payment. No subscription.</p>
           </div>
           <div className="space-y-3 text-sm">
-            {['596 clean SAT Reading & Writing questions', 'Official answer keys and explanations', 'Timed mocks and adaptive practice', 'Weak-spot and missed-question review'].map((item) => (
+            {['596 clean SAT Reading & Writing questions + 826 SAT Math questions', 'Official answer keys and explanations', 'Math visual rendering with Desmos calculator access', 'Timed section practice, adaptive drills, weak spots, and bookmarks'].map((item) => (
               <div key={item} className="flex gap-2"><CheckCircle2 className="h-5 w-5 text-emerald-400" /> {item}</div>
             ))}
           </div>
