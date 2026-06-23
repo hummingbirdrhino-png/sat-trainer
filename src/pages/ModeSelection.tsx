@@ -100,7 +100,8 @@ export default function ModeSelection() {
     ? sessionSummaries[0].predictedSatScore 
     : calculatePredictedScore(
         userAnswers.filter((a) => a.isCorrect).length,
-        userAnswers.length
+        userAnswers.length,
+        userAnswers.length > 0 ? userAnswers.reduce((sum, answer) => sum + answer.timeSpentSeconds, 0) / userAnswers.length : undefined
       );
 
   const dueForReview = Object.values(userSkills).filter(

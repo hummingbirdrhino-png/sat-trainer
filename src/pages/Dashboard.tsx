@@ -54,13 +54,13 @@ export default function Dashboard() {
 
   const totalCorrect = userAnswers.filter((a) => a.isCorrect).length;
   const totalAnswered = userAnswers.length;
-  const predictedScore = sessionSummaries.length > 0
-    ? sessionSummaries[0].predictedSatScore
-    : calculatePredictedScore(totalCorrect, totalAnswered);
-
   const avgTime = totalAnswered > 0
     ? Math.round(userAnswers.reduce((sum, a) => sum + a.timeSpentSeconds, 0) / totalAnswered)
     : 0;
+
+  const predictedScore = sessionSummaries.length > 0
+    ? sessionSummaries[0].predictedSatScore
+    : calculatePredictedScore(totalCorrect, totalAnswered, avgTime);
 
   const streak = dailyGoals.length > 0
     ? dailyGoals.sort((a, b) => b.date.localeCompare(a.date))[0]?.streak ?? 0

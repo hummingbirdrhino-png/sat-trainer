@@ -230,7 +230,8 @@ export default function Practice() {
       currentMastery,
       isCorrect,
       confidenceLevel,
-      currentQuestion.difficulty
+      currentQuestion.difficulty,
+      timeSpent
     );
 
     updateUserSkill(currentQuestion.skill, {
@@ -318,7 +319,11 @@ export default function Practice() {
       correctCount: correct,
       skillsPracticed: [...new Set(currentSession.questions.map((q) => q.skill))],
       timeTakenSeconds: timeTaken,
-      predictedSatScore: calculatePredictedScore(correct, total),
+      predictedSatScore: calculatePredictedScore(
+        correct,
+        total,
+        answers.length > 0 ? answers.reduce((sum, answer) => sum + answer.timeSpentSeconds, 0) / answers.length : undefined
+      ),
       date: Date.now(),
     };
 

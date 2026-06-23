@@ -7,15 +7,31 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 // SAT Scoring utilities
+export const TARGET_SECONDS_PER_QUESTION = 71;
+
+export function calculateTimeMultiplier(timeSpentSeconds?: number): number {
+  if (!timeSpentSeconds || timeSpentSeconds <= 0) return 1;
+
+  // Reward efficient correct work a little, but penalize slow work more clearly.
+  if (timeSpentSeconds <= TARGET_SECONDS_PER_QUESTION * 0.75) return 1.08;
+  if (timeSpentSeconds <= TARGET_SECONDS_PER_QUESTION) return 1.0;
+  if (timeSpentSeconds <= TARGET_SECONDS_PER_QUESTION * 1.25) return 0.9;
+  if (timeSpentSeconds <= TARGET_SECONDS_PER_QUESTION * 1.5) return 0.78;
+  return 0.65;
+}
+
 export function calculatePredictedScore(
   correct: number,
   total: number,
+  averageTimeSeconds?: number,
   _difficultyWeights?: number[]
 ): number {
   if (total === 0) return 400;
 
   const accuracy = correct / total;
-  const rawScore = 200 + accuracy * 600;
+  const timeMultiplier = calculateTimeMultiplier(averageTimeSeconds);
+  const timedAccuracy = Math.min(1, accuracy * timeMultiplier);
+  const rawScore = 200 + timedAccuracy * 600;
 
   // Early practice samples are noisy. Shrink predictions toward a neutral
   // 500 until the user has answered enough questions to justify confidence.
@@ -31,25 +47,31 @@ export function calculatePredictedScore(
 export function calculateMasteryDelta(
   isCorrect: boolean,
   confidenceLevel: number,
-  difficulty: string
+  difficulty: string,
+  timeSpentSeconds?: number
 ): number {
   const confidenceWeight = 0.65 + 0.35 * (confidenceLevel / 3);
   const difficultyMultiplier =
     difficulty === 'Hard' ? 1.2 : difficulty === 'Medium' ? 1.0 : 0.8;
+  const timeMultiplier = calculateTimeMultiplier(timeSpentSeconds);
   const direction = isCorrect ? 1 : -1;
-  return direction * confidenceWeight * difficultyMultiplier * 5;
+
+  // Slow correct answers still count, but less; slow wrong answers hurt more.
+  const speedAdjustedDirection = isCorrect ? timeMultiplier : 1 / timeMultiplier;
+  return direction * confidenceWeight * difficultyMultiplier * speedAdjustedDirection * 5;
 }
 
 export function updateMasteryScore(
   currentMastery: number,
   isCorrect: boolean,
   confidenceLevel: number,
-  difficulty: string
+  difficulty: string,
+  timeSpentSeconds?: number
 ): number {
-  const delta = calculateMasteryDelta(isCorrect, confidenceLevel, difficulty);
+  const delta = calculateMasteryDelta(isCorrect, confidenceLevel, difficulty, timeSpentSeconds);
   const alpha = 0.3;
   const result = isCorrect ? 1 : 0;
-  const weightedResult = result * (1 + delta / 100);
+  const weightedResult = result * (1 + delta / 100) * (isCorrect ? calculateTimeMultiplier(timeSpentSeconds) : 1);
   const newMastery =
     currentMastery * (1 - alpha) + Math.min(100, Math.max(0, weightedResult * 100)) * alpha;
   return Math.round(Math.min(100, Math.max(0, newMastery)));
