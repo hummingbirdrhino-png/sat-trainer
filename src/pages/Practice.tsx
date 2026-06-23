@@ -68,10 +68,15 @@ export default function Practice() {
       .filter(Boolean);
 
     return `
-      <p class="mb-4 font-medium">${marker}</p>
-      <ul class="ml-5 list-disc space-y-2">
-        ${notes.map((note) => `<li>${note}</li>`).join('')}
-      </ul>
+      <div class="text-left">
+        <p class="mb-4 font-medium text-slate-200">${marker}</p>
+        <div class="rounded-xl border border-blue-400/30 bg-slate-900/40 p-4 shadow-lg sm:p-5">
+          <div class="mb-3 inline-flex rounded-full border border-blue-400/25 bg-blue-500/10 px-3 py-1 text-xs font-bold uppercase tracking-[0.18em] text-blue-300">Notes</div>
+          <ul class="ml-5 list-disc space-y-2 text-left marker:text-blue-400">
+            ${notes.map((note) => `<li class="pl-1">${note}</li>`).join('')}
+          </ul>
+        </div>
+      </div>
     `;
   };
 
