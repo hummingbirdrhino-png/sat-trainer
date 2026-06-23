@@ -57,11 +57,34 @@ export default function Practice() {
   const passageRef = useRef<HTMLDivElement | null>(null);
   const timerRef = useRef<ReturnType<typeof setInterval>>(undefined);
 
-  const formatPassageHtml = (text: string) => text
-    .replace(/\s*Text 1\s*/g, '<div class="mb-2 mt-1 text-xs font-bold uppercase tracking-[0.2em] text-blue-400">Text 1</div><p class="mb-5">')
-    .replace(/\s*Text 2\s*/g, '</p><div class="mb-2 mt-5 text-xs font-bold uppercase tracking-[0.2em] text-emerald-400">Text 2</div><p>')
-    .replace(/^(?!<div)/, '<p>')
-    .replace(/(?<!>)$/, '</p>');
+  const formatNotesHtml = (text: string) => {
+    const marker = 'While researching a topic, a student has taken the following notes:';
+    if (!text.startsWith(marker)) return null;
+
+    const notesText = text.slice(marker.length).trim();
+    const notes = notesText
+      .split(/(?<=[.!?])\s+(?=[A-Z0-9“])/)
+      .map((note) => note.trim())
+      .filter(Boolean);
+
+    return `
+      <p class="mb-4 font-medium">${marker}</p>
+      <ul class="ml-5 list-disc space-y-2">
+        ${notes.map((note) => `<li>${note}</li>`).join('')}
+      </ul>
+    `;
+  };
+
+  const formatPassageHtml = (text: string) => {
+    const notesHtml = formatNotesHtml(text);
+    if (notesHtml) return notesHtml;
+
+    return text
+      .replace(/\s*Text 1\s*/g, '<div class="mb-2 mt-1 text-xs font-bold uppercase tracking-[0.2em] text-blue-400">Text 1</div><p class="mb-5">')
+      .replace(/\s*Text 2\s*/g, '</p><div class="mb-2 mt-5 text-xs font-bold uppercase tracking-[0.2em] text-emerald-400">Text 2</div><p>')
+      .replace(/^(?!<div)/, '<p>')
+      .replace(/(?<!>)$/, '</p>');
+  };
 
   const renderFormattedText = (text: string, className?: string) => (
     <span
