@@ -1085,29 +1085,51 @@ export default function Practice() {
             </div>
           )}
         </div>
-      </div>
 
-      {/* Desmos Calculator Overlay */}
-      {showCalculator && isMathSession && (
-        <div className="absolute inset-0 z-50 flex items-center justify-center bg-black/60 p-3 backdrop-blur-sm" onClick={() => setShowCalculator(false)}>
-          <div className="flex h-[86vh] w-full max-w-6xl flex-col overflow-hidden rounded-xl border" style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'rgba(148, 163, 184, 0.2)' }} onClick={(event) => event.stopPropagation()}>
-            <div className="flex items-center justify-between border-b px-4 py-3" style={{ borderColor: 'rgba(148, 163, 184, 0.14)' }}>
-              <div>
-                <h3 className="font-bold" style={{ color: 'var(--text-primary)' }}>Desmos Graphing Calculator</h3>
-                <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>College Board version embedded from Desmos</p>
+        {/* Embedded Desmos Calculator */}
+        {showCalculator && isMathSession && (
+          <aside
+            className="flex min-h-[520px] flex-col overflow-hidden border-t md:min-h-0 md:w-[min(42rem,42vw)] md:border-l md:border-t-0"
+            style={{
+              backgroundColor: 'var(--bg-surface)',
+              borderColor: 'rgba(148, 163, 184, 0.1)',
+            }}
+          >
+            <div className="flex items-center justify-between gap-3 border-b px-4 py-3" style={{ borderColor: 'rgba(148, 163, 184, 0.14)' }}>
+              <div className="min-w-0">
+                <h3 className="flex items-center gap-2 font-bold" style={{ color: 'var(--text-primary)' }}>
+                  <Calculator className="h-4 w-4" style={{ color: 'var(--accent-blue)' }} />
+                  Desmos Calculator
+                </h3>
+                <p className="truncate text-xs" style={{ color: 'var(--text-secondary)' }}>
+                  College Board SAT/AP graphing calculator embedded in practice
+                </p>
               </div>
-              <button onClick={() => setShowCalculator(false)} className="rounded-lg p-2 hover:bg-white/5" style={{ color: 'var(--text-secondary)' }}>
-                <X className="h-5 w-5" />
-              </button>
+              <div className="flex items-center gap-2">
+                <a
+                  href="https://www.desmos.com/testing/cb-sat-ap/graphing"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="hidden rounded-lg px-3 py-2 text-xs font-semibold transition-colors hover:bg-white/5 sm:inline-flex"
+                  style={{ color: 'var(--accent-blue)' }}
+                >
+                  Open tab
+                </a>
+                <button onClick={() => setShowCalculator(false)} className="rounded-lg p-2 hover:bg-white/5" style={{ color: 'var(--text-secondary)' }} title="Close calculator">
+                  <X className="h-5 w-5" />
+                </button>
+              </div>
             </div>
             <iframe
-              title="Desmos Graphing Calculator"
+              title="College Board Desmos Graphing Calculator"
               src="https://www.desmos.com/testing/cb-sat-ap/graphing"
-              className="h-full w-full flex-1 bg-white"
+              className="min-h-[480px] w-full flex-1 bg-white md:min-h-0"
+              loading="lazy"
+              allow="clipboard-write"
             />
-          </div>
-        </div>
-      )}
+          </aside>
+        )}
+      </div>
 
       {/* Question Grid Overlay */}
       {showGrid && (

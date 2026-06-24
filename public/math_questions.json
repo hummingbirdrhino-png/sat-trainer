@@ -9740,13 +9740,18 @@
     "parse_notes": [
       "page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols"
     ],
-    "choice_latex": {},
+    "choice_latex": {
+      "A": "m(x)=\\frac{x}{5.7}",
+      "B": "m(x)=x+5.7",
+      "C": "m(x)=x-5.7",
+      "D": "m(x)=5.7x"
+    },
     "choice_text": {},
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_latex_vision",
+      "B": "verified_latex_vision",
+      "C": "verified_latex_vision",
+      "D": "verified_latex_vision"
     }
   },
   {
@@ -9872,13 +9877,18 @@
     "parse_notes": [
       "page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols"
     ],
-    "choice_latex": {},
+    "choice_latex": {
+      "A": "-64",
+      "B": "62",
+      "C": "128",
+      "D": "192"
+    },
     "choice_text": {},
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_latex_vision",
+      "B": "verified_latex_vision",
+      "C": "verified_latex_vision",
+      "D": "verified_latex_vision"
     }
   },
   {
@@ -9998,13 +10008,18 @@
     "parse_notes": [
       "page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols"
     ],
-    "choice_latex": {},
+    "choice_latex": {
+      "A": "f(t)=\\frac{21}{130}t+4",
+      "B": "f(t)=\\frac{19}{130}t+4",
+      "C": "f(t)=-\\frac{21}{130}t+4",
+      "D": "f(t)=-\\frac{19}{130}t+4"
+    },
     "choice_text": {},
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_latex_vision",
+      "B": "verified_latex_vision",
+      "C": "verified_latex_vision",
+      "D": "verified_latex_vision"
     }
   },
   {
@@ -10188,13 +10203,17 @@
     "parse_notes": [
       "page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols"
     ],
-    "choice_latex": {},
+    "choice_latex": {
+      "A": "f(x)=x+5",
+      "B": "f(x)=\\frac{1}{2}x+4",
+      "D": "f(x)=-\\frac{3}{2}x+1"
+    },
     "choice_text": {},
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
+      "A": "verified_latex_vision",
+      "B": "verified_latex_vision",
       "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "D": "verified_latex_vision"
     }
   },
   {
@@ -10391,10 +10410,12 @@
     "parse_notes": [
       "page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols"
     ],
-    "choice_latex": {},
+    "choice_latex": {
+      "A": "d=2m"
+    },
     "choice_text": {},
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
+      "A": "verified_latex_vision",
       "B": "fallback_image_needs_latex_review",
       "C": "fallback_image_needs_latex_review",
       "D": "fallback_image_needs_latex_review"
