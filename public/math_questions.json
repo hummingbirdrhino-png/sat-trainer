@@ -33809,13 +33809,15 @@
     "parse_notes": [
       "page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols"
     ],
-    "choice_latex": {},
+    "choice_latex": {
+      "D": "T=\\frac{v-331.3}{0.606}"
+    },
     "choice_text": {},
     "choice_parse_status": {
       "A": "fallback_image_needs_latex_review",
       "B": "fallback_image_needs_latex_review",
       "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "D": "verified_latex_vision"
     }
   },
   {
@@ -33893,13 +33895,18 @@
     "parse_notes": [
       "page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols"
     ],
-    "choice_latex": {},
+    "choice_latex": {
+      "A": "14",
+      "B": "15",
+      "C": "17",
+      "D": "18"
+    },
     "choice_text": {},
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_latex_vision",
+      "B": "verified_latex_vision",
+      "C": "verified_latex_vision",
+      "D": "verified_latex_vision"
     }
   },
   {
@@ -33985,13 +33992,18 @@
     "parse_notes": [
       "page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols"
     ],
-    "choice_latex": {},
+    "choice_latex": {
+      "A": "\\left(-\\frac{29}{4},0\\right)",
+      "B": "\\left(-\\frac{7}{4},0\\right)",
+      "C": "\\left(\\frac{5}{4},0\\right)",
+      "D": "\\left(\\frac{17}{4},0\\right)"
+    },
     "choice_text": {},
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_latex_vision",
+      "B": "verified_latex_vision",
+      "C": "verified_latex_vision",
+      "D": "verified_latex_vision"
     }
   },
   {
@@ -34168,13 +34180,18 @@
     "parse_notes": [
       "page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols"
     ],
-    "choice_latex": {},
+    "choice_latex": {
+      "A": "-4<x<-3",
+      "B": "-3<x<1",
+      "C": "1<x<3",
+      "D": "3<x<4"
+    },
     "choice_text": {},
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_latex_vision",
+      "B": "verified_latex_vision",
+      "C": "verified_latex_vision",
+      "D": "verified_latex_vision"
     }
   },
   {
@@ -34540,7 +34557,12 @@
     "parse_notes": [
       "page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols"
     ],
-    "choice_latex": {},
+    "choice_latex": {
+      "A": "\\text{The marble's height was 0 inches above the ground 8 seconds after it started moving.}",
+      "B": "\\text{The marble's height was 8 inches above the ground when it started moving.}",
+      "C": "\\text{The marble's minimum height was 0 inches above the ground.}",
+      "D": "\\text{The marble's minimum height was 8 inches above the ground.}"
+    },
     "choice_text": {
       "A": "The marble's height was \n inches above the ground \n seconds after it star ted moving.",
       "B": "The marble's height was \n inches above the ground when it star ted moving.",
@@ -34548,10 +34570,10 @@
       "D": "The marble's minimum height was \n inches above the ground."
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_latex_vision",
+      "B": "verified_latex_vision",
+      "C": "verified_latex_vision",
+      "D": "verified_latex_vision"
     }
   },
   {
@@ -34790,13 +34812,18 @@
     "parse_notes": [
       "page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols"
     ],
-    "choice_latex": {},
+    "choice_latex": {
+      "A": "n=\\frac{p-20}{16}",
+      "B": "n=\\frac{p}{16}+20",
+      "C": "n=\\frac{p}{16}-20",
+      "D": "n=\\frac{16}{p-20}"
+    },
     "choice_text": {},
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_latex_vision",
+      "B": "verified_latex_vision",
+      "C": "verified_latex_vision",
+      "D": "verified_latex_vision"
     }
   },
   {
@@ -34858,13 +34885,18 @@
     "parse_notes": [
       "page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols"
     ],
-    "choice_latex": {},
+    "choice_latex": {
+      "A": "(0,2)",
+      "B": "(-4,2)",
+      "C": "(2,0)",
+      "D": "(2,-4)"
+    },
     "choice_text": {},
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_latex_vision",
+      "B": "verified_latex_vision",
+      "C": "verified_latex_vision",
+      "D": "verified_latex_vision"
     }
   },
   {
@@ -34926,13 +34958,18 @@
     "parse_notes": [
       "page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols"
     ],
-    "choice_latex": {},
+    "choice_latex": {
+      "A": "4x^2+24",
+      "B": "4x^2+10",
+      "C": "4x^2+6",
+      "D": "4x^2-2"
+    },
     "choice_text": {},
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_latex_vision",
+      "B": "verified_latex_vision",
+      "C": "verified_latex_vision",
+      "D": "verified_latex_vision"
     }
   },
   {
@@ -34994,13 +35031,18 @@
     "parse_notes": [
       "page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols"
     ],
-    "choice_latex": {},
+    "choice_latex": {
+      "A": "6x^2y^2(2x^6)",
+      "B": "6x^2y^2(x^4)",
+      "C": "6x^2y^2(x^6+2)",
+      "D": "6x^2y^2(x^4+2)"
+    },
     "choice_text": {},
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_latex_vision",
+      "B": "verified_latex_vision",
+      "C": "verified_latex_vision",
+      "D": "verified_latex_vision"
     }
   },
   {
@@ -35126,13 +35168,18 @@
     "parse_notes": [
       "page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols"
     ],
-    "choice_latex": {},
+    "choice_latex": {
+      "A": "d=0.006(1+670)^t",
+      "B": "d=670(1+0.006)^t",
+      "C": "d=(1+0.006)^t",
+      "D": "d=(1+670)^t"
+    },
     "choice_text": {},
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_latex_vision",
+      "B": "verified_latex_vision",
+      "C": "verified_latex_vision",
+      "D": "verified_latex_vision"
     }
   },
   {
@@ -35244,13 +35291,18 @@
     "parse_notes": [
       "page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols"
     ],
-    "choice_latex": {},
+    "choice_latex": {
+      "A": "(0,0)",
+      "B": "(-4,1)",
+      "C": "(4,-1)",
+      "D": "(4,1)"
+    },
     "choice_text": {},
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_latex_vision",
+      "B": "verified_latex_vision",
+      "C": "verified_latex_vision",
+      "D": "verified_latex_vision"
     }
   },
   {
@@ -35322,17 +35374,20 @@
       "page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols"
     ],
     "choice_latex": {
-      "C": "5x"
+      "C": "5x",
+      "A": "5x^2-5x",
+      "B": "5x^2+5x",
+      "D": "5x^2"
     },
     "choice_text": {
       "C": "5x",
       "D": "5x\n2"
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
+      "A": "verified_latex_vision",
+      "B": "verified_latex_vision",
       "C": "verified_text_layer",
-      "D": "fallback_image_needs_latex_review"
+      "D": "verified_latex_vision"
     }
   },
   {
@@ -35394,13 +35449,18 @@
     "parse_notes": [
       "page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols"
     ],
-    "choice_latex": {},
+    "choice_latex": {
+      "A": "-91x^2",
+      "B": "6x^2",
+      "C": "20x^2",
+      "D": "40x^2"
+    },
     "choice_text": {},
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_latex_vision",
+      "B": "verified_latex_vision",
+      "C": "verified_latex_vision",
+      "D": "verified_latex_vision"
     }
   },
   {
@@ -35507,7 +35567,9 @@
     ],
     "choice_latex": {
       "A": "6",
-      "B": "2"
+      "B": "2",
+      "C": "-2",
+      "D": "-6"
     },
     "choice_text": {
       "A": "6",
@@ -35516,8 +35578,8 @@
     "choice_parse_status": {
       "A": "verified_text_layer",
       "B": "verified_text_layer",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "C": "verified_latex_vision",
+      "D": "verified_latex_vision"
     }
   },
   {
@@ -35588,13 +35650,18 @@
     "parse_notes": [
       "page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols"
     ],
-    "choice_latex": {},
+    "choice_latex": {
+      "A": "4(x^3+4)",
+      "B": "4(x^3+2)",
+      "C": "2(x^3+4)",
+      "D": "2(x^3+2)"
+    },
     "choice_text": {},
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_latex_vision",
+      "B": "verified_latex_vision",
+      "C": "verified_latex_vision",
+      "D": "verified_latex_vision"
     }
   },
   {
@@ -35763,13 +35830,18 @@
     "parse_notes": [
       "page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols"
     ],
-    "choice_latex": {},
+    "choice_latex": {
+      "A": "M=1{,}800(1.02)^4",
+      "B": "M=1{,}800(1.02)^{4q}",
+      "C": "M=1{,}800(1.005)^{4q}",
+      "D": "M=1{,}800(1.082)^q"
+    },
     "choice_text": {},
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_latex_vision",
+      "B": "verified_latex_vision",
+      "C": "verified_latex_vision",
+      "D": "verified_latex_vision"
     }
   },
   {
@@ -35856,13 +35928,18 @@
     "parse_notes": [
       "page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols"
     ],
-    "choice_latex": {},
+    "choice_latex": {
+      "A": "f(x)=0.02(3{,}000)^x",
+      "B": "f(x)=0.98(3{,}000)^x",
+      "C": "f(x)=3{,}000(0.02)^x",
+      "D": "f(x)=3{,}000(0.98)^x"
+    },
     "choice_text": {},
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_latex_vision",
+      "B": "verified_latex_vision",
+      "C": "verified_latex_vision",
+      "D": "verified_latex_vision"
     }
   },
   {
@@ -36161,13 +36238,16 @@
     "parse_notes": [
       "page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols"
     ],
-    "choice_latex": {},
+    "choice_latex": {
+      "C": "H=1+\\frac{V_B}{V_P}",
+      "D": "H=V_B-V_P"
+    },
     "choice_text": {},
     "choice_parse_status": {
       "A": "fallback_image_needs_latex_review",
       "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "C": "verified_latex_vision",
+      "D": "verified_latex_vision"
     }
   },
   {
@@ -36238,13 +36318,16 @@
     "parse_notes": [
       "page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols"
     ],
-    "choice_latex": {},
+    "choice_latex": {
+      "C": "W=\\frac{t}{P}",
+      "D": "W=P+t"
+    },
     "choice_text": {},
     "choice_parse_status": {
       "A": "fallback_image_needs_latex_review",
       "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "C": "verified_latex_vision",
+      "D": "verified_latex_vision"
     }
   },
   {
@@ -36464,7 +36547,12 @@
     "parse_notes": [
       "page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols"
     ],
-    "choice_latex": {},
+    "choice_latex": {
+      "A": "\\text{5 years after the company started selling jewelry online, its predicted annual revenue is approximately 648,650 dollars.}",
+      "B": "\\text{5 years after the company started selling jewelry online, its predicted annual revenue will have increased by a total of approximately 648,650 dollars.}",
+      "C": "\\text{When the company's predicted annual revenue is approximately 648,650 dollars, it is 5 times the predicted annual revenue for the previous year.}",
+      "D": "\\text{When the company's predicted annual revenue is approximately 648,650 dollars, it is 5\\% greater than the predicted annual revenue for the previous year.}"
+    },
     "choice_text": {
       "A": "years after the company star ted selling jewelry online, its predicted annual revenue is approximately \n dollars.",
       "B": "years after the company star ted selling jewelry online, its predicted annual revenue will have increased by a total of approximately \ndollars.",
@@ -36472,10 +36560,10 @@
       "D": "When the company’s predicted annual revenue is approximately \n dollars, it is \n greater than the predicted annual revenue for the\nprevious year."
     },
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_latex_vision",
+      "B": "verified_latex_vision",
+      "C": "verified_latex_vision",
+      "D": "verified_latex_vision"
     }
   },
   {
@@ -36579,13 +36667,18 @@
     "parse_notes": [
       "page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols"
     ],
-    "choice_latex": {},
+    "choice_latex": {
+      "A": "H=\\frac{25}{9}(D-T)+100",
+      "B": "H=\\frac{25}{9}(D-T)-100",
+      "C": "H=\\frac{25}{9}(D+T)+100",
+      "D": "H=\\frac{25}{9}(D+T)-100"
+    },
     "choice_text": {},
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_latex_vision",
+      "B": "verified_latex_vision",
+      "C": "verified_latex_vision",
+      "D": "verified_latex_vision"
     }
   },
   {
@@ -36656,13 +36749,18 @@
     "parse_notes": [
       "page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols"
     ],
-    "choice_latex": {},
+    "choice_latex": {
+      "A": "5a^3",
+      "B": "8a^5",
+      "C": "2a^3+3",
+      "D": "2a^3+6a^2"
+    },
     "choice_text": {},
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_latex_vision",
+      "B": "verified_latex_vision",
+      "C": "verified_latex_vision",
+      "D": "verified_latex_vision"
     }
   },
   {
@@ -36733,13 +36831,15 @@
     "parse_notes": [
       "page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols"
     ],
-    "choice_latex": {},
+    "choice_latex": {
+      "D": "a^2+ab+\\frac{u}{4}"
+    },
     "choice_text": {},
     "choice_parse_status": {
       "A": "fallback_image_needs_latex_review",
       "B": "fallback_image_needs_latex_review",
       "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "D": "verified_latex_vision"
     }
   },
   {
@@ -36809,13 +36909,18 @@
     "parse_notes": [
       "page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols"
     ],
-    "choice_latex": {},
+    "choice_latex": {
+      "A": "(-12,0)",
+      "B": "(-30,0)",
+      "C": "(-360,0)",
+      "D": "(12,0)"
+    },
     "choice_text": {},
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_latex_vision",
+      "B": "verified_latex_vision",
+      "C": "verified_latex_vision",
+      "D": "verified_latex_vision"
     }
   },
   {
@@ -36973,12 +37078,16 @@
     "parse_notes": [
       "page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols"
     ],
-    "choice_latex": {},
+    "choice_latex": {
+      "A": "\\frac{u}{4}",
+      "B": "a",
+      "C": "4a"
+    },
     "choice_text": {},
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
+      "A": "verified_latex_vision",
+      "B": "verified_latex_vision",
+      "C": "verified_latex_vision",
       "D": "fallback_image_needs_latex_review"
     }
   },
