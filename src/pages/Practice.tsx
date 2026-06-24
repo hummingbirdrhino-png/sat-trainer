@@ -816,7 +816,13 @@ export default function Practice() {
                 const choiceLatex = currentQuestion.choice_latex?.[letter];
                 const choiceText = currentQuestion.choice_text?.[letter] ?? text;
                 const choiceImage = currentQuestion.choice_images?.[letter];
-                const shouldUseChoiceImage = Boolean(choiceImage && currentQuestion.choice_parse_status?.[letter] === 'fallback_image_needs_latex_review');
+                const choiceStatus = currentQuestion.choice_parse_status?.[letter];
+                const shouldUseChoiceImage = Boolean(
+                  choiceImage && (
+                    choiceStatus === 'fallback_image_needs_latex_review' ||
+                    choiceStatus === 'verified_latex_vision'
+                  )
+                );
 
                 return (
                   <button
@@ -869,11 +875,7 @@ export default function Practice() {
                     >
                       {letter}
                     </span>
-                    {choiceLatex ? (
-                      <span className={cn('flex-1 text-base leading-relaxed sm:text-lg', getAnswerTextStyle(letter))}>
-                        <LatexMath value={choiceLatex} />
-                      </span>
-                    ) : shouldUseChoiceImage && choiceImage ? (
+                    {shouldUseChoiceImage && choiceImage ? (
                       <span className="flex-1 overflow-hidden rounded-lg bg-white p-2 sm:p-3">
                         <img
                           src={assetUrl(choiceImage)}
@@ -882,6 +884,10 @@ export default function Practice() {
                           loading="lazy"
                           decoding="async"
                         />
+                      </span>
+                    ) : choiceLatex ? (
+                      <span className={cn('flex-1 text-base leading-relaxed sm:text-lg', getAnswerTextStyle(letter))}>
+                        <LatexMath value={choiceLatex} />
                       </span>
                     ) : choiceText ? (
                       renderFormattedText(choiceText, cn('flex-1 text-base leading-relaxed sm:text-lg', getAnswerTextStyle(letter)))
