@@ -2760,13 +2760,18 @@
     "parse_notes": [
       "page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols"
     ],
-    "choice_latex": {},
+    "choice_latex": {
+      "A": "\\begin{array}{|c|c|}\\hline x & y\\\\\\hline 0 & 4\\\\\\hline 1 & 5\\\\\\hline 2 & 6\\\\\\hline\\end{array}",
+      "B": "\\begin{array}{|c|c|}\\hline x & y\\\\\\hline 0 & 6\\\\\\hline 1 & 5\\\\\\hline 2 & 4\\\\\\hline\\end{array}",
+      "C": "\\begin{array}{|c|c|}\\hline x & y\\\\\\hline 0 & 2\\\\\\hline 1 & 1\\\\\\hline 2 & 0\\\\\\hline\\end{array}",
+      "D": "\\begin{array}{|c|c|}\\hline x & y\\\\\\hline 0 & 0\\\\\\hline 1 & 1\\\\\\hline 2 & 2\\\\\\hline\\end{array}"
+    },
     "choice_text": {},
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_latex_vision",
+      "B": "verified_latex_vision",
+      "C": "verified_latex_vision",
+      "D": "verified_latex_vision"
     }
   },
   {
@@ -5731,13 +5736,18 @@
     "parse_notes": [
       "page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols"
     ],
-    "choice_latex": {},
+    "choice_latex": {
+      "A": "\\text{Graph with two intersecting lines: one decreasing line and one increasing line; intersection in the lower-right quadrant.}",
+      "B": "\\text{Graph with two intersecting lines: one steep increasing line and one shallow decreasing line; intersection left of center.}",
+      "C": "\\text{Graph with two intersecting lines: one steep increasing line and one slightly increasing line; intersection below the x-axis.}",
+      "D": "\\text{Graph with two lines near the left side; one steep increasing line and one vertical line.}"
+    },
     "choice_text": {},
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_latex_vision",
+      "B": "verified_latex_vision",
+      "C": "verified_latex_vision",
+      "D": "verified_latex_vision"
     }
   },
   {
@@ -8957,13 +8967,18 @@
     "parse_notes": [
       "page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols"
     ],
-    "choice_latex": {},
+    "choice_latex": {
+      "A": "\\text{Graph of a decreasing line with negative slope, crossing both axes near the center.}",
+      "B": "\\text{Graph of a decreasing line with negative slope, steeper than the one in A, crossing the y-axis above the origin.}",
+      "C": "\\text{Graph of a decreasing line with shallow negative slope, crossing the y-axis above the origin.}",
+      "D": "\\text{Graph of a steep decreasing line crossing the y-axis above the origin and the x-axis near the origin.}"
+    },
     "choice_text": {},
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_latex_vision",
+      "B": "verified_latex_vision",
+      "C": "verified_latex_vision",
+      "D": "verified_latex_vision"
     }
   },
   {
@@ -9157,13 +9172,18 @@
     "parse_notes": [
       "page_images_are_question_only_crops_preserving_equations_graphs_tables; plain_text_may_omit_math_symbols"
     ],
-    "choice_latex": {},
+    "choice_latex": {
+      "A": "\\begin{array}{|c|c|}\\hline x & y\\\\\\hline 0 & 0\\\\\\hline 1 & -4\\\\\\hline 2 & -8\\\\\\hline\\end{array}",
+      "B": "\\begin{array}{|c|c|}\\hline x & y\\\\\\hline 0 & 40\\\\\\hline 1 & 44\\\\\\hline 2 & 48\\\\\\hline\\end{array}",
+      "C": "\\begin{array}{|c|c|}\\hline x & y\\\\\\hline 0 & 40\\\\\\hline 1 & 36\\\\\\hline 2 & 32\\\\\\hline\\end{array}",
+      "D": "\\begin{array}{|c|c|}\\hline x & y\\\\\\hline 0 & 0\\\\\\hline 1 & 4\\\\\\hline 2 & 8\\\\\\hline\\end{array}"
+    },
     "choice_text": {},
     "choice_parse_status": {
-      "A": "fallback_image_needs_latex_review",
-      "B": "fallback_image_needs_latex_review",
-      "C": "fallback_image_needs_latex_review",
-      "D": "fallback_image_needs_latex_review"
+      "A": "verified_latex_vision",
+      "B": "verified_latex_vision",
+      "C": "verified_latex_vision",
+      "D": "verified_latex_vision"
     }
   },
   {
